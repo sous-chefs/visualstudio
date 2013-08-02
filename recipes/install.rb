@@ -37,7 +37,7 @@ install_log_file = win_friendly_path(File.join(install_dir, 'vsinstall.log'))
 
 iso_extraction_dir = win_friendly_path(File.join(Dir.tmpdir(), 'vs2012'))
 setup_exe_path = File.join(iso_extraction_dir, node['visualstudio'][edition]['installer_file'])
-admin_deployment_filename = 'AdminDeployment' + edition + '.xml'
+admin_deployment_filename = 'AdminDeployment-' + edition + '.xml'
 admin_deployment_xml_file = win_friendly_path(File.join(iso_extraction_dir, "AdminDeployment.xml"))
 seven_zip_exe_path = "#{node['7-zip']['home']}/7z.exe"
 
