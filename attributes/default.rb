@@ -47,7 +47,7 @@ default['visualstudio']['premium']['checksum'] =
   '21e5145b05f9af0dff7d5698f37fc7829929c4b13929afe943ff6f6c28ce5492'
 
 #VS 2012 Ultimate
-default['visualstudio']['ultimate']['filename'] = 'en_visual_studio_2010_ultimate_x86_dvd_509116.iso'
+default['visualstudio']['ultimate']['filename'] = 'en_visual_studio_ultimate_2012_x86_dvd_920947.iso'
 default['visualstudio']['ultimate']['installer_file'] = 'vs_ultimate.exe'
 default['visualstudio']['ultimate']['package_name'] = 'Microsoft Visual Studio Ultimate 2012'
 default['visualstudio']['ultimate']['checksum'] =
