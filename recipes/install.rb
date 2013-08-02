@@ -21,19 +21,24 @@
 # Ensure 7-zip is installed
 include_recipe '7-zip::default'
 
+edition = node['visualstudio']['edition']
+
 # Ensure the installation ISO url has been set by the user
-install_url = node['visualstudio']['url']
-raise "'visualstudio url attribute must be set before running this cookbook" if install_url.nil?
+install_source = node['visualstudio']['source']
+raise "'visualstudio source attribute must be set before running this cookbook" if install_source.nil?
+install_filename = node['visualstudio'][edition]['filename']
+install_url = win_friendly_path(File.join(install_source, install_filename))
 
 # Create install paths
-checksum = node['visualstudio']['checksum']
-package_name = node['visualstudio']['package_name']
+checksum = node['visualstudio'][edition]['checksum']
+package_name = node['visualstudio'][edition]['package_name']
 install_dir = node['visualstudio']['install_dir']
 install_log_file = win_friendly_path(File.join(install_dir, 'vsinstall.log'))
 
 iso_extraction_dir = win_friendly_path(File.join(Dir.tmpdir(), 'vs2012'))
-setup_exe_path = File.join(iso_extraction_dir, node['visualstudio']['installer_file'])
-admin_deployment_xml_file = win_friendly_path(File.join(iso_extraction_dir, 'AdminDeployment.xml'))
+setup_exe_path = File.join(iso_extraction_dir, node['visualstudio'][edition]['installer_file'])
+admin_deployment_filename = 'AdminDeployment' + edition + '.xml'
+admin_deployment_xml_file = win_friendly_path(File.join(iso_extraction_dir, "AdminDeployment.xml"))
 seven_zip_exe_path = "#{node['7-zip']['home']}/7z.exe"
 
 # Download ISO to local file cache, or just use if local path
@@ -51,7 +56,9 @@ execute 'extract_vs2012_iso' do
 end
 
 # Create installation config file
-cookbook_file admin_deployment_xml_file
+cookbook_file admin_deployment_xml_file do
+  source admin_deployment_filename
+end
 
 # Install Visual Studio
 windows_package package_name do
