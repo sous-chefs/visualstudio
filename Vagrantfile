@@ -89,4 +89,24 @@ Vagrant.configure("2") do |config|
     }
   end
   
+  # Visual Studio 2012 Update 3
+  config.vm.provision :chef_solo do |chef|
+    chef.log_level = :debug
+    chef.file_cache_path = "c:/chef/cache"
+    chef.file_backup_path = "c:/chef/backup"
+    chef.add_recipe "windows::default"
+    chef.add_recipe "windows::reboot_handler"
+    chef.add_recipe "minitest-handler::default"
+    chef.add_recipe "visualstudio::installupdate"
+    chef.json={
+      "visualstudio"=>{
+        "source" => "c:/vagrant/cache",
+        "edition" => "ultimate"
+      },
+      "windows"=>{
+        "reboot_timeout" => 15
+      }
+    }
+  end
+  
 end
