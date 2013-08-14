@@ -55,3 +55,7 @@ default['visualstudio']['ultimate']['checksum'] =
 
 # Currently you cannot change this, doing so will break the cookbook
 default['visualstudio']['install_dir'] = 'C:\\Program Files\\Microsoft Visual Studio 11.0'
+
+# VS 2012 Update 3
+default['visualstudio']['update']['installer_file'] = 'VS2012.3.exe'
+default['visualstudio']['update']['package_name'] = 'packagenamehere'

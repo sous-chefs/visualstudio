@@ -20,6 +20,7 @@
 
 # VS installation requires .NET 4.5 to be installed first
 include_recipe 'visualstudio::dotnet_prereq'
+include_recipe 'visualstudio::sqlce_prereq'
 
 # Enable/disable Nuget package restore
 include_recipe 'visualstudio::nuget'
