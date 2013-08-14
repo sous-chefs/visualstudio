@@ -37,6 +37,8 @@ iso_extraction_dir = win_friendly_path(File.join(Dir.tmpdir(), 'vs2012update'))
 setup_exe_path = File.join(iso_extraction_dir, node['visualstudio']['update']['installer_file'])
 seven_zip_exe_path = "#{node['7-zip']['home']}/7z.exe"
 
+updatekey = node['visualstudio']['update']['registrykey']
+
 # Download ISO to local file cache, or just use if local path
 local_iso_path = cached_file(install_url, checksum)
 
@@ -48,7 +50,7 @@ end
 # Extract the ISO image to the tmp dir
 execute 'extract_vs2012_update_iso' do
   command "#{seven_zip_exe_path} x -y -o#{iso_extraction_dir} #{local_iso_path}"
-  only_if { true }
+  # TODO: Ensure Idempotence - not_if { registry_key_exists?(updatekey, :i386) }
 end
 
 windows_reboot 1 do

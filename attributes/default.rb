@@ -55,5 +55,6 @@ default['visualstudio']['install_dir'] = 'C:\\Program Files\\Microsoft Visual St
 # VS 2012 Update 3
 default['visualstudio']['update']['filename'] = 'VS2012.3.iso'
 default['visualstudio']['update']['installer_file'] = 'VS2012.3.exe'
-default['visualstudio']['update']['package_name'] = 'packagenamehere'
+default['visualstudio']['update']['package_name'] = 'Visual Studio 2012 Update 3 (KB2707250)'
 default['visualstudio']['update']['checksum'] = 'd7d04e9533d34fa097c3b220f209411c94478b283646955a1cc85616f89f50b2' # SHA-1 89D4AC51AB2444134D61B668AAA8C4A655B84510
+default['visualstudio']['update']['registrykey'] = 'HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Updates\Microsoft Visual Studio 2012\Visual Studio 2012 Update 3 (KB2707250)'
