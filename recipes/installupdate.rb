@@ -1,9 +1,9 @@
 #
-# Author:: Shawn Neal <sneal@daptiv.com>
+# Author:: Joe Fitzgerald
 # Cookbook Name:: visualstudio
-# Recipe:: install
+# Recipe:: installupdate
 #
-# Copyright 2013, Daptiv Solutions, LLC.
+# Copyright 2013, Joe Fitzgerald.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,26 +21,23 @@
 # Ensure 7-zip is installed
 include_recipe '7-zip::default'
 
-edition = node['visualstudio']['edition']
-
 # Ensure the installation ISO url has been set by the user
 install_source = node['visualstudio']['source']
 raise "'visualstudio source attribute must be set before running this cookbook" if install_source.nil?
-install_filename = node['visualstudio'][edition]['filename']
+install_filename = node['visualstudio']['update']['filename']
 install_url = win_friendly_path(File.join(install_source, install_filename))
 
 # Create install paths
-checksum = node['visualstudio'][edition]['checksum']
-package_name = node['visualstudio'][edition]['package_name']
+checksum = node['visualstudio']['update']['checksum']
+package_name = node['visualstudio']['update']['package_name']
 install_dir = node['visualstudio']['install_dir']
-install_log_file = win_friendly_path(File.join(install_dir, 'vsinstall.log'))
+install_log_file = win_friendly_path(File.join(install_dir, 'vsupdateinstall.log'))
 
-iso_extraction_dir = win_friendly_path(File.join(Dir.tmpdir(), 'vs2012'))
-setup_exe_path = File.join(iso_extraction_dir, node['visualstudio'][edition]['installer_file'])
-admin_deployment_filename = 'AdminDeployment-' + edition + '.xml'
-admin_deployment_xml_file = win_friendly_path(File.join(iso_extraction_dir, "AdminDeployment.xml"))
+iso_extraction_dir = win_friendly_path(File.join(Dir.tmpdir(), 'vs2012update'))
+setup_exe_path = File.join(iso_extraction_dir, node['visualstudio']['update']['installer_file'])
 seven_zip_exe_path = "#{node['7-zip']['home']}/7z.exe"
-devenv_file = File.join(install_dir, '\Common7\IDE\devenv.exe')
+
+updatekey = node['visualstudio']['update']['registrykey']
 
 # Download ISO to local file cache, or just use if local path
 local_iso_path = cached_file(install_url, checksum)
@@ -51,29 +48,23 @@ directory iso_extraction_dir do
 end
 
 # Extract the ISO image to the tmp dir
-execute 'extract_vs2012_iso' do
+execute 'extract_vs2012_update_iso' do
   command "#{seven_zip_exe_path} x -y -o#{iso_extraction_dir} #{local_iso_path}"
-  not_if { File.exists?(devenv_file) }
+  # TODO: Ensure Idempotence - not_if { registry_key_exists?(updatekey, :i386) }
 end
 
-# Create installation config file
-cookbook_file admin_deployment_xml_file do
-  source admin_deployment_filename
-  not_if { File.exists?(devenv_file) }
-end
-
-windows_reboot 5 do
-  reason 'Visual Studio 2012 Install Complete'
+windows_reboot 1 do
+  reason 'Visual Studio 2012 Update Install Complete'
   action :nothing
 end
 
-# Install Visual Studio
+# Install Visual Studio 2012 Update
 windows_package package_name do
   source setup_exe_path
   installer_type :custom
-  options "/Q /norestart /Log \"#{install_log_file}\" /AdminFile \"#{admin_deployment_xml_file}\""
+  options "/Q /norestart /noweb /Log \"#{install_log_file}\""
   action :install
-  # notifies :request, 'windows_reboot[5]'
+  # notifies :request, 'windows_reboot[1]'
 end
 
 # Cleanup extracted ISO files from tmp dir

@@ -25,7 +25,7 @@ include_recipe 'dotnetframework'
 # If .NET 4.5 is not installed first the VS install silently fails forever
 dotnet_45_file = File.join(node['dotnetframework']['dir'], 'Microsoft.Activities.Build.dll')
 dotnet_is_installed = File.exists?(dotnet_45_file)
-Chef::Log.warn '.NET 4 missing, please reboot and rerun chef' unless dotnet_is_installed
+Chef::Log.warn '.NET 4.5 missing, please reboot and rerun chef' unless dotnet_is_installed
 
 # Let other recipes know its missing at start of run
 node.set['visualstudio']['dotnet_is_installed'] = File.exists?(dotnet_45_file)
