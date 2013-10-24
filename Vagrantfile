@@ -6,8 +6,8 @@ Vagrant.configure("2") do |config|
   config.winrm.username = "vagrant"
   config.winrm.password = "vagrant"
 
-  config.vm.box = "windows2008r2"
-  
+  config.vm.box_url = 'http://vmit07.hq.daptiv.com/vagrant/boxes/vagrant-windows2008r2.box'
+  config.vm.box = 'vagrant-windows2008r2'
   config.vm.guest = :windows
   config.vm.network :forwarded_port, guest: 5985, host: 5985
   
@@ -31,80 +31,25 @@ Vagrant.configure("2") do |config|
     v.vmx["RemoteDisplay.vnc.port"] = "5900"
   end
   
-  # .NET 4.5
+  # Install .NET 4.5 first
   config.vm.provision :chef_solo do |chef|
-    chef.log_level = :debug
-    chef.file_cache_path = "c:/chef/cache"
-    chef.file_backup_path = "c:/chef/backup"
-    chef.add_recipe "windows::default"
-    chef.add_recipe "windows::reboot_handler"
-    chef.add_recipe "minitest-handler::default"
-    chef.add_recipe "dotnetframework::default"
-    chef.json={
-      "dotnetframework"=>{
-        "version" => "4.5",
-        "4.5"=>{
-          "url" => "c:/vagrant/cache/dotnetfx45_full_x86_x64.exe"
-        }
-      },
-      "windows"=>{
-        "reboot_timeout" => 15
-      }
-    }
+    chef.log_level = :info
+    chef.add_recipe 'dotnetframework'
+    chef.add_recipe 'minitest-handler'
   end
   
-  # SQLCE 4.0 SP1
-  config.vm.provision :chef_solo do |chef|
-    chef.log_level = :debug
-    chef.file_cache_path = "c:/chef/cache"
-    chef.file_backup_path = "c:/chef/backup"
-    chef.add_recipe "windows::default"
-    chef.add_recipe "windows::reboot_handler"
-    chef.add_recipe "minitest-handler::default"
-    chef.add_recipe "sqlce::default"
-    chef.json={
-      "windows"=>{
-        "reboot_timeout" => 15
-      }
-    }
-  end
+  # Need to reboot before .NET 4.5 install finishes
+  config.vm.provision :shell, inline: 'shutdown /r /t 1 /f /c ".NET 4.5 Reboot"'
   
-  # Visual Studio 2012
+  # Now we can finally run the VS recipe
   config.vm.provision :chef_solo do |chef|
-    chef.log_level = :debug
-    chef.file_cache_path = "c:/chef/cache"
-    chef.file_backup_path = "c:/chef/backup"
-    chef.add_recipe "windows::default"
-    chef.add_recipe "windows::reboot_handler"
-    chef.add_recipe "minitest-handler::default"
-    chef.add_recipe "visualstudio::default"
-    chef.json={
-      "visualstudio"=>{
-        "source" => "c:/vagrant/cache",
-        "edition" => "ultimate"
-      },
-      "windows"=>{
-        "reboot_timeout" => 15
-      }
-    }
-  end
-  
-  # Visual Studio 2012 Update 3
-  config.vm.provision :chef_solo do |chef|
-    chef.log_level = :debug
-    chef.file_cache_path = "c:/chef/cache"
-    chef.file_backup_path = "c:/chef/backup"
-    chef.add_recipe "windows::default"
-    chef.add_recipe "windows::reboot_handler"
-    chef.add_recipe "minitest-handler::default"
-    chef.add_recipe "visualstudio::installupdate"
-    chef.json={
-      "visualstudio"=>{
-        "source" => "c:/vagrant/cache",
-        "edition" => "ultimate"
-      },
-      "windows"=>{
-        "reboot_timeout" => 15
+    chef.log_level = :info
+    chef.add_recipe 'visualstudio'
+    chef.add_recipe 'minitest-handler'
+    chef.json = {
+      'visualstudio' => {
+        'edition' => 'professional',
+        'source' => 'http://vmit07.hq.daptiv.com/installs/Microsoft%20Visual%20Studio%202012/Visual%20Studio%20Professional%202012%20x86/'
       }
     }
   end

@@ -17,15 +17,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+# This recipe ensures .NET 4.5 is installed, if not a warn is logged
 
-# VS requires .NET 4.5 to be installed before installation
-node.default['dotnetframework']['version'] = '4.5'
-include_recipe 'dotnetframework'
-
-# If .NET 4.5 is not installed first the VS install silently fails forever
-dotnet_45_file = File.join(node['dotnetframework']['dir'], 'Microsoft.Activities.Build.dll')
-dotnet_is_installed = File.exists?(dotnet_45_file)
-Chef::Log.warn '.NET 4.5 missing, please reboot and rerun chef' unless dotnet_is_installed
-
-# Let other recipes know its missing at start of run
-node.set['visualstudio']['dotnet_is_installed'] = File.exists?(dotnet_45_file)
+dotnet4dir = File.join(ENV['WINDIR'], 'Microsoft.Net\\Framework64\\v4.0.30319')
+dotnet_45_file = File.join(dotnet4dir, 'Microsoft.Activities.Build.dll')
+dotnet_is_not_installed_msg = '.NET 4.5 must be installed before installing VisualStudio. ' +
+  'This is required otherwise the Visual Studio installer will silently fail. ' +
+  'Please install .NET 4.5, reboot, then run this recipe again.'
+Chef::Log.warn dotnet_is_not_installed_msg unless File.exists?(dotnet_45_file)

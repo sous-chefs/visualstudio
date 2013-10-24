@@ -21,26 +21,23 @@
 # Ensure 7-zip is installed
 include_recipe '7-zip::default'
 
-edition = node['visualstudio']['edition']
-
 # Ensure the installation ISO url has been set by the user
-install_source = node['visualstudio']['source']
-raise "'visualstudio source attribute must be set before running this cookbook" if install_source.nil?
-install_filename = node['visualstudio'][edition]['filename']
-install_url = win_friendly_path(File.join(install_source, install_filename))
+if node['visualstudio']['source'].nil?
+  raise "'visualstudio source attribute must be set before running this cookbook"
+end
 
-# Create install paths
+edition = node['visualstudio']['edition']
+install_url = File.join(node['visualstudio']['source'], node['visualstudio'][edition]['filename'])
 checksum = node['visualstudio'][edition]['checksum']
-package_name = node['visualstudio'][edition]['package_name']
+vs_package_name = node['visualstudio'][edition]['package_name']
+
 install_dir = node['visualstudio']['install_dir']
 install_log_file = win_friendly_path(File.join(install_dir, 'vsinstall.log'))
 
 iso_extraction_dir = win_friendly_path(File.join(Dir.tmpdir(), 'vs2012'))
 setup_exe_path = File.join(iso_extraction_dir, node['visualstudio'][edition]['installer_file'])
-admin_deployment_filename = 'AdminDeployment-' + edition + '.xml'
 admin_deployment_xml_file = win_friendly_path(File.join(iso_extraction_dir, "AdminDeployment.xml"))
-seven_zip_exe_path = "#{node['7-zip']['home']}/7z.exe"
-devenv_file = File.join(install_dir, '\Common7\IDE\devenv.exe')
+vs_is_installed = File.exists?(File.join(install_dir, '\Common7\IDE\devenv.exe'))
 
 # Download ISO to local file cache, or just use if local path
 local_iso_path = cached_file(install_url, checksum)
@@ -48,36 +45,34 @@ local_iso_path = cached_file(install_url, checksum)
 # Create the extraction tmp dir
 directory iso_extraction_dir do
   action :create
+  notifies :run, 'execute[extract_vs2012_iso]', :immediately
+  not_if { vs_is_installed }
 end
 
 # Extract the ISO image to the tmp dir
 execute 'extract_vs2012_iso' do
-  command "#{seven_zip_exe_path} x -y -o#{iso_extraction_dir} #{local_iso_path}"
-  not_if { File.exists?(devenv_file) }
+  command "#{File.join(node['7-zip']['home'], '7z.exe')} x -y -o#{iso_extraction_dir} #{local_iso_path}"
+  not_if { vs_is_installed }
 end
 
 # Create installation config file
 cookbook_file admin_deployment_xml_file do
-  source admin_deployment_filename
-  not_if { File.exists?(devenv_file) }
-end
-
-windows_reboot 5 do
-  reason 'Visual Studio 2012 Install Complete'
-  action :nothing
+  source 'AdminDeployment-' + edition + '.xml'
+  action :create_if_missing
+  not_if { vs_is_installed }
 end
 
 # Install Visual Studio
-windows_package package_name do
+windows_package vs_package_name do
   source setup_exe_path
   installer_type :custom
   options "/Q /norestart /Log \"#{install_log_file}\" /AdminFile \"#{admin_deployment_xml_file}\""
-  action :install
-  # notifies :request, 'windows_reboot[5]'
+  notifies :delete, "directory[#{iso_extraction_dir}]"
+  not_if { vs_is_installed }
 end
 
 # Cleanup extracted ISO files from tmp dir
 directory iso_extraction_dir do
-  action :delete
+  action :nothing
   recursive true
 end
