@@ -20,14 +20,9 @@
 
 # VS installation requires .NET 4.5 to be installed first
 include_recipe 'visualstudio::dotnet_prereq'
-include_recipe 'visualstudio::sqlce_prereq'
 
 # Enable/disable Nuget package restore
 include_recipe 'visualstudio::nuget'
 
-# Download the ISO and install, but only if .NET is installed and VS is not installed
-dotnet_is_installed = node['visualstudio']['dotnet_is_installed']
-install_dir = node['visualstudio']['install_dir']
-vs_is_installed = File.exists?(File.join(install_dir, '\Common7\IDE\devenv.exe'))
-
-include_recipe 'visualstudio::install' if dotnet_is_installed && !vs_is_installed
+# Install VS
+include_recipe 'visualstudio::install'
