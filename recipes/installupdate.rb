@@ -23,7 +23,7 @@ include_recipe '7-zip::default'
 
 # Ensure the installation ISO url has been set by the user
 install_source = node['visualstudio']['source']
-raise "'visualstudio source attribute must be set before running this cookbook" if install_source.nil?
+raise "'visualstudio source attribute must be set to run this cookbook" if install_source.nil?
 install_filename = node['visualstudio']['update']['filename']
 install_url = win_friendly_path(File.join(install_source, install_filename))
 
@@ -50,7 +50,7 @@ end
 # Extract the ISO image to the tmp dir
 execute 'extract_vs2012_update_iso' do
   command "#{seven_zip_exe_path} x -y -o#{iso_extraction_dir} #{local_iso_path}"
-  # TODO: Ensure Idempotence - not_if { registry_key_exists?(updatekey, :i386) }
+  not_if { File.exists?(setup_exe_path) }
 end
 
 windows_reboot 1 do
@@ -64,7 +64,6 @@ windows_package package_name do
   installer_type :custom
   options "/Q /norestart /noweb /Log \"#{install_log_file}\""
   action :install
-  # notifies :request, 'windows_reboot[1]'
 end
 
 # Cleanup extracted ISO files from tmp dir

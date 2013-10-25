@@ -34,9 +34,10 @@ vs_package_name = node['visualstudio'][edition]['package_name']
 install_dir = node['visualstudio']['install_dir']
 install_log_file = win_friendly_path(File.join(install_dir, 'vsinstall.log'))
 
+seven_zip_exe = File.join(node['7-zip']['home'], '7z.exe')
 iso_extraction_dir = win_friendly_path(File.join(Dir.tmpdir(), 'vs2012'))
 setup_exe_path = File.join(iso_extraction_dir, node['visualstudio'][edition]['installer_file'])
-admin_deployment_xml_file = win_friendly_path(File.join(iso_extraction_dir, "AdminDeployment.xml"))
+admin_deployment_xml_file = win_friendly_path(File.join(iso_extraction_dir, 'AdminDeployment.xml'))
 vs_is_installed = File.exists?(File.join(install_dir, '\Common7\IDE\devenv.exe'))
 
 # Download ISO to local file cache, or just use if local path
@@ -51,7 +52,7 @@ end
 
 # Extract the ISO image to the tmp dir
 execute 'extract_vs2012_iso' do
-  command "#{File.join(node['7-zip']['home'], '7z.exe')} x -y -o#{iso_extraction_dir} #{local_iso_path}"
+  command "#{seven_zip_exe} x -y -o#{iso_extraction_dir} #{local_iso_path}"
   not_if { vs_is_installed }
 end
 
