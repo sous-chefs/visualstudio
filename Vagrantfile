@@ -43,13 +43,13 @@ Vagrant.configure("2") do |config|
   
   # Now we can finally run the VS recipe
   config.vm.provision :chef_solo do |chef|
-    chef.log_level = :debug
+    chef.log_level = :info
     chef.add_recipe 'visualstudio'
     chef.add_recipe 'minitest-handler'
     chef.json = {
       'visualstudio' => {
         'edition' => 'professional',
-        'source' => 'http://vmit07.hq.daptiv.com/installs/Microsoft%20Visual%20Studio%202012/Visual%20Studio%20Professional%202012%20x86/'
+        'source' => 'http://vmit07.hq.daptiv.com/installs/cookbookresources'
       }
     }
   end
