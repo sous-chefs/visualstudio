@@ -43,7 +43,7 @@ Vagrant.configure("2") do |config|
   
   # Now we can finally run the VS recipe
   config.vm.provision :chef_solo do |chef|
-    chef.log_level = :info
+    chef.log_level = :debug
     chef.add_recipe 'visualstudio'
     chef.add_recipe 'minitest-handler'
     chef.json = {
