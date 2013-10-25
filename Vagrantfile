@@ -46,7 +46,7 @@ Vagrant.configure("2") do |config|
     chef.log_level = :info
     chef.add_recipe 'visualstudio'
     chef.add_recipe 'minitest-handler'
-    chef.attempts = 2
+    chef.attempts = 10
     chef.json = {
       'visualstudio' => {
         'edition' => 'professional',
