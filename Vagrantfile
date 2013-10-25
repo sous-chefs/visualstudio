@@ -41,6 +41,9 @@ Vagrant.configure("2") do |config|
   # Need to reboot before .NET 4.5 install finishes
   config.vm.provision :shell, inline: 'shutdown /r /t 1 /f /c ".NET 4.5 Reboot"'
   
+  # Workaround for vagrant-windows issue #119
+  config.vm.provision :shell, inline: 'net use'
+  
   # Now we can finally run the VS recipe
   config.vm.provision :chef_solo do |chef|
     chef.log_level = :info
