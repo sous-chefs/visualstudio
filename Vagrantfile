@@ -38,18 +38,19 @@ Vagrant.configure("2") do |config|
     chef.add_recipe 'minitest-handler'
   end
   
-  # Need to reboot before .NET 4.5 install finishes
-  config.vm.provision :shell, inline: 'shutdown /r /t 1 /f /c ".NET 4.5 Reboot"'
+  # Need to reboot before .NET 4.5 install finishes (requires vagrant-windows >= 1.2.3)
+  config.vm.provision :shell, inline: 'Restart-Computer -Force'
   
   # Now we can finally run the VS recipe
   config.vm.provision :chef_solo do |chef|
     chef.log_level = :info
     chef.add_recipe 'visualstudio'
     chef.add_recipe 'minitest-handler'
+    chef.attempts = 4
     chef.json = {
       'visualstudio' => {
         'edition' => 'professional',
-        'source' => 'http://vmit07.hq.daptiv.com/installs/Microsoft%20Visual%20Studio%202012/Visual%20Studio%20Professional%202012%20x86/'
+        'source' => 'http://vmit07.hq.daptiv.com/installs/cookbookresources'
       }
     }
   end

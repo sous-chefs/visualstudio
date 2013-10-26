@@ -19,9 +19,13 @@
 #
 
 # VS requires SQL CE 4.0 to be installed before installation to avoid a forced reboot
-sqlce_file = File.join('C:\\Program Files\\Microsoft SQL Server Compact Edition\\v4.0', 'sqlcecompact40.dll')
-sqlce_is_installed = File.exists?(sqlce_file)
-Chef::Log.warn 'SQL CE 4.0 is not installed, please install it and rerun chef' unless sqlce_is_installed
+sqlce_file = File.join(
+  'C:\\Program Files\\Microsoft SQL Server Compact Edition\\v4.0',
+  'sqlcecompact40.dll')
+
+if !File.exists?(sqlce_file)
+  Chef::Log.warn 'SQL CE 4.0 is not installed, please install it and rerun chef'
+end
 
 # Let other recipes know it's missing at start of run
 node.set['visualstudio']['sqlce_is_installed'] = File.exists?(sqlce_file)
