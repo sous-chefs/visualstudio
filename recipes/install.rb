@@ -69,6 +69,7 @@ windows_package vs_package_name do
   installer_type :custom
   options "/Q /norestart /Log \"#{install_log_file}\" /AdminFile \"#{admin_deployment_xml_file}\""
   notifies :delete, "directory[#{iso_extraction_dir}]"
+  timeout 3600 # 1hour
   not_if { vs_is_installed }
 end
 
