@@ -41,7 +41,7 @@ admin_deployment_xml_file = win_friendly_path(File.join(iso_extraction_dir, 'Adm
 vs_is_installed = File.exists?(File.join(install_dir, '\Common7\IDE\devenv.exe'))
 
 # Download ISO to local file cache, or just use if local path
-local_iso_path = cached_file(install_url, checksum)
+local_iso_path = cached_file(install_url, checksum) unless vs_is_installed
 
 # Create the extraction tmp dir
 directory iso_extraction_dir do
