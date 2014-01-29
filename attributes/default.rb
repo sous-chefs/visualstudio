@@ -71,3 +71,8 @@ default['visualstudio']['update']['checksum'] =
 default['visualstudio']['update']['registrykey'] =
   'HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Updates\Microsoft Visual Studio 2012'+
   '\Visual Studio 2012 Update 3 (KB2707250)'
+
+
+# VS 2012 Office developer tools
+default['visualstudio']['vsto']['installer_file'] = 'officetools_bundle.exe'
+default['visualstudio']['vsto']['package_name'] = 'Microsoft Office Developer Tools for Visual Studio 2012 ENU'

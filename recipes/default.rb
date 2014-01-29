@@ -26,3 +26,6 @@ include_recipe 'visualstudio::nuget'
 
 # Install VS
 include_recipe 'visualstudio::install'
+
+# Install VS Update
+include_recipe 'visualstudio::installupdate'
