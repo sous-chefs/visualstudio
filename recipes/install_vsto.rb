@@ -3,7 +3,7 @@
 # Cookbook Name:: visualstudio
 # Recipe:: install_vsto
 #
-# Copyright 2014, Juan laube.
+# Copyright 2014, Daptiv Solutions, LLC.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
