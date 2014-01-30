@@ -76,6 +76,7 @@ default['visualstudio']['update']['registrykey'] =
 # VS 2012 Office developer tools
 default['visualstudio']['vsto']['installer_file'] = 'officetools_bundle.exe'
 default['visualstudio']['vsto']['package_src_url'] =
-  'http://download.microsoft.com/download/2/F/6/2F6A4FFA-D409-40C8-AF68-F6F0CBE0A00D/ENU/officetools_bundle.exe'
+  'http://download.microsoft.com/download/2/F/6/2F6A4FFA-D409-40C8-AF68-F6F0CBE0A00D/ENU/' +
+  'officetools_bundle.exe'
 default['visualstudio']['vsto']['package_name'] =
   'Microsoft Office Developer Tools for Visual Studio 2012 ENU'
