@@ -48,7 +48,8 @@ windows_package package_name do
   action :install
 end
 
-# Remove temp directory
-directory temp_dir do
-  action :delete
+# Cleanup temp directory
+directory iso_extraction_dir do
+  action :nothing
+  recursive true
 end
