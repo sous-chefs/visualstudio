@@ -73,6 +73,13 @@ default['visualstudio']['update']['registrykey'] =
   '\Visual Studio 2012 Update 4 (KB2870699)'
 
 
+# VS 2012 Update 4
+default['visualstudio']['sp4']['installer_file'] = 'VS2012.4.exe'
+default['visualstudio']['sp4']['package_src_url'] =
+  'http://download.microsoft.com/download/D/4/8/D48D1AC2-A297-4C9E-A9D0-A218E6609F06/VSU4/' +
+  'VS2012.4.exe'
+default['visualstudio']['vsto']['package_name'] = 'Visual Studio 2012 Update 4'
+
 # VS 2012 Office developer tools
 default['visualstudio']['vsto']['installer_file'] = 'officetools_bundle.exe'
 default['visualstudio']['vsto']['package_src_url'] =
