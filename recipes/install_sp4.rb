@@ -49,7 +49,7 @@ windows_package package_name do
 end
 
 # Cleanup temp directory
-directory iso_extraction_dir do
-  action :nothing
+directory temp_dir do
+  action :delete
   recursive true
 end
