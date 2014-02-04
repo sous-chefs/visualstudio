@@ -6,4 +6,4 @@ description      'Installs/Configures Visual Studio 2012'
 ver_path = File.join(File.dirname(__FILE__), 'version.txt')
 version ((IO.read(ver_path) if File.exists?(ver_path)) || '0.0.1').chomp
 depends          'windows'
-depends          '7-zip'
+depends          'seven_zip'
