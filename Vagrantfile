@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
     chef.add_recipe 'visualstudio::default'
     chef.add_recipe 'visualstudio::nuget'
     chef.add_recipe 'visualstudio::install_update'
-    chef.add_recipe 'visualstudio::install_updateweb' # <-- should no-op
+    #chef.add_recipe 'visualstudio::install_updateweb'
     chef.add_recipe 'visualstudio::install_vsto'
     chef.add_recipe 'minitest-handler'
     chef.json = {
