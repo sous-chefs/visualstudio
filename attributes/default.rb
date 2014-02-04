@@ -22,6 +22,9 @@ default['visualstudio']['enable_nuget_package_restore'] = true
 
 default['visualstudio']['edition'] = 'ultimate' # or premium, professional, testprofessional
 
+# Currently you cannot change this, doing so will break the cookbook
+default['visualstudio']['install_dir'] = ENV['ProgramFiles(x86)'] + '\Microsoft Visual Studio 11.0'
+
 # Set this attribute your self to the FQDN of the folder which contains the ISO
 # default['visualstudio']['source'] = 'http://example.com:8080/visualstudio'
 
@@ -58,16 +61,32 @@ default['visualstudio']['ultimate']['package_name'] = 'Microsoft Visual Studio U
 default['visualstudio']['ultimate']['checksum'] =
   'c2c140ec6b16d7d4596b680066de35cbdf60ec049eb42129e5c30945063d2e83'
 
-# Currently you cannot change this, doing so will break the cookbook
-default['visualstudio']['install_dir'] = 'C:\\Program Files\\Microsoft Visual Studio 11.0'
-
-# VS 2012 Update 3
-default['visualstudio']['update']['filename'] = 'VS2012.3.iso'
-default['visualstudio']['update']['installer_file'] = 'VS2012.3.exe'
-default['visualstudio']['update']['package_name'] = 'Visual Studio 2012 Update 3 (KB2707250)'
-# SHA-1 89D4AC51AB2444134D61B668AAA8C4A655B84510
+# VS 2012 Update 4
+default['visualstudio']['update']['source'] = node['visualstudio']['source']
+default['visualstudio']['update']['filename'] = 'VS2012.4.iso'
+default['visualstudio']['update']['installer_file'] = 'VS2012.4.exe'
+default['visualstudio']['update']['package_name'] = 'Visual Studio 2012 Update 4 (KB2707250)'
+default['visualstudio']['update']['package_regkey'] =
+  'HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall' +
+  '\{312d9252-c71c-4c84-b171-f4ad46e22098}'
 default['visualstudio']['update']['checksum'] =
-  'd7d04e9533d34fa097c3b220f209411c94478b283646955a1cc85616f89f50b2'
-default['visualstudio']['update']['registrykey'] =
-  'HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Updates\Microsoft Visual Studio 2012'+
-  '\Visual Studio 2012 Update 3 (KB2707250)'
+  'c462118eabcc242a50f1215587cb1c79505159af79fc50c24d8be1d25203cd87'
+
+# VS 2012 Update 4 - Web Updater
+default['visualstudio']['update_web']['source'] =
+  'http://download.microsoft.com/download/D/4/8/D48D1AC2-A297-4C9E-A9D0-A218E6609F06/VSU4/'
+default['visualstudio']['update_web']['checksum'] =
+  '8c95bd32fe9a4fbd733704bdfb6b6fdaf63f896686156251befef14dc26fe2a0'
+
+# VS 2012 Office developer tools
+default['visualstudio']['vsto']['installer_file'] = 'officetools_bundle.exe'
+default['visualstudio']['vsto']['package_src_url'] =
+  'http://download.microsoft.com/download/2/F/6/2F6A4FFA-D409-40C8-AF68-F6F0CBE0A00D/ENU/' +
+  'officetools_bundle.exe'
+default['visualstudio']['vsto']['package_name'] =
+  'Microsoft Office Developer Tools for Visual Studio 2012 ENU'
+default['visualstudio']['vsto']['package_regkey'] =
+  'HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall' +
+  '\11a5e71f-e0d4-46b6-9fba-e5d0fc6149d0}'
+default['visualstudio']['vsto']['checksum'] =
+  '1480da0041446ea534db180acd1ecb7db6cca988242ace536c7eed5c1ae7087e'

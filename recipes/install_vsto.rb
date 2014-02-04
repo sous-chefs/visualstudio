@@ -1,9 +1,9 @@
 #
-# Author:: Joe Fitzgerald
+# Author:: Juan Laube
 # Cookbook Name:: visualstudio
-# Recipe:: sqlce_prereq
+# Recipe:: install_vsto
 #
-# Copyright 2013, Joe Fitzgerald.
+# Copyright 2014, Daptiv Solutions, LLC.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,14 +18,14 @@
 # limitations under the License.
 #
 
-# VS requires SQL CE 4.0 to be installed before installation to avoid a forced reboot
-sqlce_file = File.join(
-  'C:\\Program Files\\Microsoft SQL Server Compact Edition\\v4.0',
-  'sqlcecompact40.dll')
+install_log_path = win_friendly_path(
+  File.join(node['visualstudio']['install_dir'], 'vstoinstall.log'))
 
-if !File.exists?(sqlce_file)
-  Chef::Log.warn 'SQL CE 4.0 is not installed, please install it and rerun chef'
+# Install Visual Studio 2012 Update
+windows_package node['visualstudio']['vsto']['package_name'] do
+  source node['visualstudio']['vsto']['package_src_url']
+  checksum node['visualstudio']['vsto']['checksum']
+  installer_type :custom
+  options "/Q /norestart /noweb /Log \"#{install_log_path}\""
+  action :install
 end
-
-# Let other recipes know it's missing at start of run
-node.set['visualstudio']['sqlce_is_installed'] = File.exists?(sqlce_file)
