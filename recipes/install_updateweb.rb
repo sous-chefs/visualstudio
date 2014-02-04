@@ -18,16 +18,17 @@
 # limitations under the License.
 #
 
-::Chef::Recipe.send(:include, Visualstudio::Helper)
-
 install_log_file = win_friendly_path(
   File.join(node['visualstudio']['install_dir'], 'spinstall.log'))
 
+install_url = File.join(node['visualstudio']['update_web']['source'],
+  node['visualstudio']['update']['installer_file'])
+
 # Install Visual Studio 2012 Update
-windows_package node['visualstudio']['update_web']['package_name'] do
-  source node['visualstudio']['update_web']['package_src_url']
+windows_package node['visualstudio']['update']['package_name'] do
+  source install_url
+  checksum node['visualstudio']['update_web']['checksum']
   installer_type :custom
   options "/Q /norestart /Log \"#{install_log_file}\""
   action :install
-  not_if { is_vs_installed? }
 end

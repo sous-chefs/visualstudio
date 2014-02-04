@@ -23,7 +23,7 @@ enable_nuget_package_restore = node['visualstudio']['enable_nuget_package_restor
 # Use setx because the Chef env resource requires a re-login before being available
 execute 'set_allow_nuget_to_auto_update' do
   command "setx -m EnableNuGetPackageRestore \"#{enable_nuget_package_restore.to_s}\""
-  only_if { true }
+  only_if { ENV['EnableNuGetPackageRestore'] != enable_nuget_package_restore }
 end
 
 # Set EnableNuGetPackageRestore for this process

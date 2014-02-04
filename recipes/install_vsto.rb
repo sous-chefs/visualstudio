@@ -18,38 +18,14 @@
 # limitations under the License.
 #
 
-# Ensure the installation ISO url has been set by the user
-package_src_url = node['visualstudio']['vsto']['package_src_url']
-temp_dir = win_friendly_path(File.join(Dir.tmpdir(), 'vs2012_vsto'))
-setup_exe_path = File.join(temp_dir, node['visualstudio']['vsto']['installer_file'])
-
-# Create install paths
-package_name = node['visualstudio']['vsto']['package_name']
-install_dir = node['visualstudio']['install_dir']
-install_log_file = win_friendly_path(File.join(install_dir, 'vstoinstall.log'))
-vs_is_installed = File.exists?(File.join(install_dir, '\Common7\IDE\devenv.exe'))
-
-# Create temp directory for package installer
-directory temp_dir do
-  action :create
-  not_if { vs_is_installed }
-end
-
-# Transfer package installer from Microsoft download site to local filesystem
-remote_file setup_exe_path do
-  source package_src_url
-end
+install_log_path = win_friendly_path(
+  File.join(node['visualstudio']['install_dir'], 'vstoinstall.log'))
 
 # Install Visual Studio 2012 Update
-windows_package package_name do
-  source setup_exe_path
+windows_package node['visualstudio']['vsto']['package_name'] do
+  source node['visualstudio']['vsto']['package_src_url']
+  checksum node['visualstudio']['vsto']['checksum']
   installer_type :custom
-  options "/Q /norestart /noweb /Log \"#{install_log_file}\""
+  options "/Q /norestart /noweb /Log \"#{install_log_path}\""
   action :install
-end
-
-# Cleanup temp directory
-directory temp_dir do
-  action :delete
-  recursive true
 end
