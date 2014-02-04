@@ -1,0 +1,29 @@
+{
+  "sources": {
+    "visualstudio": {
+      "path": "."
+    },
+    "seven_zip": {
+      "locked_version": "1.0.3",
+      "git": "git://github.com/daptiv/seven_zip.git",
+      "ref": "debee422459a4a8f1d7573424d865805badb5fd5"
+    },
+    "dotnetframework": {
+      "locked_version": "0.1.0",
+      "git": "git://github.com/daptiv/dotnetframework.git",
+      "ref": "96fb107519915117db4d545c9f3924087948c178"
+    },
+    "minitest-handler": {
+      "locked_version": "1.1.4"
+    },
+    "sqlce": {
+      "locked_version": "1.0.0"
+    },
+    "windows": {
+      "locked_version": "1.12.8"
+    },
+    "chef_handler": {
+      "locked_version": "1.1.4"
+    }
+  }
+}
