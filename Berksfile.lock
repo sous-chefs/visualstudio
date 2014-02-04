@@ -16,9 +16,6 @@
     "minitest-handler": {
       "locked_version": "1.1.4"
     },
-    "sqlce": {
-      "locked_version": "1.0.0"
-    },
     "windows": {
       "locked_version": "1.12.8"
     },
