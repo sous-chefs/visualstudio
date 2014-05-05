@@ -10,6 +10,20 @@ Vagrant.configure("2") do |config|
   config.vm.provider :virtualbox do |vb|
     vb.gui = true
   end
+
+  config.vm.provider :vsphere do |vsphere, override|
+    override.vm.box = "vsphere-dummy"
+    override.vm.box_url = "http://vagrantboxes.hq.daptiv.com/vagrant/boxes/vsphere-dummy.box"
+    vsphere.insecure = true
+    vsphere.host = ENV['vpshere_host']
+    vsphere.data_center_name = ENV['vpshere_data_center_name']
+    vsphere.data_store_name = ENV['vpshere_data_store_name']
+    vsphere.compute_resource_name = ENV['vpshere_compute_resource_name']
+    vsphere.resource_pool_name = ENV['vpshere_resource_pool_name']
+    vsphere.template_name = 'Templates/windows-2008r2_chef-11.10.4'
+    vsphere.user = ENV['vsphere_user']
+    vsphere.password = ENV['vsphere_password']
+  end
   
   # Install .NET 4.5 first
   config.vm.provision :chef_solo do |chef|
