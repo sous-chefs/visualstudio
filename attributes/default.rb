@@ -23,7 +23,8 @@ default['visualstudio']['enable_nuget_package_restore'] = true
 default['visualstudio']['edition'] = 'ultimate' # or premium, professional, testprofessional
 
 # Currently you cannot change this, doing so will break the cookbook
-default['visualstudio']['install_dir'] = ENV['ProgramFiles(x86)'] + '\Microsoft Visual Studio 11.0'
+default['visualstudio']['install_dir'] = (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') +
+  '\Microsoft Visual Studio 11.0'
 
 # Set this attribute your self to the FQDN of the folder which contains the ISO
 # default['visualstudio']['source'] = 'http://example.com:8080/visualstudio'
