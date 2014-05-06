@@ -4,7 +4,7 @@ describe 'visualstudio::install' do
   describe 'windows' do
     before(:each) do
       ENV['ProgramFiles(x86)'] = 'C:\Program Files (x86)'
-      ::File::ALT_SEPARATOR = '\\' # https://github.com/sethvargo/chefspec/issues/371
+      stub_const("File::ALT_SEPARATOR", '\\')
     end
 
     let(:chef_run) do
@@ -22,7 +22,7 @@ describe 'visualstudio::install' do
   describe 'linux' do
     before(:each) do
       ENV['ProgramFiles(x86)'] = nil
-      ::File::ALT_SEPARATOR = '/' # COOK-4620
+      stub_const("File::ALT_SEPARATOR", '\\')
     end
 
     let(:chef_run) do
