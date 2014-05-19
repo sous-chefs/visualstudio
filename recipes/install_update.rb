@@ -52,6 +52,7 @@ windows_package 'install_vs2012_sp' do
   source setup_exe_path
   installer_type :custom
   options "/Q /norestart /noweb /Log \"#{install_log_file}\""
+  timeout 1800 # 30 minutes
   action :nothing
   notifies :delete, "directory[#{iso_extraction_dir}]"
 end
