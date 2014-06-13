@@ -33,7 +33,7 @@ install_url = File.join(node['visualstudio']['update']['source'],
 # Create install paths
 install_log_file = win_friendly_path(
   File.join(node['visualstudio']['install_dir'], 'vsupdateinstall.log'))
-iso_extraction_dir = win_friendly_path(File.join(Dir.tmpdir(), 'vs2012update'))
+iso_extraction_dir = win_friendly_path(File.join(Chef::Config[:file_cache_path], 'vs2012update'))
 setup_exe_path = File.join(iso_extraction_dir, node['visualstudio']['update']['installer_file'])
 
 # Extract the ISO image to the tmp dir
@@ -42,7 +42,6 @@ seven_zip_archive 'extract_vs2012_sp_iso' do
   source install_url
   overwrite true
   checksum node['visualstudio']['update']['checksum']
-  notifies :install, 'windows_package[install_vs2012_sp]'
   not_if { sp_is_installed }
 end
 
@@ -53,7 +52,7 @@ windows_package 'install_vs2012_sp' do
   installer_type :custom
   options "/Q /norestart /noweb /Log \"#{install_log_file}\""
   timeout 1800 # 30 minutes
-  action :nothing
+  not_if { sp_is_installed }
   notifies :delete, "directory[#{iso_extraction_dir}]"
 end
 
@@ -61,4 +60,5 @@ end
 directory iso_extraction_dir do
   action :nothing
   recursive true
+  not_if { node['visualstudio']['preserve_extracted_files'] }
 end

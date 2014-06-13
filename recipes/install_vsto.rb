@@ -21,7 +21,15 @@
 install_log_path = win_friendly_path(
   File.join(node['visualstudio']['install_dir'], 'vstoinstall.log'))
 
-# Install Visual Studio 2012 Update
+# By removing this key we can skip an uncessary reboot before installing VSTO
+key = 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion' +
+  '\WindowsUpdate\Auto Update\RebootRequired'
+registry_key key do
+  recursive true
+  action :delete_key
+end
+
+# Install Visual Studio Tools for Office
 windows_package node['visualstudio']['vsto']['package_name'] do
   source node['visualstudio']['vsto']['package_src_url']
   checksum node['visualstudio']['vsto']['checksum']

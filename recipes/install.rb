@@ -32,7 +32,7 @@ install_url = File.join(node['visualstudio']['source'], node['visualstudio'][edi
 install_log_file = win_friendly_path(
   File.join(node['visualstudio']['install_dir'], 'vsinstall.log'))
 
-iso_extraction_dir = win_friendly_path(File.join(Dir.tmpdir(), 'vs2012'))
+iso_extraction_dir = win_friendly_path(File.join(Chef::Config[:file_cache_path], 'vs2012'))
 setup_exe_path = File.join(iso_extraction_dir, node['visualstudio'][edition]['installer_file'])
 admin_deployment_xml_file = win_friendly_path(File.join(iso_extraction_dir, 'AdminDeployment.xml'))
 
@@ -66,4 +66,5 @@ end
 directory iso_extraction_dir do
   action :nothing
   recursive true
+  not_if { node['visualstudio']['preserve_extracted_files'] }
 end
