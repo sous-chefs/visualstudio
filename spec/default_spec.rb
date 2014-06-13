@@ -13,7 +13,7 @@ describe 'visualstudio::install' do
       end.converge(described_recipe)
     end
 
-    it 'tells chef that ppm host name is prefixed with box name' do
+    it 'install dir attribute is correctly set' do
       vs_install_dir = chef_run.node['visualstudio']['install_dir']
       expect(vs_install_dir).to eq('C:\Program Files (x86)\Microsoft Visual Studio 11.0')
     end
@@ -31,7 +31,7 @@ describe 'visualstudio::install' do
       end.converge(described_recipe)
     end
 
-    it 'tells chef that ppm host name is prefixed with box name' do
+    it 'install dir attribute is correctly set' do
       vs_install_dir = chef_run.node['visualstudio']['install_dir']
       expect(vs_install_dir).to eq('C:\Program Files (x86)\Microsoft Visual Studio 11.0')
     end
