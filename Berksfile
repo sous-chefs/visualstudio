@@ -1,4 +1,4 @@
-site :opscode
+chef_api :config
 
 metadata
 cookbook "seven_zip", github: "daptiv/seven_zip"
