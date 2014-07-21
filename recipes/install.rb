@@ -48,7 +48,7 @@ end
 # Create installation config file
 cookbook_file admin_deployment_xml_file do
   source 'AdminDeployment-' + edition + '.xml'
-  action :create_if_missing
+  action :create
   not_if { vs_is_installed }
 end
 
