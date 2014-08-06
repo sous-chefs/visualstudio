@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
-  config.vm.box_url = 'http://vagrantboxes.hq.daptiv.com/vagrant/boxes/vbox_windows-2008r2_chef-11.12.2.box'
-  config.vm.box = 'vbox_windows-2008r2_chef-11.12.2'
+  config.vm.box_url = 'http://vagrantboxes.hq.daptiv.com/vagrant/boxes/vbox_windows-2008r2_chef-11.12.4.box'
+  config.vm.box = 'vbox_windows-2008r2_chef-11.12.4'
   config.vm.guest = :windows
   config.vm.network :forwarded_port, guest: 5985, host: 5985, auto_correct: true
 
