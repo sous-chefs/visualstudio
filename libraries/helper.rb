@@ -2,7 +2,7 @@ module Visualstudio
   module Helper
 
     def is_vs_installed?(install_dir=nil)
-      install_dir ||= File.join(node['visualstudio']['install_dir']
+      install_dir ||= File.join(node['visualstudio']['install_dir'])
       File.exists?(File.join(install_dir, '\Common7\IDE\devenv.exe'))
     end
 

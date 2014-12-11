@@ -54,7 +54,7 @@
     not_if { vs_is_installed }
   end
 
-  Install Visual Studio
+  # Install Visual Studio
   windows_package node['visualstudio'][edition]['package_name'] do
     source setup_exe_path
     installer_type :custom
