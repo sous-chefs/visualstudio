@@ -91,3 +91,28 @@ default['visualstudio']['vsto']['package_regkey'] =
   '\11a5e71f-e0d4-46b6-9fba-e5d0fc6149d0}'
 default['visualstudio']['vsto']['checksum'] =
   '1480da0041446ea534db180acd1ecb7db6cca988242ace536c7eed5c1ae7087e'
+#
+# VS 2010 Professional
+default['visualstudio']['professional_2010']['filename'] =
+  'en_visual_studio_2010_professional_x86_dvd_509727.iso'
+default['visualstudio']['professional_2010']['package_name'] =
+  'Microsoft Visual Studio 2010 Professional - ENU'
+default['visualstudio']['professional_2010']['checksum'] =
+  'bdfba5df0bd72cffdb398fe885d9e36d052617647c0ae4fd0579a8fc785c95ba'
+default['visualstudio']['professional_2010']['install_dir'] =
+  (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') + '\Microsoft Visual Studio 10.0'
+default['visualstudio']['professional_2010']['installer_file'] = File.join('setup', 'setup.exe')
+default['visualstudio']['professional_2010']['config_file'] = 'unattend.ini'
+
+# VS 2010 Update
+default['visualstudio']['2010_update']['source'] = node['visualstudio']['source']
+default['visualstudio']['2010_update']['filename'] = 'VS2010SP1dvd1.iso'
+default['visualstudio']['2010_update']['installer_file'] = 'Setup.exe'
+# TODO: determine below
+default['visualstudio']['2010_update']['package_name'] =
+  'Microsoft Visual Studio 2010 Service Pack 1'
+default['visualstudio']['2010_update']['checksum'] =
+  'fce24f0e3f95fdeb54b806be3266f3b61a1e6b5b78c7e6c13c36fc1a6f5ba0ad'
+default['visualstudio']['2010_update']['package_regkey'] =
+  'HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall' +
+  '\{ED780CA9-0687-3C12-B439-3369F224941F}'
