@@ -52,6 +52,19 @@
     source conf_source
     action :create
     not_if { vs_is_installed }
+    not_if { node['visualstudio'][edition]['config_file'] =~ /unattend/ }
+  end
+
+  template "#{configuration_file}.tmp" do
+    source "#{conf_source}.erb"
+    action :create
+    variables 'chef_cache_path' => Chef::Config[:file_cache_path].downcase
+    only_if { node['visualstudio'][edition]['config_file'] =~ /unattend/ }
+  end
+
+  powershell_script "convert unattend.ini to unicode" do
+    code "gc -en utf8 #{configuration_file}.tmp | Out-File -en unicode #{configuration_file}"
+    only_if { node['visualstudio'][edition]['config_file'] =~ /unattend/ }
   end
 
   # Install Visual Studio
