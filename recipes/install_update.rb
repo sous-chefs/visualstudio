@@ -20,45 +20,12 @@
 
 ::Chef::Recipe.send(:include, Visualstudio::Helper)
 
-sp_is_installed = is_sp_installed?()
-
-# Ensure the installation ISO url has been set by the user
-if !node['visualstudio']['update']['source']
-  raise 'visualstudio update source attribute must be set before running this recipe'
-end
-
-install_url = File.join(node['visualstudio']['update']['source'],
-  node['visualstudio']['update']['filename'])
-
-# Create install paths
-install_log_file = win_friendly_path(
-  File.join(node['visualstudio']['install_dir'], 'vsupdateinstall.log'))
-iso_extraction_dir = win_friendly_path(File.join(Chef::Config[:file_cache_path], 'vs2012update'))
-setup_exe_path = File.join(iso_extraction_dir, node['visualstudio']['update']['installer_file'])
-
-# Extract the ISO image to the tmp dir
-seven_zip_archive 'extract_vs2012_sp_iso' do
-  path iso_extraction_dir
-  source install_url
-  overwrite true
+visualstudio_update "vs2012update" do
+  source node['visualstudio']['update']['source']
+  install_dir node['visualstudio']['install_dir']
+  installer_file node['visualstudio']['update']['installer_file']
+  filename node['visualstudio']['update']['filename']
   checksum node['visualstudio']['update']['checksum']
-  not_if { sp_is_installed }
-end
-
-# Install Visual Studio 2012 Update
-windows_package 'install_vs2012_sp' do
   package_name node['visualstudio']['update']['package_name']
-  source setup_exe_path
-  installer_type :custom
-  options "/Q /norestart /noweb /Log \"#{install_log_file}\""
-  timeout 1800 # 30 minutes
-  not_if { sp_is_installed }
-  notifies :delete, "directory[#{iso_extraction_dir}]"
-end
-
-# Cleanup extracted ISO files from tmp dir
-directory iso_extraction_dir do
-  action :nothing
-  recursive true
-  not_if { node['visualstudio']['preserve_extracted_files'] }
+  package_regkey node['visualstudio']['update']['package_regkey']
 end

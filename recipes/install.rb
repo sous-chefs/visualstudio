@@ -18,73 +18,17 @@
 # limitations under the License.
 #
 
-::Chef::Recipe.send(:include, Visualstudio::Helper)
-
-
-[*(node['visualstudio']['edition'])].each do |edition|
-  install_dir = attribute_from_edition_or_cookbook(edition, 'install_dir')
-  vs_is_installed = is_vs_installed?(install_dir)
-
-  source = attribute_from_edition_or_cookbook(edition, 'source')
-  install_url = File.join(source, node['visualstudio'][edition]['filename'])
-  install_log_file = win_friendly_path(File.join(install_dir, 'vsinstall.log'))
-
-  iso_extraction_dir = win_friendly_path(
-    File.join(Chef::Config[:file_cache_path], 'vs2012', edition))
-  setup_exe_path = File.join(iso_extraction_dir, node['visualstudio'][edition]['installer_file'])
-  configure_basename = node['visualstudio'][edition]['config_file'] || 'AdminDeployment.xml'
-  configuration_file = win_friendly_path(File.join(iso_extraction_dir, configure_basename))
-
-  # Extract the ISO image to the tmp dir
-  seven_zip_archive 'extract_vs2012_iso' do
-    path iso_extraction_dir
-    source install_url
-    overwrite true
+# edition may be a an arry, but check for string for 
+# backwards compatibility
+[*node['visualstudio']['edition']].each do |edition|
+  visualstudio_version edition do
+    install_dir node['visualstudio'][edition]['install_dir'] ||
+      node['visualstudio']['install_dir']
+    source node['visualstudio']['source']
+    installer_file node['visualstudio'][edition]['installer_file']
     checksum node['visualstudio'][edition]['checksum']
-    not_if { vs_is_installed }
-  end
-
-  conf_source = node['visualstudio'][edition]['config_file'] ||
-    'AdminDeployment-' + edition + '.xml'
-
-  # Create installation config file
-  cookbook_file configuration_file do
-    source conf_source
-    action :create
-    not_if { vs_is_installed }
-    not_if { node['visualstudio'][edition]['config_file'] =~ /unattend/ }
-  end
-
-  template "#{configuration_file}.tmp" do
-    source "#{conf_source}.erb"
-    action :create
-    variables 'chef_cache_path' => Chef::Config[:file_cache_path].downcase
-    only_if { node['visualstudio'][edition]['config_file'] =~ /unattend/ }
-  end
-
-  powershell_script "convert unattend.ini to unicode" do
-    code "gc -en utf8 #{configuration_file}.tmp | Out-File -en unicode #{configuration_file}"
-    only_if { node['visualstudio'][edition]['config_file'] =~ /unattend/ }
-  end
-
-  # Install Visual Studio
-  windows_package node['visualstudio'][edition]['package_name'] do
-    source setup_exe_path
-    installer_type :custom
-    if node['visualstudio'][edition]['config_file'] =~ /unattend/
-      options "/Q /norestart /Log \"#{install_log_file}\" /unattendfile \"#{configuration_file}\""
-    else
-      options "/Q /norestart /Log \"#{install_log_file}\" /AdminFile \"#{configuration_file}\""
-    end
-    notifies :delete, "directory[#{iso_extraction_dir}]"
-    timeout 3600 # 1hour
-    not_if { vs_is_installed }
-  end
-
-  # Cleanup extracted ISO files from tmp dir
-  directory iso_extraction_dir do
-    action :nothing
-    recursive true
-    not_if { node['visualstudio']['preserve_extracted_files'] }
+    filename node['visualstudio'][edition]['filename']
+    package_name node['visualstudio'][edition]['package_name']
+    configure_basename node['visualstudio'][edition]['config_file']
   end
 end
