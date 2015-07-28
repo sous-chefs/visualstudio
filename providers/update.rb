@@ -8,9 +8,9 @@ action :create do
     install_log = ::File.join(new_resource.install_dir, 'vsupdateinstall.log')
     extracted_iso_path = win_friendly_path(
       ::File.join(Chef::Config[:file_cache_path],
-                  "#{new_resource.edition}_update"))
+        "#{new_resource.edition}_update"))
     setup_exe_path = ::File.join(extracted_iso_path,
-                                 new_resource.installer_file)
+      new_resource.installer_file)
     seven_zip_archive "extract_#{new_resource.edition}_iso" do
       path extracted_iso_path
       source install_url
@@ -33,5 +33,6 @@ action :create do
       recursive true
       not_if { node['visualstudio']['preserve_extracted_files'] }
     end
+    new_resource.updated_by_last_action(true)
   end
 end

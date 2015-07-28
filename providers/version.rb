@@ -4,12 +4,11 @@ action :create do
   else
     edition = new_resource.edition
     install_url = ::File.join(new_resource.source,
-                              new_resource.filename)
+      new_resource.filename)
     install_log_file = win_friendly_path(::File.join(new_resource.install_dir,
-                                                     'vsinstall.log'))
-    extracted_iso = win_friendly_path(::File
-                                      .join(Chef::Config[:file_cache_path],
-                                            'vs2012', edition))
+      'vsinstall.log'))
+    extracted_iso = win_friendly_path(::File.join(
+      Chef::Config[:file_cache_path], 'vs2012', edition))
     setup_exe_path = ::File.join(extracted_iso, new_resource.installer_file)
 
     # Extract the ISO image to the tmp dir
@@ -23,9 +22,8 @@ action :create do
     ini_install = !new_resource.configure_basename.nil?
     if ini_install
       config_source = new_resource.configure_basename
-      config_path = win_friendly_path(::File
-                                      .join(extracted_iso,
-                                            new_resource.configure_basename))
+      config_path = win_friendly_path(::File.join(
+        extracted_iso, new_resource.configure_basename))
       template "#{config_path}.tmp" do
         source "#{config_source}.erb"
         action :create
@@ -42,9 +40,8 @@ action :create do
       setup_options = " /unattendfile \"#{config_path}\""
     else
       config_source = "AdminDeployment-#{new_resource.edition}.xml"
-      config_path = win_friendly_path(::File
-                                      .join(extracted_iso,
-                                            'AdminDeployment.xml'))
+      config_path = win_friendly_path(::File.join(
+        extracted_iso, 'AdminDeployment.xml'))
       # Create installation config file
       cookbook_file config_path do
         source config_source
@@ -69,6 +66,7 @@ action :create do
       recursive true
       not_if { node['visualstudio']['preserve_extracted_files'] }
     end
+    new_resource.updated_by_last_action(true)
   end
 end
 def vs_installed?(install_dir = nil)
