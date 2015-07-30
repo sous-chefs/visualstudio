@@ -21,7 +21,7 @@
 ::Chef::Recipe.send(:include, Visualstudio::Helper)
 
 visualstudio_update "vs2010update" do
-  source node['visualstudio']['2010_update']['source']
+  source node['visualstudio']['source']
   install_dir node['visualstudio']['install_dir']
   installer_file node['visualstudio']['2010_update']['installer_file']
   filename node['visualstudio']['2010_update']['filename']
