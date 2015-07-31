@@ -20,6 +20,8 @@ Set the `node['visualstudio']['source']` attribute to the download location of t
 
 By default this cookbook assumes you're installing VisualStudio 2012 Ultimate. If you'd like to install another version set the 'edition' attribute to: 'professional', 'premium', or 'testprofessional'.
 
+In order to install VisualStudio 2010, you must provide an unattend.ini template. A working example is included in this recipe. The template is required due to relative paths inside the recipe.
+
 # Attributes
 
 ## Required
@@ -30,6 +32,7 @@ By default this cookbook assumes you're installing VisualStudio 2012 Ultimate. I
 * `node['visualstudio']['checksum']` - SHA256 checksum of the ISO.
 * `node['visualstudio']['package_name']` - The name of the package as it shows in Add/Remove programs. Defaults to Microsoft Visual Studio Ultimate 2012.
 * `node['visualstudio']['installer_file']` - The name of the VisualStudio installer executable. Defaults to vs_ultimate.exe.
+* `node['visualstudio']['config_file']` - The name of the config file to use (IE, unattend.ini) This should correspond to a template. Only required for Visual Studio 2010.
 
 # Recipes
 
@@ -52,6 +55,24 @@ Installs VS 2012 SP4 from the VS2012.4.iso. Add this to your runlist to update t
 
 ## install_updateweb
 Same as above but it uses the web downloader.
+
+## lwrp
+
+This recipe does nothing but makes the `visualstudio_version` and `visualstudio_update` resource definitions available.
+
+For example, to install Visual Studio 2010 using the `visualstudio_version` definition:
+
+```ruby
+  visualstudio_version "vs2010" do
+    install_dir 'C:\Program Files (x86)' + '\Microsoft Visual Studio 10.0'
+    source "http://path-to-ISO/"
+    installer_file File.join('setup', 'setup.exe')
+    checksum 'bdfba5df0bd72cffdb398fe885d9e36d052617647c0ae4fd0579a8fc785c95ba'
+    filename 'en_visual_studio_2010_professional_x86_dvd_509727.iso'
+    package_name 'Microsoft Visual Studio 2010 Service Pack 1'
+    configure_basename 'unattend.ini'
+  end
+```
 
 ## install_vsto
 Installs the Microsoft Office Developer Tools for VS2012. Add this to your runlist if you need Office development tools for Office plugin development.

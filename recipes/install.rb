@@ -18,6 +18,7 @@
 # limitations under the License.
 #
 
+<<<<<<< HEAD
 ::Chef::Recipe.send(:include, Visualstudio::Helper)
 
 # Ensure the installation ISO url has been set by the user
@@ -68,4 +69,19 @@ directory iso_extraction_dir do
   action :nothing
   recursive true
   not_if { node['visualstudio']['preserve_extracted_files'] }
+=======
+# edition may be a an arry, but check for string for 
+# backwards compatibility
+[*node['visualstudio']['edition']].each do |edition|
+  visualstudio_version edition do
+    install_dir node['visualstudio'][edition]['install_dir'] ||
+      node['visualstudio']['install_dir']
+    source node['visualstudio']['source']
+    installer_file node['visualstudio'][edition]['installer_file']
+    checksum node['visualstudio'][edition]['checksum']
+    filename node['visualstudio'][edition]['filename']
+    package_name node['visualstudio'][edition]['package_name']
+    configure_basename node['visualstudio'][edition]['config_file']
+  end
+>>>>>>> pr/23
 end

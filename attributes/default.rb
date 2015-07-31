@@ -21,7 +21,7 @@
  # ultimate, premium, professional, testprofessional
 default['visualstudio']['edition'] = 'professional'
 
-# 2012, 2013, 2015
+# 2010, 2012, 2013, 2015
 default['visualstudio']['version'] = '2015'
 
 # Set this attribute your self to the FQDN of the folder which contains the ISO
@@ -31,6 +31,7 @@ default['visualstudio']['version'] = '2015'
 default['visualstudio']['enable_nuget_package_restore'] = true
 
 # Version specific attributes
+include_attribute 'visualstudio::vs2010'
 include_attribute 'visualstudio::vs2012'
 include_attribute 'visualstudio::vs2013'
 include_attribute 'visualstudio::vs2015'

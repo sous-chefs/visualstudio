@@ -20,12 +20,12 @@
 
 ::Chef::Recipe.send(:include, Visualstudio::Helper)
 
-visualstudio_update "vs2012update" do
-  source node['visualstudio']['update']['source']
+visualstudio_update "vs2010update" do
+  source node['visualstudio']['source']
   install_dir node['visualstudio']['install_dir']
-  installer_file node['visualstudio']['update']['installer_file']
-  filename node['visualstudio']['update']['filename']
-  checksum node['visualstudio']['update']['checksum']
-  package_name node['visualstudio']['update']['package_name']
-  package_regkey node['visualstudio']['update']['package_regkey']
+  installer_file node['visualstudio']['2010']['update']['installer_file']
+  filename node['visualstudio']['2010']['update']['filename']
+  checksum node['visualstudio']['2010']['update']['checksum']
+  package_name node['visualstudio']['2010']['update']['package_name']
+  package_regkey node['visualstudio']['2010']['update']['package_regkey']
 end
