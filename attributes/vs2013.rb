@@ -3,7 +3,7 @@
 # Cookbook Name:: visualstudio
 # Attribute:: vs2013
 #
-# Copyright 2015, Daptiv Solutions, LLC.
+# Copyright 2015, Shawn Neal
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,7 +19,8 @@
 #
 
 # Currently you cannot change this, doing so will break the cookbook
-default['visualstudio']['2013']['install_dir'] = (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') +
+default['visualstudio']['2013']['install_dir'] =
+  (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') +
   '\Microsoft Visual Studio 12.0'
 
 # Test Professional
@@ -48,6 +49,7 @@ default['visualstudio']['2013']['premium']['checksum'] =
 # Ultimate
 default['visualstudio']['2013']['ultimate']['installer_file'] = 'vs_ultimate.exe'
 default['visualstudio']['2013']['ultimate']['filename'] = 'vs2013.4_ult_enu.iso'
-default['visualstudio']['2013']['ultimate']['package_name'] = 'Microsoft Visual Studio Ultimate 2013'
+default['visualstudio']['2013']['ultimate']['package_name'] =
+  'Microsoft Visual Studio Ultimate 2013'
 default['visualstudio']['2013']['ultimate']['checksum'] =
   '61eefab736579fa8c58a524338a0dc46d15c1bbaf978b660ab93bedb8847756c'

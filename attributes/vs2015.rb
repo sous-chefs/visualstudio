@@ -3,7 +3,7 @@
 # Cookbook Name:: visualstudio
 # Attribute:: vs2015
 #
-# Copyright 2015, Daptiv Solutions, LLC.
+# Copyright 2015, Shawn Neal
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,8 +19,9 @@
 #
 
 # Currently you cannot change this, doing so will break the cookbook
-default['visualstudio']['2015']['install_dir'] = (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') +
-  '\Microsoft Visual Studio 13.0'
+default['visualstudio']['2015']['install_dir'] =
+  (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') +
+  '\Microsoft Visual Studio 14.0'
 
 # Professional
 default['visualstudio']['2015']['professional']['installer_file'] = 'vs_professional.exe'

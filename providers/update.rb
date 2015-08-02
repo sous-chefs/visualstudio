@@ -1,7 +1,7 @@
 include DSL::RegistryHelper
 include Windows::Helper
 
-action :create do
+action :install do
   if registry_key_exists?(new_resource.package_regkey)
   else
     install_url = ::File.join(new_resource.source, new_resource.filename)

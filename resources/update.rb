@@ -1,6 +1,6 @@
-actions :create
+actions :install
+default_action :install
 
-default_action :create
 attribute :edition, kind_of: String, name_attribute: false
 attribute :source, kind_of: String
 attribute :install_dir, kind_of: String, name_attribute: false

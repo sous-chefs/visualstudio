@@ -19,7 +19,8 @@
 #
 
 # Currently you cannot change this, doing so will break the cookbook
-default['visualstudio']['2012']['install_dir'] = (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') +
+default['visualstudio']['2012']['install_dir'] =
+  (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') +
   '\Microsoft Visual Studio 11.0'
 
 # Test Professional
@@ -42,7 +43,8 @@ default['visualstudio']['2012']['professional']['checksum'] =
 
 # Premium
 default['visualstudio']['2012']['premium']['installer_file'] = 'vs_premium.exe'
-default['visualstudio']['2012']['premium']['filename'] = 'en_visual_studio_premium_2012_x86_dvd_920758.iso'
+default['visualstudio']['2012']['premium']['filename'] =
+  'en_visual_studio_premium_2012_x86_dvd_920758.iso'
 default['visualstudio']['2012']['premium']['package_name'] = 'Microsoft Visual Studio Premium 2012'
 default['visualstudio']['2012']['premium']['checksum'] =
   '21e5145b05f9af0dff7d5698f37fc7829929c4b13929afe943ff6f6c28ce5492'
@@ -51,7 +53,8 @@ default['visualstudio']['2012']['premium']['checksum'] =
 default['visualstudio']['2012']['ultimate']['installer_file'] = 'vs_ultimate.exe'
 default['visualstudio']['2012']['ultimate']['filename'] =
   'en_visual_studio_ultimate_2012_x86_dvd_920947.iso'
-default['visualstudio']['2012']['ultimate']['package_name'] = 'Microsoft Visual Studio Ultimate 2012'
+default['visualstudio']['2012']['ultimate']['package_name'] =
+  'Microsoft Visual Studio Ultimate 2012'
 default['visualstudio']['2012']['ultimate']['checksum'] =
   'c2c140ec6b16d7d4596b680066de35cbdf60ec049eb42129e5c30945063d2e83'
 
@@ -59,7 +62,8 @@ default['visualstudio']['2012']['ultimate']['checksum'] =
 default['visualstudio']['2012']['update']['source'] = node['visualstudio']['source']
 default['visualstudio']['2012']['update']['filename'] = 'VS2012.4.iso'
 default['visualstudio']['2012']['update']['installer_file'] = 'VS2012.4.exe'
-default['visualstudio']['2012']['update']['package_name'] = 'Visual Studio 2012 Update 4 (KB2707250)'
+default['visualstudio']['2012']['update']['package_name'] =
+  'Visual Studio 2012 Update 4 (KB2707250)'
 default['visualstudio']['2012']['update']['package_regkey'] =
   'HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall' +
   '\{312d9252-c71c-4c84-b171-f4ad46e22098}'
