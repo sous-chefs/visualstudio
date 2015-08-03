@@ -1,4 +1,4 @@
-chef_api :config
+source "http://berkshelfapi.daptiv.com"
 
 metadata
 cookbook "seven_zip", github: "daptiv/seven_zip"
