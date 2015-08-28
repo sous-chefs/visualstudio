@@ -18,53 +18,38 @@
 # limitations under the License.
 #
 
-::Chef::Recipe.send(:include, Visualstudio::Helper)
-
-vs_is_installed = is_vs_installed?()
-
-# Ensure the installation ISO url has been set by the user
-if !node['visualstudio']['source']
-  raise 'visualstudio source attribute must be set before running this cookbook'
+# Ensure the user specified the required source attribute
+if node['visualstudio']['source'].nil?
+  fail 'The required attribute node[\'visualstudio\'][\'source\'] is empty, ' +
+    'set this and run again!'
 end
 
-edition = node['visualstudio']['edition']
-install_url = File.join(node['visualstudio']['source'], node['visualstudio'][edition]['filename'])
-install_log_file = win_friendly_path(
-  File.join(node['visualstudio']['install_dir'], 'vsinstall.log'))
-
-iso_extraction_dir = win_friendly_path(File.join(Chef::Config[:file_cache_path], 'vs2012'))
-setup_exe_path = File.join(iso_extraction_dir, node['visualstudio'][edition]['installer_file'])
-admin_deployment_xml_file = win_friendly_path(File.join(iso_extraction_dir, 'AdminDeployment.xml'))
-
-# Extract the ISO image to the tmp dir
-seven_zip_archive 'extract_vs2012_iso' do
-  path iso_extraction_dir
-  source install_url
-  overwrite true
-  checksum node['visualstudio'][edition]['checksum']
-  not_if { vs_is_installed }
+# If the user specified an installs array value use it, otherwise fallback
+installs = node['visualstudio']['installs']
+if installs.nil?
+  installs = [{
+    'edition' => node['visualstudio']['edition'],
+    'version' => node['visualstudio']['version']
+  }]
 end
 
-# Create installation config file
-cookbook_file admin_deployment_xml_file do
-  source 'AdminDeployment-' + edition + '.xml'
-  action :create
-  not_if { vs_is_installed }
-end
+# Install each specified edition/version
+installs.each do |install|
+  version = install['version']
+  edition = install['edition']
 
-# Install Visual Studio
-windows_package node['visualstudio'][edition]['package_name'] do
-  source setup_exe_path
-  installer_type :custom
-  options "/Q /norestart /Log \"#{install_log_file}\" /AdminFile \"#{admin_deployment_xml_file}\""
-  notifies :delete, "directory[#{iso_extraction_dir}]"
-  timeout 3600 # 1hour
-  not_if { vs_is_installed }
-end
+  install_url = ::File.join(node['visualstudio']['source'],
+    node['visualstudio'][version][edition]['filename'])
 
-# Cleanup extracted ISO files from tmp dir
-directory iso_extraction_dir do
-  action :nothing
-  recursive true
-  not_if { node['visualstudio']['preserve_extracted_files'] }
+  visualstudio_edition "visualstudio_#{version}_#{edition}" do
+    edition edition
+    version version
+    install_dir node['visualstudio'][version]['install_dir']
+    source install_url
+    package_name node['visualstudio'][version][edition]['package_name']
+    checksum node['visualstudio'][version][edition]['checksum']
+    preserve_extracted_files node['visualstudio']['preserve_extracted_files']
+    installer_file node['visualstudio'][version][edition]['installer_file']
+    configure_basename node['visualstudio'][version][edition]['config_file'] if version == '2010'
+  end
 end
