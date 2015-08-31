@@ -1,9 +1,9 @@
 #
-# Author:: Juan Laube
+# Author:: Shawn Neal
 # Cookbook Name:: visualstudio
 # Recipe:: installupdate_web
 #
-# Copyright 2014, Daptiv Solutions, LLC.
+# Copyright 2015, Daptiv Solutions, LLC.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,17 +18,5 @@
 # limitations under the License.
 #
 
-install_log_file = win_friendly_path(
-  File.join(node['visualstudio']['install_dir'], 'spinstall.log'))
-
-install_url = File.join(node['visualstudio']['update_web']['source'],
-  node['visualstudio']['update']['installer_file'])
-
-# Install Visual Studio 2012 Update
-windows_package node['visualstudio']['update']['package_name'] do
-  source install_url
-  checksum node['visualstudio']['update_web']['checksum']
-  installer_type :custom
-  options "/Q /norestart /Log \"#{install_log_file}\""
-  action :install
-end
+# This is here for backwards compatability, for now all updates are web updates
+include_recipe 'visualstudio::install_update'

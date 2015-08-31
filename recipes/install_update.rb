@@ -1,9 +1,9 @@
 #
-# Author:: Joe Fitzgerald
+# Author:: Shawn Neal
 # Cookbook Name:: visualstudio
-# Recipe:: installupdate
+# Recipe:: install_update
 #
-# Copyright 2013, Joe Fitzgerald.
+# Copyright 2015, Shawn Neal
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -18,14 +18,30 @@
 # limitations under the License.
 #
 
-::Chef::Recipe.send(:include, Visualstudio::Helper)
+# Ensure the user specified the required source attribute
+if node['visualstudio']['source'].nil?
+  fail 'The required attribute node[\'visualstudio\'][\'source\'] is empty, ' +
+    'set this and run again!'
+end
 
-visualstudio_update 'vs2012update' do
-  source node['visualstudio']['update']['source']
-  install_dir node['visualstudio']['install_dir']
-  installer_file node['visualstudio']['update']['installer_file']
-  filename node['visualstudio']['update']['filename']
-  checksum node['visualstudio']['update']['checksum']
-  package_name node['visualstudio']['update']['package_name']
-  package_regkey node['visualstudio']['update']['package_regkey']
+# If the user specified an installs array value use it, otherwise fallback
+installs = node['visualstudio']['installs']
+if installs.nil?
+  installs = [{
+    'version' => node['visualstudio']['version']
+  }]
+end
+
+# Create list of unique VS versions that have updates
+versions = installs.map { |i| i['version'] }.uniq
+versions.reject! { |v| node['visualstudio'][v]['update'].nil? }
+
+# Install updates for each VS version
+versions.each do |version|
+  visualstudio_update "visualstudio_#{version}_update" do
+    install_dir node['visualstudio'][version]['install_dir']
+    source node['visualstudio'][version]['update']['source']
+    package_name node['visualstudio'][version]['update']['package_name']
+    checksum node['visualstudio'][version]['update']['checksum']
+  end
 end
