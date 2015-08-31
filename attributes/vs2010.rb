@@ -30,15 +30,15 @@ default['visualstudio']['2010']['professional']['install_dir'] =
 default['visualstudio']['2010']['professional']['installer_file'] = File.join('setup', 'setup.exe')
 default['visualstudio']['2010']['professional']['config_file'] = 'unattend.ini'
 
-# VS 2010 Update
-default['visualstudio']['2010']['update']['source'] = node['visualstudio']['source']
-default['visualstudio']['2010']['update']['filename'] = 'VS2010SP1dvd1.iso'
-default['visualstudio']['2010']['update']['installer_file'] = 'Setup.exe'
-# TODO: determine below
-default['visualstudio']['2010']['update']['package_name'] =
+# VS 2010 SP1
+default['visualstudio']['2013']['update']['source'] =
+  'http://download.microsoft.com/download/A/5/D/A5D85122-E8BB-4C29-8B87-1653058C0DA0/' +
+  'VS10SP1-KB2736182.exe'
+default['visualstudio']['2013']['update']['checksum'] =
+  '8ab60bfb65f49d257d1883bf7aa5464db6c185216009dbab630da6e634dda3ce'
+default['visualstudio']['2013']['update']['package_name'] =
   'Microsoft Visual Studio 2010 Service Pack 1'
-default['visualstudio']['2010']['update']['checksum'] =
-  'fce24f0e3f95fdeb54b806be3266f3b61a1e6b5b78c7e6c13c36fc1a6f5ba0ad'
-default['visualstudio']['2010']['update']['package_regkey'] =
-  'HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall' +
-  '\{ED780CA9-0687-3C12-B439-3369F224941F}'
+
+# VSTO
+#http://www.microsoft.com/en-us/download/confirmation.aspx?id=48217
+#http://download.microsoft.com/download/7/A/F/7AFA5695-2B52-44AA-9A2D-FC431C231EDC/vstor_redist.exe

@@ -33,7 +33,8 @@ default['visualstudio']['2013']['testprofessional']['checksum'] =
 
 # Professional
 default['visualstudio']['2013']['professional']['installer_file'] = 'vs_professional.exe'
-default['visualstudio']['2013']['professional']['filename'] = 'vs2013.4_pro_enu.iso'
+default['visualstudio']['2013']['professional']['filename'] =
+  'en_visual_studio_professional_2013_x86_dvd_3175298.iso'
 default['visualstudio']['2013']['professional']['package_name'] =
   'Microsoft Visual Studio Professional 2013'
 default['visualstudio']['2013']['professional']['checksum'] =
@@ -53,3 +54,11 @@ default['visualstudio']['2013']['ultimate']['package_name'] =
   'Microsoft Visual Studio Ultimate 2013'
 default['visualstudio']['2013']['ultimate']['checksum'] =
   '61eefab736579fa8c58a524338a0dc46d15c1bbaf978b660ab93bedb8847756c'
+
+# Update 5
+default['visualstudio']['2013']['update']['source'] =
+  'http://download.microsoft.com/download/A/F/9/AF95E6F8-2E6E-49D0-A48A-8E918D7FD768/VS2013.5.exe'
+default['visualstudio']['2013']['update']['checksum'] =
+  '8c95bd32fe9a4fbd733704bdfb6b6fdaf63f896686156251befef14dc26fe2a0'
+default['visualstudio']['2013']['update']['package_name'] =
+  'Visual Studio 2013 Update 5 (KB3021976)'
