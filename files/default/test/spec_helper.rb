@@ -1,6 +1,22 @@
 require 'win32/registry'
 require 'minitest/autorun'
 
+module ChefHelper
+  def installs(node)
+    return node['visualstudio']['installs'] unless node['visualstudio']['installs'].nil?
+    return [{
+      'edition' => node['visualstudio']['edition'],
+      'version' => node['visualstudio']['version']
+    }]
+  end
+
+  def each_version_edition(node, &block)
+    installs(node).each do |install|
+      block.call(install['version'], install['edition'])
+    end
+  end
+end
+
 module MiniTest::Assertions
   def assert_package_is_installed(package_name)
     assert package_is_installed(package_name), "Expected #{package_name} to be installed"
