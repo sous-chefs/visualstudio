@@ -1,21 +1,13 @@
 DEPENDENCIES
-  dotnetframework
-    git: git://github.com/daptiv/dotnetframework.git
-    revision: 4437387d17e69ea9700dfc6d496fa3f6c7252ecc
-  minitest-handler (~> 1.3.1)
-  seven_zip
-    git: git://github.com/daptiv/seven_zip.git
-    revision: 43254f63671be8a95a239e0002486253c077875a
-  sqlce (~> 1.0.0)
+  minitest-handler
+  sqlce
   visualstudio
     path: .
     metadata: true
 
 GRAPH
-  chef_handler (1.1.9)
-  dotnetframework (0.1.0)
-    windows (>= 1.2.6)
-  minitest-handler (1.3.4)
+  chef_handler (1.2.0)
+  minitest-handler (1.4.0)
     chef_handler (>= 0.0.0)
   seven_zip (1.0.4)
     windows (>= 1.2.2)
@@ -24,5 +16,5 @@ GRAPH
   visualstudio (0.0.1)
     seven_zip (>= 0.0.0)
     windows (>= 0.0.0)
-  windows (1.32.3)
+  windows (1.38.1)
     chef_handler (>= 0.0.0)
