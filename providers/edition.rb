@@ -18,6 +18,8 @@
 # limitations under the License.
 #
 
+require 'fileutils'
+
 include Windows::Helper
 
 def whyrun_supported?
@@ -36,14 +38,16 @@ action :install do
         checksum new_resource.checksum
       end
 
+      # Ensure the target directory exists so logging doesn't fail on VS 2010
+      FileUtils::mkdir_p new_resource.install_dir
+
       # Install Visual Studio
-      install_log_file = win_friendly_path(::File.join(new_resource.install_dir, 'vsinstall.log'))
       setup_options = new_resource.version == '2010' ? prepare_vs2010_options : prepare_vs_options
 
       windows_package new_resource.package_name do
         source installer_exe
         installer_type :custom
-        options "/Q /norestart /noweb /log \"#{install_log_file}\" #{setup_options}"
+        options setup_options
         timeout 3600 # 1hour
       end
 
@@ -69,7 +73,7 @@ def prepare_vs_options
     action :create
   end
 
-  setup_options = " /AdminFile \"#{config_path}\""
+  setup_options = "/Q /norestart /noweb /log \"#{install_log_file}\" /adminfile \"#{config_path}\""
   setup_options
 end
 
@@ -79,7 +83,7 @@ def prepare_vs2010_options
   template "#{config_path}.tmp" do
     source "#{new_resource.configure_basename}.erb"
     action :create
-    variables 'chef_cache_path' => Chef::Config[:file_cache_path].downcase
+    variables 'extracted_iso_dir' => extracted_iso_dir.downcase
   end
 
   # chef creates utf-8 ini file but VS expects unicode, so convert
@@ -89,8 +93,12 @@ def prepare_vs2010_options
     )
   end
 
-  setup_options = " /unattendfile \"#{config_path}\""
+  setup_options = "/unattendfile \"#{config_path}\""
   setup_options
+end
+
+def install_log_file
+  win_friendly_path(::File.join(new_resource.install_dir, 'vsinstall.log'))
 end
 
 def installer_exe

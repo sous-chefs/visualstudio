@@ -18,6 +18,11 @@
 # limitations under the License.
 #
 
+# Currently you cannot change this, doing so will break the cookbook
+default['visualstudio']['2010']['install_dir'] =
+  (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') +
+  '\Microsoft Visual Studio 10.0'
+
 # VS 2010 Professional
 default['visualstudio']['2010']['professional']['filename'] =
   'en_visual_studio_2010_professional_x86_dvd_509727.iso'
@@ -25,10 +30,10 @@ default['visualstudio']['2010']['professional']['package_name'] =
   'Microsoft Visual Studio 2010 Professional - ENU'
 default['visualstudio']['2010']['professional']['checksum'] =
   'bdfba5df0bd72cffdb398fe885d9e36d052617647c0ae4fd0579a8fc785c95ba'
-default['visualstudio']['2010']['professional']['install_dir'] =
-  (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') + '\Microsoft Visual Studio 10.0'
 default['visualstudio']['2010']['professional']['installer_file'] = File.join('setup', 'setup.exe')
 default['visualstudio']['2010']['professional']['config_file'] = 'unattend.ini'
+
+# TODO: Ultimate, Premium
 
 # VS 2010 SP1
 default['visualstudio']['2013']['update']['source'] =
