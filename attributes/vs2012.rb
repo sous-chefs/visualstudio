@@ -59,11 +59,11 @@ default['visualstudio']['2012']['ultimate']['checksum'] =
   'c2c140ec6b16d7d4596b680066de35cbdf60ec049eb42129e5c30945063d2e83'
 
 # Update 4
-default['visualstudio']['2012']['update']['source'] =
-  'http://download.microsoft.com/download/D/4/8/D48D1AC2-A297-4C9E-A9D0-A218E6609F06/VSU4/' +
-  'VS2012.4.exe'
+#http://download.microsoft.com/download/D/4/8/D48D1AC2-A297-4C9E-A9D0-A218E6609F06/VSU4/VS2012.4.iso
+default['visualstudio']['2012']['update']['filename'] = 'VS2012.4.iso'
+default['visualstudio']['2012']['update']['source'] = node['visualstudio']['source']
 default['visualstudio']['2012']['update']['checksum'] =
-  '8c95bd32fe9a4fbd733704bdfb6b6fdaf63f896686156251befef14dc26fe2a0'
+  'c462118eabcc242a50f1215587cb1c79505159af79fc50c24d8be1d25203cd87'
 default['visualstudio']['2012']['update']['package_name'] =
   'Visual Studio 2012 Update 4 (KB2707250)'
 

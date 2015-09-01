@@ -56,9 +56,10 @@ default['visualstudio']['2013']['ultimate']['checksum'] =
   '61eefab736579fa8c58a524338a0dc46d15c1bbaf978b660ab93bedb8847756c'
 
 # Update 5
-default['visualstudio']['2013']['update']['source'] =
-  'http://download.microsoft.com/download/A/F/9/AF95E6F8-2E6E-49D0-A48A-8E918D7FD768/VS2013.5.exe'
+# http://download.microsoft.com/download/A/F/9/AF95E6F8-2E6E-49D0-A48A-8E918D7FD768/VS2013.5.iso
+default['visualstudio']['2013']['update']['filename'] = 'VS2013.5.iso'
+default['visualstudio']['2013']['update']['source'] = node['visualstudio']['source']
 default['visualstudio']['2013']['update']['checksum'] =
-  'e4a5968fd33bf917a5641cb6573d15a5ce775151b6cfbebeeb77f6cf8b2924b1'
+  'baa3e1286bf847ffb1ba6191f14494aa5f0b856ea258284d99924481ea83c6cf'
 default['visualstudio']['2013']['update']['package_name'] =
   'Visual Studio 2013 Update 5 (KB3021976)'
