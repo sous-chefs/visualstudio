@@ -21,39 +21,60 @@
 require 'digest/md5'
 
 include Windows::Helper
+include Visualstudio::Helper
+
+def whyrun_supported?
+  true
+end
 
 action :install do
-  if !vs_update_installed?
+  unless package_is_installed?(new_resource.package_name)
     converge_by("Installing #{new_resource.package_name}") do
 
-      # Install Visual Studio Update
-      install_log_file = win_friendly_path(::File.join(
-        new_resource.install_dir, 'vsinstall_update.log'))
-
-      windows_package new_resource.package_name do
+      # Extract the ISO image to the temporary Chef cache dir
+      seven_zip_archive "extract_#{setup_basename}_iso" do
+        path extracted_iso_dir
         source new_resource.source
+        overwrite true
         checksum new_resource.checksum
+      end
+
+      # Install Visual Studio Update
+      windows_package new_resource.package_name do
+        source setup_exe
         installer_type :custom
-        options "/Q /norestart /Log \"#{install_log_file}\""
+        options "/Q /norestart /noweb /log \"#{install_log_file}\""
         timeout 3600 # 1 hour
       end
 
-      # Done, keep further Chef runs from installing
-      write_idempotence_check_file
+      # Cleanup extracted ISO files
+      directory extracted_iso_dir do
+        action :delete
+        recursive true
+        not_if { new_resource.preserve_extracted_files }
+      end
     end
     new_resource.updated_by_last_action(true)
   end
 end
 
-def idempotence_check_file
-  ::File.join(new_resource.install_dir, 'vsinstall_update.inst')
+def extracted_iso_dir
+  win_friendly_path(
+    ::File.join(
+      Chef::Config[:file_cache_path],
+      Digest::MD5.hexdigest(new_resource.package_name)))
 end
 
-def write_idempotence_check_file
-  IO.write(idempotence_check_file, new_resource.package_name)
+def install_log_file
+  win_friendly_path(::File.join(new_resource.install_dir, 'vsinstall_update.log'))
 end
 
-def vs_update_installed?
-  ::File.exist?(idempotence_check_file) &&
-    (IO.read(idempotence_check_file).chomp == new_resource.package_name)
+# only base file name of source, e.g. VS2013.5
+def setup_basename
+  ::File.basename(new_resource.source, '.iso')
+end
+
+# setup executable path, by convention the exe has the same name as the iso
+def setup_exe
+  ::File.join(extracted_iso_dir, "#{setup_basename}.exe")
 end

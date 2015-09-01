@@ -32,3 +32,6 @@ attribute :package_name, kind_of: String, :required => true
 
 # The source update exe SHA256 checksum
 attribute :checksum, kind_of: String
+
+# Should the extracted ISO files be preserved after installation?
+attribute :preserve_extracted_files, kind_of: [TrueClass, FalseClass], default: false
