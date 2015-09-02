@@ -22,7 +22,7 @@ For Windows7 SP1 and Windows Server 2008 SP1 you must first install [KB2664825](
 
 # Usage
 
-Set the `node['visualstudio']['source']` attribute to the download location of the VisualStudio ISO, for example: http://example.com/installs. Then add `'visualstudio::default'` to your runlist.
+Set the `node['visualstudio']['source']` attribute to the download location of the VisualStudio ISO, for example: http://example.com/installs. Then add `'visualstudio::default'` to your runlist. The same source attribute is used for all editions, versions, and updates.
 
 By default this cookbook assumes you're installing VisualStudio 2012 Ultimate. If you'd like to install another edition set the 'edition' attribute to: 'professional', 'premium', or 'testprofessional'. If you'd like to install a different version set the 'version' attribute to: '2010', '2012', '2013', '2015'.
 
@@ -38,17 +38,17 @@ node['visualstudio']['installs'] = [{
 }]
 ```
 
-In order to install VisualStudio 2010, you must provide an unattend.ini template. A working example is included in this recipe. The template is required due to relative paths inside the recipe.
+Unlike newer versions of VisualStudio which use an AdminDeployment.xml file, VS 2010 uses an unattend.ini file. This cookbook includes a working default copy which you may optionally override. The template is required due to relative paths inside the recipe.
 
 # Attributes
 
 ## Required
-* `node['visualstudio']['source']` - Required, fully qualified http(s) path to the ISO directory. For example: http://example.com/installs. This should not include the ISO filename, only the path where to find the ISO.
+* `node['visualstudio']['source']` - Required, fully qualified http(s) path to the ISO directory. For example: http://example.com/installs. This should not include the ISO filename, only the path where to find the ISOs.
 
 ## Optional
 * `node['visualstudio']['enable_nuget_package_restore']` - true or false. Sets the system wide environment variable to enable MSBuild/VisualStudio package restore on build. This defaults to true.
 * `node['visualstudio']['installs']` - An array of hashes that contain the various versions and editions of VS to install. See Usage above for an example.
-* `node['visualstudio']['2010']['professional']['config_file']` - The name of the config file to use (i.e. unattend.ini) This should correspond to a template. Only required for Visual Studio 2010.
+* `node['visualstudio']['2010']['professional']['config_file']` - The name of the config file to use (i.e. unattend.ini) This should correspond to a template. Only used for Visual Studio 2010.
 
 Each VS version/edition pair has their own unique attributes which can be overridden. The most common to override would be `checksum` and `filename`. For example, we can override the VS 2013 Professional checksum and file_name attributes like so:
 
@@ -74,13 +74,10 @@ Logs a warning if .NET is not installed. Included by the default recipe.
 # Optional Recipes
 
 ## install_update
-Installs VS 2012 SP4 from the VS2012.4.iso. Add this to your runlist to update to the latest VS2012 SP. By default you must place the iso in the same folder as the VS 2012 iso.
-
-## install_updateweb
-Same as above but it uses the web downloader.
+Installs VS updates from the corresponding VS update ISO that is publicly downloadable from Microsoft. Add this to your runlist to update all versions of VS in your installs attribute array. By default you must place the iso in the same folder as the main VS ISO since they all share the same source attribute.
 
 ## install_vsto
-Installs the Microsoft Office Developer Tools for VS2012. Add this to your runlist if you need Office development tools for Office plugin development.
+Installs the Microsoft Office Developer Tools for VS2012. Add this to your runlist if you need Office development tools for Office plugin development. Other versions of VS are not currently supported and will log a Chef warning.
 
 ## LWRP
 
