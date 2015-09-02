@@ -18,20 +18,9 @@
 # limitations under the License.
 #
 
-# Ensure the user specified the required source attribute
-if node['visualstudio']['source'].nil?
-  fail 'The required attribute node[\'visualstudio\'][\'source\'] is empty, ' +
-    'set this and run again!'
-end
+::Chef::Recipe.send(:include, Visualstudio::Helper)
 
-# If the user specified an installs array value use it, otherwise fallback
-installs = node['visualstudio']['installs']
-if installs.nil?
-  installs = [{
-    'edition' => node['visualstudio']['edition'],
-    'version' => node['visualstudio']['version']
-  }]
-end
+assert_source_attribute_is_set
 
 # Install each specified edition/version
 installs.each do |install|

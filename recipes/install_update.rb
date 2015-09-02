@@ -18,26 +18,15 @@
 # limitations under the License.
 #
 
-# Ensure the user specified the required source attribute
-if node['visualstudio']['source'].nil?
-  fail 'The required attribute node[\'visualstudio\'][\'source\'] is empty, ' +
-    'set this and run again!'
-end
+::Chef::Recipe.send(:include, Visualstudio::Helper)
 
-# If the user specified an installs array value use it, otherwise fallback
-installs = node['visualstudio']['installs']
-if installs.nil?
-  installs = [{
-    'version' => node['visualstudio']['version']
-  }]
-end
+assert_source_attribute_is_set
 
 # Create list of unique VS versions that have updates
-versions = installs.map { |i| i['version'] }.uniq
-versions.reject! { |v| node['visualstudio'][v]['update'].nil? }
+versions_with_updates = versions.reject { |v| node['visualstudio'][v]['update'].nil? }
 
 # Install updates for each VS version
-versions.each do |version|
+versions_with_updates.each do |version|
   iso_src = ::File.join(node['visualstudio']['source'],
     node['visualstudio'][version]['update']['filename'])
 

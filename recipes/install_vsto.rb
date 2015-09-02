@@ -18,16 +18,7 @@
 # limitations under the License.
 #
 
-# If the user specified an installs array value use it, otherwise fallback
-installs = node['visualstudio']['installs']
-if installs.nil?
-  installs = [{
-    'version' => node['visualstudio']['version']
-  }]
-end
-
-# Create list of unique VS versions
-versions = installs.map { |i| i['version'] }.uniq
+::Chef::Recipe.send(:include, Visualstudio::Helper)
 
 # Install VSTO for each VS version
 versions.each do |version|

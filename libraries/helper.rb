@@ -1,10 +1,5 @@
 module Visualstudio
   module Helper
-    def is_vsto_installed?()
-      version = node['visualstudio']['version']
-      registry_key_exists?(node['visualstudio'][version]['vsto']['package_regkey'])
-    end
-
     def package_is_installed?(package_name)
       require 'win32/registry'
       
@@ -28,6 +23,28 @@ module Visualstudio
 
       # if we make it this far we didn't find the package
       return false
+    end
+
+    # array of VS edition/version hashes to install
+    def installs
+      return node['visualstudio']['installs'] unless node['visualstudio']['installs'].nil?
+      return [{
+        'edition' => node['visualstudio']['edition'],
+        'version' => node['visualstudio']['version']
+      }]
+    end
+
+    # array of unique VS versions exclusive of editions
+    def versions
+      installs.map { |i| i['version'] }.uniq
+    end
+
+    def assert_source_attribute_is_set
+      # Ensure the user specified the required source attribute
+      if node['visualstudio']['source'].nil?
+        fail 'The required attribute node[\'visualstudio\'][\'source\'] is empty, ' +
+          'set this and run again!'
+      end
     end
   end
 end
