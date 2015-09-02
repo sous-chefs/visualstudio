@@ -18,22 +18,40 @@
 # limitations under the License.
 #
 
-install_log_path = win_friendly_path(
-  File.join(node['visualstudio']['2012']['install_dir'], 'vstoinstall.log'))
-
-# By removing this key we can skip an uncessary reboot before installing VSTO
-key = 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion' +
-  '\WindowsUpdate\Auto Update\RebootRequired'
-registry_key key do
-  recursive true
-  action :delete_key
+# If the user specified an installs array value use it, otherwise fallback
+installs = node['visualstudio']['installs']
+if installs.nil?
+  installs = [{
+    'version' => node['visualstudio']['version']
+  }]
 end
 
-# Install Visual Studio Tools for Office
-windows_package node['visualstudio']['2012']['vsto']['package_name'] do
-  source node['visualstudio']['2012']['vsto']['package_src_url']
-  checksum node['visualstudio']['2012']['vsto']['checksum']
-  installer_type :custom
-  options "/Q /norestart /noweb /Log \"#{install_log_path}\""
-  action :install
+# Create list of unique VS versions
+versions = installs.map { |i| i['version'] }.uniq
+
+# Install VSTO for each VS version
+versions.each do |version|
+  if version == '2012'
+    install_log_path = win_friendly_path(
+      File.join(node['visualstudio']['2012']['install_dir'], 'vstoinstall.log'))
+
+    # By removing this key we can skip an uncessary reboot before installing VSTO
+    key = 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion' +
+      '\WindowsUpdate\Auto Update\RebootRequired'
+    registry_key key do
+      recursive true
+      action :delete_key
+    end
+
+    # Install Visual Studio Tools for Office
+    windows_package node['visualstudio']['2012']['vsto']['package_name'] do
+      source node['visualstudio']['2012']['vsto']['package_src_url']
+      checksum node['visualstudio']['2012']['vsto']['checksum']
+      installer_type :custom
+      options "/Q /norestart /noweb /Log \"#{install_log_path}\""
+      action :install
+    end
+  else
+    Chef::Log.warn("VSTO is not currently supported for Visual Studio #{version}")
+  end
 end
