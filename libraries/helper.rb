@@ -2,7 +2,7 @@ module Visualstudio
   module Helper
     def package_is_installed?(package_name)
       require 'win32/registry'
-      
+
       uninstall_reg_key = 'SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
 
       Win32::Registry::HKEY_LOCAL_MACHINE.open(uninstall_reg_key) do |uninstall_reg|

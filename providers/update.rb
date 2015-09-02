@@ -48,7 +48,8 @@ action :install do
       end
 
       # Cleanup extracted ISO files
-      directory extracted_iso_dir do
+      directory "remove_#{new_resource.package_name}" do
+        path extracted_iso_dir
         action :delete
         recursive true
         not_if { new_resource.preserve_extracted_files }
