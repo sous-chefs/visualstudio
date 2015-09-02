@@ -21,13 +21,14 @@
 require 'fileutils'
 
 include Windows::Helper
+include Visualstudio::Helper
 
 def whyrun_supported?
   true
 end
 
 action :install do
-  if !vs_installed?
+  unless package_is_installed?(new_resource.package_name)
     converge_by("Installing VisualStudio #{new_resource.edition} #{new_resource.version}") do
 
       # Extract the ISO image to the temporary Chef cache dir
@@ -112,8 +113,4 @@ def extracted_iso_dir
       Chef::Config[:file_cache_path],
       new_resource.version,
       new_resource.edition))
-end
-
-def vs_installed?
-  ::File.exist?(::File.join(new_resource.install_dir, '\Common7\IDE\devenv.exe'))
 end
