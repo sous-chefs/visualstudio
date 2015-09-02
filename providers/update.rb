@@ -75,6 +75,9 @@ def setup_basename
 end
 
 # setup executable path, by convention the exe has the same name as the iso
+# except VS 2010 which just uses setup.exe
 def setup_exe
-  ::File.join(extracted_iso_dir, "#{setup_basename}.exe")
+  file = ::File.join(extracted_iso_dir, "#{setup_basename}.exe")
+  return file if ::File.exist?(file)
+  ::File.join(extracted_iso_dir, 'setup.exe')
 end
