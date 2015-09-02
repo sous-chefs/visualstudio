@@ -90,7 +90,7 @@ visualstudio_edition 'vs_2015_professional' do
   edition: 'professional',
   version: '2015',
   install_dir: 'C:\Program Files (x86)\Microsoft Visual Studio 14.0',
-  source: 'http://localhost:8080/en_visual_studio_professional_2015_x86_x64_dvd_6846629',
+  source: 'http://localhost:8080/en_visual_studio_professional_2015_x86_x64_dvd_6846629.iso',
   package_name: 'Microsoft Visual Studio Professional 2015',
   checksum: '8d6d9a13ccb7f409161518e07e610c12180f415995fa417fa1343a4f2f4ce74b',
   installer_file: 'vs_professional.exe'
