@@ -7,6 +7,18 @@ This cookbook assumes .NET 4.5/4.6 has already been installed and rebooted the s
 
 This cookbook requires 7-zip to be installed so it can extract the ISO. To ensure this happens this cookbook includes the [seven_zip](https://github.com/daptiv/seven_zip) default recipe.
 
+## Supported Visual Studio Editions/Versions
+- 2010 Professional
+- 2012 Professional
+- 2012 Test Professional
+- 2012 Premium
+- 2012 Ultimate
+- 2013 Professional
+- 2013 Test Professional
+- 2013 Premium
+- 2013 Ultimate
+- 2015 Professional
+
 ## Supported OSs
 - Windows 7
 - Windows 8
@@ -19,6 +31,66 @@ This cookbook requires 7-zip to be installed so it can extract the ISO. To ensur
 
 ### Windows Server 2008 SP1 and Windows 7
 For Windows7 SP1 and Windows Server 2008 SP1 you must first install [KB2664825](http://support.microsoft.com/kb/2664825), otherwise the VS installer will reboot in the middle of the installation. See [Save yourself from insanity: Visual Studio 2012 silent install](https://gshaw0.wordpress.com/2013/09/06/save-yourself-from-insanity-visual-studio-2012-silent-install/) for more details. To avoid this it is recommended that you first install [SQL CE 4](http://www.microsoft.com/en-us/download/details.aspx?id=17876). You can install SQL CE 4 via Chef using the [sqlce cookbook](http://community.opscode.com/cookbooks/sqlce).
+
+# Attributes
+
+## Required
+
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td><code>['visualstudio']['source']</code></td>
+    <td>Url</td>
+    <td>http(s) root url to where all the ISOs are stored for VisualStudio installation</td>
+    <td></td>
+  </tr>
+</table>
+
+## Optional
+
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td><code>['visualstudio']['edition']</code></td>
+    <td>Boolean</td>
+    <td>The VisualStudio edition to install, i.e. professional, premium, ultimate, testprofessional</td>
+    <td><code>ultimate</code></td>
+  </tr>
+  <tr>
+    <td><code>['visualstudio']['version']</code></td>
+    <td>Integer</td>
+    <td>The VisualStudio version to install, i.e. 2010, 2012, 2013, 2015</td>
+    <td><code>2012</code></td>
+  </tr>
+  <tr>
+    <td><code>['visualstudio']['enable_nuget_package_restore']</code></td>
+    <td>Boolean</td>
+    <td>Sets the system wide environment variable to enable MSBuild/VisualStudio package restore on build</td>
+    <td><code>True</code></td>
+  </tr>
+  <tr>
+    <td><code>['visualstudio']['installs']</code></td>
+    <td>Array</td>
+    <td>An array of hashes that contain the various versions and editions of VS to install. See Usage below for an example.</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><code>['visualstudio']['2010']['professional']['config_file']</code></td>
+    <td>Boolean</td>
+    <td>The name of the VS 2010 unattend.ini template to use.</td>
+    <td></td>
+  </tr>
+</table>
 
 # Usage
 
@@ -38,18 +110,6 @@ node['visualstudio']['installs'] = [{
 }]
 ```
 
-Unlike newer versions of VisualStudio which use an AdminDeployment.xml file, VS 2010 uses an unattend.ini file. This cookbook includes a working default copy which you may optionally override. The template is required due to relative paths inside the recipe.
-
-# Attributes
-
-## Required
-* `node['visualstudio']['source']` - Required, fully qualified http(s) path to the ISO directory. For example: http://example.com/installs. This should not include the ISO filename, only the path where to find the ISOs.
-
-## Optional
-* `node['visualstudio']['enable_nuget_package_restore']` - true or false. Sets the system wide environment variable to enable MSBuild/VisualStudio package restore on build. This defaults to true.
-* `node['visualstudio']['installs']` - An array of hashes that contain the various versions and editions of VS to install. See Usage above for an example.
-* `node['visualstudio']['2010']['professional']['config_file']` - The name of the config file to use (i.e. unattend.ini) This should correspond to a template. Only used for Visual Studio 2010.
-
 Each VS version/edition pair has their own unique attributes which can be overridden. The most common to override would be `checksum` and `filename`. For example, we can override the VS 2013 Professional checksum and file_name attributes like so:
 
 ```ruby
@@ -57,13 +117,15 @@ node.override['visualstudio']['2013']['professional']['checksum'] = 'c4930bb8345
 node.override['visualstudio']['2013']['professional']['file_name'] = 'My_vs2013.iso'
 ```
 
+Unlike newer versions of VisualStudio which use an AdminDeployment.xml file, VS 2010 uses an unattend.ini file. This cookbook includes a working default unattend.ini template which you may optionally override. The use of a template instead of a static file is required due to relative paths inside the file.
+
 # Recipes
 
 ## default
 Ensures all VisualStudio prereqs are installed first and then only runs the install recipe if they are met. You should add this recipe to your run list.
 
 ## install
-Installs VisualStudio using the included AdminDeployment.xml. Included by the default recipe.
+Installs VisualStudio using the included AdminDeployment.xml or unattend.ini. Included by the default recipe.
 
 ## nuget
 Configures the enable_nuget_package_restore environment variable. Included by the default recipe.
@@ -77,7 +139,7 @@ Logs a warning if .NET is not installed. Included by the default recipe.
 Installs VS updates from the corresponding VS update ISO that is publicly downloadable from Microsoft. Add this to your runlist to update all versions of VS in your installs attribute array. By default you must place the iso in the same folder as the main VS ISO since they all share the same source attribute.
 
 ## install_vsto
-Installs the Microsoft Office Developer Tools for VS2012. Add this to your runlist if you need Office development tools for Office plugin development. Other versions of VS are not currently supported and will log a Chef warning.
+Installs the Microsoft Office Developer Tools for Visual Studio 2012. Add this to your runlist if you need Office development tools for Office plugin development. Other versions of VS are not currently supported and will log a Chef warning.
 
 ## LWRP
 
@@ -96,6 +158,24 @@ visualstudio_edition 'vs_2015_professional' do
   installer_file: 'vs_professional.exe'
 end
 ```
+
+# TO DO
+
+- Support all VS 2010 editions
+- Support all VS 2015 editions
+- Check for .NET 4.6 installed, but only if VS 2015 is going to be installed
+- Support VSTO on all versions of VS
+- More tests
+- Refactor duplication between cookbook helper and test helper
+
+# Contributing
+
+1. Fork the repository on Github
+2. Create a named feature branch (i.e. add-vsto-support-for-vs2010)
+3. Write your change
+4. Write tests for your change (if applicable)
+5. Run the build and ensure it passes. `bundle install && bundle exec rake`
+6. Submit a Pull Request
 
 # Author
 
