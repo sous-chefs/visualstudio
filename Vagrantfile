@@ -1,5 +1,5 @@
 Vagrant.configure("2") do |config|
-  config.vm.box = 'daptiv/windows2012r2_chef12'
+  config.vm.box = 'daptiv/windows2012r2_chef11'
   config.vm.communicator = :winrm
   config.vm.provision :chef_solo do |chef|
     chef.add_recipe 'sqlce::default'
