@@ -110,11 +110,11 @@ node['visualstudio']['installs'] = [{
 }]
 ```
 
-Each VS version/edition pair has their own unique attributes which can be overridden. The most common to override would be `checksum` and `filename`. For example, we can override the VS 2013 Professional checksum and file_name attributes like so:
+Each VS version/edition pair has their own unique attributes which can be overridden. The most common to override would be `checksum` and `filename`. For example, we can override the VS 2013 Professional checksum and filename attributes like so:
 
 ```ruby
 node.override['visualstudio']['2013']['professional']['checksum'] = 'c4930bb83454a2fcbc762da79a4227e92fdbef7d0b395c619829a36c3fb4ec54'
-node.override['visualstudio']['2013']['professional']['file_name'] = 'My_vs2013.iso'
+node.override['visualstudio']['2013']['professional']['filename'] = 'My_vs2013.iso'
 ```
 
 Unlike newer versions of VisualStudio which use an AdminDeployment.xml file, VS 2010 uses an unattend.ini file. This cookbook includes a working default unattend.ini template which you may optionally override. The use of a template instead of a static file is required due to relative paths inside the file.
