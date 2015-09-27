@@ -19,6 +19,7 @@
 #
 
 require 'digest/md5'
+require 'chef/shell_out'
 
 include Windows::Helper
 include Visualstudio::Helper
@@ -43,7 +44,7 @@ action :install do
       windows_package new_resource.package_name do
         source setup_exe
         installer_type :custom
-        options "/Q /norestart /noweb /log \"#{install_log_file}\""
+        options "/Q /norestart /noweb /Log \"#{install_log_file}\""
         timeout 3600 # 1 hour
       end
 
@@ -67,7 +68,7 @@ def extracted_iso_dir
 end
 
 def install_log_file
-  win_friendly_path(::File.join(new_resource.install_dir, 'vsinstall_update.log'))
+  win_friendly_path(::File.join(new_resource.install_dir, 'vsinstallupdate.log'))
 end
 
 # only base file name of source, e.g. VS2013.5
@@ -78,7 +79,6 @@ end
 # setup executable path, by convention the exe has the same name as the iso
 # except VS 2010 which just uses setup.exe
 def setup_exe
-  file = ::File.join(extracted_iso_dir, "#{setup_basename}.exe")
-  return file if ::File.exist?(file)
-  ::File.join(extracted_iso_dir, 'setup.exe')
+  setup_file = new_resource.package_name.include?('2010') ? 'setup.exe' : "#{setup_basename}.exe"
+  ::File.join(extracted_iso_dir, setup_file)
 end
