@@ -1,9 +1,9 @@
 #
-# Author:: Joe Fitzgerald
+# Author:: Shawn Neal
 # Cookbook Name:: visualstudio
-# Recipe:: installupdate
+# Recipe:: install_update
 #
-# Copyright 2013, Joe Fitzgerald.
+# Copyright 2015, Shawn Neal
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,12 +20,21 @@
 
 ::Chef::Recipe.send(:include, Visualstudio::Helper)
 
-visualstudio_update 'vs2012update' do
-  source node['visualstudio']['update']['source']
-  install_dir node['visualstudio']['install_dir']
-  installer_file node['visualstudio']['update']['installer_file']
-  filename node['visualstudio']['update']['filename']
-  checksum node['visualstudio']['update']['checksum']
-  package_name node['visualstudio']['update']['package_name']
-  package_regkey node['visualstudio']['update']['package_regkey']
+assert_source_attribute_is_set
+
+# Create list of unique VS versions that have updates
+versions_with_updates = versions.reject { |v| node['visualstudio'][v]['update'].nil? }
+
+# Install updates for each VS version
+versions_with_updates.each do |version|
+  iso_src = ::File.join(node['visualstudio']['source'],
+    node['visualstudio'][version]['update']['filename'])
+
+  visualstudio_update "visualstudio_#{version}_update" do
+    install_dir node['visualstudio'][version]['install_dir']
+    source iso_src
+    package_name node['visualstudio'][version]['update']['package_name']
+    checksum node['visualstudio'][version]['update']['checksum']
+    preserve_extracted_files node['visualstudio']['preserve_extracted_files']
+  end
 end

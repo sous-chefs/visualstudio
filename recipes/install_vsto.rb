@@ -18,22 +18,31 @@
 # limitations under the License.
 #
 
-install_log_path = win_friendly_path(
-  File.join(node['visualstudio']['2012']['install_dir'], 'vstoinstall.log'))
+::Chef::Recipe.send(:include, Visualstudio::Helper)
 
-# By removing this key we can skip an uncessary reboot before installing VSTO
-key = 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion' +
-  '\WindowsUpdate\Auto Update\RebootRequired'
-registry_key key do
-  recursive true
-  action :delete_key
-end
+# Install VSTO for each VS version
+versions.each do |version|
+  if version == '2012'
+    install_log_path = win_friendly_path(
+      File.join(node['visualstudio']['2012']['install_dir'], 'vstoinstall.log'))
 
-# Install Visual Studio Tools for Office
-windows_package node['visualstudio']['2012']['vsto']['package_name'] do
-  source node['visualstudio']['2012']['vsto']['package_src_url']
-  checksum node['visualstudio']['2012']['vsto']['checksum']
-  installer_type :custom
-  options "/Q /norestart /noweb /Log \"#{install_log_path}\""
-  action :install
+    # By removing this key we can skip an uncessary reboot before installing VSTO
+    key = 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion' +
+      '\WindowsUpdate\Auto Update\RebootRequired'
+    registry_key key do
+      recursive true
+      action :delete_key
+    end
+
+    # Install Visual Studio Tools for Office
+    windows_package node['visualstudio']['2012']['vsto']['package_name'] do
+      source node['visualstudio']['2012']['vsto']['package_src_url']
+      checksum node['visualstudio']['2012']['vsto']['checksum']
+      installer_type :custom
+      options "/Q /norestart /noweb /Log \"#{install_log_path}\""
+      action :install
+    end
+  else
+    Chef::Log.warn("VSTO is not currently supported for Visual Studio #{version}")
+  end
 end

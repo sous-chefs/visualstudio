@@ -2199,7 +2199,7 @@ InstallActionInteger=5
 [Additional Global Property Names]
 {E0875D42-A33D-4C64-81C9-167795F29CA4},PathFromCartmanToRoot,..,0
 {DF8FF64A-1967-4871-9E32-CA2F819BAB81},HWNDForLoadingDialog,0,0
-{3FEC8684-50AE-49BD-8B70-9E27852611F7},MSIDatabase,<%= @chef_cache_path %>\vs2012\professional_2010\vs_setup.msi,0
+{3FEC8684-50AE-49BD-8B70-9E27852611F7},MSIDatabase,<%= @extracted_iso_dir %>\vs_setup.msi,0
 {0668D241-D486-476B-BE89-B5BB387B8CD3},IsInstallMode,1,0
 {F7C3A876-6A4A-4624-9803-CE3216659633},Transaction Maintenance Mode,0,0
 {799FF008-23F3-4279-BBAE-34A39906F7A3},MPC,01018,0
@@ -2218,7 +2218,7 @@ InstallActionInteger=5
 {04A6827C-55A7-48E1-AAFF-3B0B172CD871},Auto Login Available,0,0
 {CE6EA7C5-0F0C-4D91-B597-092B82E2128B},AlreadyInstalled,\A higher version of Visual Studio is already installed\Microsoft .NET Framework 4\.NET Framework 4 Multi-Targeting Pack\Microsoft Silverlight\Microsoft Silverlight 3 SDK Prerequisite\Microsoft SQL Server System CLR Types\Microsoft SQL Server System CLR Types (x64)\Microsoft SQL Server 2008 R2 Management Objects (x64),0
 {D6B8FD61-6E36-489E-A9EF-A04CC202C14F},Queued Deferred Reboot,0,0
-{89D8A61F-50C2-4F93-BCF2-9DC2F9501D74},DependencyCheck Data,<%= @chef_cache_path %>\vs2012\professional_2010\setup\baseline.dat;<%= @chef_cache_path %>\vs2012\professional_2010\setup\vs_setup.pdi;Microsoft Visual Studio 2010 Professional - ENU,0
+{89D8A61F-50C2-4F93-BCF2-9DC2F9501D74},DependencyCheck Data,<%= @extracted_iso_dir %>\setup\baseline.dat;<%= @extracted_iso_dir %>\setup\vs_setup.pdi;Microsoft Visual Studio 2010 Professional - ENU,0
 {2B7DE335-914B-476F-AF77-E9EF03938188},Component Number,7,0
 {2699A822-7FAC-4640-9D7C-306E6AA478BB},SendUXLog,0,0
 {739790FE-7740-4BD5-872B-2195FED088FE},State,Changed,0
@@ -2275,13 +2275,13 @@ gfn_ encrypted mode=0
 {F11BC22E-07EC-44E3-987D-081E0406C98E}=0
 {F24FCE05-8B5C-472F-9F53-9C9BB3DE50AF}=15
 {1650AF31-D056-4820-88CA-BCCF7F1B40AF}=0
-{9843461C-2F7A-4000-B91C-2DDD224C9E91}=<%= @chef_cache_path %>\vs2012\professional_2010\unattend.ini
+{9843461C-2F7A-4000-B91C-2DDD224C9E91}=<%= @extracted_iso_dir %>\unattend.ini
 {6A9EEFF2-CC63-44D1-BD81-C56EDD4F19E1}=Microsoft Visual Studio 2010 Professional
 {A17A8E79-CB1C-49DB-B92E-34ADBFCDA36B}=
 {919E2FE6-4F33-4859-AE20-ACF44478D767}=
 {E0875D42-A33D-4C64-81C9-167795F29CA4}=..
 {DF8FF64A-1967-4871-9E32-CA2F819BAB81}=0
-{3FEC8684-50AE-49BD-8B70-9E27852611F7}=<%= @chef_cache_path %>\vs2012\professional_2010\vs_setup.msi
+{3FEC8684-50AE-49BD-8B70-9E27852611F7}=<%= @extracted_iso_dir %>\vs_setup.msi
 {0668D241-D486-476B-BE89-B5BB387B8CD3}=1
 {F7C3A876-6A4A-4624-9803-CE3216659633}=0
 {799FF008-23F3-4279-BBAE-34A39906F7A3}=01018
@@ -2300,7 +2300,7 @@ gfn_ encrypted mode=0
 {04A6827C-55A7-48E1-AAFF-3B0B172CD871}=0
 {CE6EA7C5-0F0C-4D91-B597-092B82E2128B}=\A higher version of Visual Studio is already installed\Microsoft .NET Framework 4\.NET Framework 4 Multi-Targeting Pack\Microsoft Silverlight\Microsoft Silverlight 3 SDK Prerequisite\Microsoft SQL Server System CLR Types\Microsoft SQL Server System CLR Types (x64)\Microsoft SQL Server 2008 R2 Management Objects (x64)
 {D6B8FD61-6E36-489E-A9EF-A04CC202C14F}=0
-{89D8A61F-50C2-4F93-BCF2-9DC2F9501D74}=<%= @chef_cache_path %>\vs2012\professional_2010\setup\baseline.dat;<%= @chef_cache_path %>\vs2012\professional_2010\setup\vs_setup.pdi;Microsoft Visual Studio 2010 Professional - ENU
+{89D8A61F-50C2-4F93-BCF2-9DC2F9501D74}=<%= @extracted_iso_dir %>\setup\baseline.dat;<%= @extracted_iso_dir %>\setup\vs_setup.pdi;Microsoft Visual Studio 2010 Professional - ENU
 {2B7DE335-914B-476F-AF77-E9EF03938188}=7
 {2699A822-7FAC-4640-9D7C-306E6AA478BB}=0
 {739790FE-7740-4BD5-872B-2195FED088FE}=Changed
