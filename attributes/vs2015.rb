@@ -31,3 +31,12 @@ default['visualstudio']['2015']['professional']['package_name'] =
   'Microsoft Visual Studio Professional 2015'
 default['visualstudio']['2015']['professional']['checksum'] =
   '8d6d9a13ccb7f409161518e07e610c12180f415995fa417fa1343a4f2f4ce74b'
+
+# Community
+default['visualstudio']['2015']['community']['installer_file'] = 'vs_community.exe'
+default['visualstudio']['2015']['community']['filename'] =
+    'vs2015.com_enu.iso'
+default['visualstudio']['2015']['community']['package_name'] =
+    'Microsoft Visual Studio Community 2015'
+default['visualstudio']['2015']['community']['checksum'] =
+    '96463572892a0b4dd564f58fbbb1a38d705cad8ca46805dbb4fe6576255c6c01'

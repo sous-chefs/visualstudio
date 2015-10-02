@@ -18,6 +18,7 @@ This cookbook requires 7-zip to be installed so it can extract the ISO. To ensur
 - 2013 Premium
 - 2013 Ultimate
 - 2015 Professional
+- 2015 Community
 
 ## Supported OSs
 - Windows 7
@@ -63,7 +64,7 @@ For Windows7 SP1 and Windows Server 2008 SP1 you must first install [KB2664825](
   <tr>
     <td><code>['visualstudio']['edition']</code></td>
     <td>Boolean</td>
-    <td>The VisualStudio edition to install, i.e. professional, premium, ultimate, testprofessional</td>
+    <td>The VisualStudio edition to install, i.e. community, professional, premium, ultimate, testprofessional</td>
     <td><code>ultimate</code></td>
   </tr>
   <tr>
@@ -96,7 +97,7 @@ For Windows7 SP1 and Windows Server 2008 SP1 you must first install [KB2664825](
 
 Set the `node['visualstudio']['source']` attribute to the download location of the VisualStudio ISO, for example: http://example.com/installs. Then add `'visualstudio::default'` to your runlist. The same source attribute is used for all editions, versions, and updates.
 
-By default this cookbook assumes you're installing VisualStudio 2012 Ultimate. If you'd like to install another edition set the 'edition' attribute to: 'professional', 'premium', or 'testprofessional'. If you'd like to install a different version set the 'version' attribute to: '2010', '2012', '2013', '2015'.
+By default this cookbook assumes you're installing VisualStudio 2012 Ultimate. If you'd like to install another edition set the 'edition' attribute to: 'community', 'professional', 'premium', or 'testprofessional'. If you'd like to install a different version set the 'version' attribute to: '2010', '2012', '2013', '2015'.
 
 If you need to install multiple different versions/editions of VisualStudio on the same node you must instead set the 'installs' attribute. If the installs attribute is set then the version and edition attributes are ignored.
 

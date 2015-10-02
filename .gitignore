@@ -16,3 +16,6 @@ bin/*
 .kitchen.local.yml
 
 /cache/
+
+#IDE
+.idea/
