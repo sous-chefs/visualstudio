@@ -35,8 +35,8 @@ default['visualstudio']['2015']['professional']['checksum'] =
 # Community
 default['visualstudio']['2015']['community']['installer_file'] = 'vs_community.exe'
 default['visualstudio']['2015']['community']['filename'] =
-    'vs2015.com_enu.iso'
+  'vs2015.com_enu.iso'
 default['visualstudio']['2015']['community']['package_name'] =
-    'Microsoft Visual Studio Community 2015'
+  'Microsoft Visual Studio Community 2015'
 default['visualstudio']['2015']['community']['checksum'] =
-    '96463572892a0b4dd564f58fbbb1a38d705cad8ca46805dbb4fe6576255c6c01'
+  '96463572892a0b4dd564f58fbbb1a38d705cad8ca46805dbb4fe6576255c6c01'
