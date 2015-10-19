@@ -50,6 +50,7 @@ action :install do
         installer_type :custom
         options setup_options
         timeout 3600 # 1hour
+        success_codes [0, 127, 3010]
       end
 
       # Cleanup extracted ISO files from tmp dir
