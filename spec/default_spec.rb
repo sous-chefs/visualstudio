@@ -8,7 +8,7 @@ describe 'visualstudio::install' do
     end
 
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'windows', version: '2008R2') do |node|
+      ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2') do |node|
         node.set['visualstudio']['source'] = 'http://localhost:8080'
       end.converge(described_recipe)
     end
@@ -39,14 +39,14 @@ describe 'visualstudio::install' do
     end
 
     it 'raises an error when VS source attribute is not set' do
-      chef_run = ChefSpec::Runner.new(platform: 'windows', version: '2008R2')
+      chef_run = ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2')
       expect { chef_run.converge(described_recipe) }.to raise_error(RuntimeError,
         'The required attribute node[\'visualstudio\'][\'source\'] is empty, ' +
           'set this and run again!')
     end
 
     it 'installs VS 2012 TestProfessional when only edition attribute is set' do
-      chef_run = ChefSpec::Runner.new(platform: 'windows', version: '2008R2') do |node|
+      chef_run = ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2') do |node|
         node.set['visualstudio']['source'] = 'http://localhost:8080'
         node.set['visualstudio']['edition'] = 'testprofessional'
       end.converge(described_recipe)
@@ -64,7 +64,7 @@ describe 'visualstudio::install' do
     end
 
     it 'installs Vs 2013 Ultimate when edition attribute is set to Ultimate and version to 2013' do
-      chef_run = ChefSpec::Runner.new(platform: 'windows', version: '2008R2') do |node|
+      chef_run = ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2') do |node|
         node.set['visualstudio']['source'] = 'http://localhost:8080'
         node.set['visualstudio']['edition'] = 'ultimate'
         node.set['visualstudio']['version'] = '2013'
@@ -73,7 +73,7 @@ describe 'visualstudio::install' do
     end
 
     it 'installs multiple editions and versions when installs attribute is set' do
-      chef_run = ChefSpec::Runner.new(platform: 'windows', version: '2008R2') do |node|
+      chef_run = ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2') do |node|
         node.set['visualstudio']['source'] = 'http://localhost:8080'
         node.set['visualstudio']['installs'] = [
           {
@@ -97,7 +97,7 @@ describe 'visualstudio::install' do
     end
 
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04') do |node|
+      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '12.04') do |node|
         node.set['visualstudio']['source'] = 'http://localhost:8080'
       end.converge(described_recipe)
     end

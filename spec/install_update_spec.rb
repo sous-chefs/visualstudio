@@ -8,7 +8,7 @@ describe 'visualstudio::install_update' do
     end
 
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'windows', version: '2008R2') do |node|
+      ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2') do |node|
         node.set['visualstudio']['source'] = 'http://localhost:8080'
       end.converge(described_recipe)
     end

@@ -8,7 +8,7 @@ describe 'visualstudio::install_vsto' do
     end
 
     let(:chef_run) do
-      ChefSpec::Runner.new(platform: 'windows', version: '2008R2').converge(described_recipe)
+      ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2').converge(described_recipe)
     end
 
     it 'installs VSTO for VS 2012' do
