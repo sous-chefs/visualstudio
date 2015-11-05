@@ -45,9 +45,8 @@
     <SelectableItemCustomization Id="JavaJDKV1" Hidden="no" Selected="no" FriendlyName="Java SE Development Kit (7.0.550.13)" />
     <SelectableItemCustomization Id="Node.jsV1" Hidden="no" Selected="no" FriendlyName="Joyent Node.js" />
     <SelectableItemCustomization Id="VSEmu_AndroidV1" Hidden="no" Selected="no" FriendlyName="Microsoft Visual Studio Emulator for Android" />
-    <SelectableItemCustomization Id="WebSocket4NetV1" Hidden="no" Selected="no" FriendlyName="WebSocket4Net" />
     <SelectableItemCustomization Id="ToolsForWin81_WP80_WP81V1" Hidden="no" Selected="no" FriendlyName="Tools and Windows SDKs" />
-    <SelectableItemCustomization Id="WindowsPhone81EmulatorsV1" Selected="no" FriendlyName="Emulators for Windows Phone 8.1" />
+    <SelectableItemCustomization Id="WindowsPhone81EmulatorsV1" Hidden="no" Selected="no" FriendlyName="Emulators for Windows Phone 8.1" />
     <SelectableItemCustomization Id="GitForWindowsV1" Hidden="no" Selected="no" FriendlyName="Git for Windows" />
     <SelectableItemCustomization Id="GitHubVSV1" Hidden="no" Selected="no" FriendlyName="GitHub Extension for Visual Studio" />
     <SelectableItemCustomization Id="VS_SDK_GroupV1" Hidden="no" Selected="no" FriendlyName="Visual Studio Extensibility Tools" />
