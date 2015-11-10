@@ -9,7 +9,10 @@ class InstallUpdateSpec < MiniTest::Chef::Spec
 
       it 'installs Visual Studio update' do
         each_version_edition(node) do |version, _|
-          node['visualstudio'][version]['update']['package_name'].must_be_installed
+          # not all versions support an update
+          if node['visualstudio'][version]['update']
+            node['visualstudio'][version]['update']['package_name'].must_be_installed
+          end
         end
       end
     end

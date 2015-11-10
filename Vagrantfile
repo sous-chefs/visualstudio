@@ -1,8 +1,7 @@
 Vagrant.configure("2") do |config|
-  config.vm.box = 'daptiv/windows2012r2_chef11'
+  config.vm.box = 'daptiv/windows2012r2_chef12'
   config.vm.communicator = :winrm
   config.vm.provision :chef_solo do |chef|
-    chef.add_recipe 'sqlce::default'
     chef.add_recipe 'visualstudio::default'
     chef.add_recipe 'visualstudio::install_update'
     chef.add_recipe 'visualstudio::install_vsto'
@@ -10,7 +9,7 @@ Vagrant.configure("2") do |config|
     chef.file_cache_path = 'c:/var/chef/cache' # Need leading drive letter
     chef.json = {
       'visualstudio' => {
-        'version' => '2012',
+        'version' => '2015',
         'edition' => 'professional',
         'source' => 'http://vagrantboxes.hq.daptiv.com/installs/cookbookresources',
         'preserve_extracted_files' => true
