@@ -40,6 +40,7 @@ versions.each do |version|
       checksum node['visualstudio']['2012']['vsto']['checksum']
       installer_type :custom
       options "/Q /norestart /noweb /Log \"#{install_log_path}\""
+      timeout 1800
       action :install
     end
   else
