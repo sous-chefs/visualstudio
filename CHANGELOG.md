@@ -2,6 +2,13 @@
 
 This file is used to list changes made in each version of visualstudion.
 
+## 1.0.1:
+
+* Exit code 3010 (reboot required) should not fail Chef run
+* Fix install_update minitest failure on VS 2015
+* Fix VisualStudio 2015 installation error (WebSocket4NetV1) on Windows 2012R2
+* Increase VSTO installation timeout from 10m to 30m
+
 ## 1.0.0:
 
 * Initial release to Chef SuperMarket
