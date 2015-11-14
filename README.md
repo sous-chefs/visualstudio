@@ -3,9 +3,14 @@ This Chef cookbook installs Visual Studio 2010, 2012, 2013, 2015 from an ISO.
 
 # Requirements
 
-This cookbook assumes .NET 4.5/4.6 has already been installed and rebooted the system before running the VisualStudio cookbook. If you forget to install .NET first this cookbook will log a warning.
+This cookbook assumes the appropriate version of the .NET framework has already been installed before running the VisualStudio cookbook. To install .NET you can use the [dotnetframework cookbook](https://github.com/daptiv/dotnetframework). You must reboot the system after the .NET installation and before the VisualStudio installation.
+
+- VisualStudio 2010, 2012, and 2013 require .NET 4.5.x.
+- VisualStudio 2015 requires .NET 4.6.
 
 This cookbook requires 7-zip to be installed so it can extract the ISO. To ensure this happens this cookbook includes the [seven_zip](https://github.com/daptiv/seven_zip) default recipe.
+
+NOTE - This cookbook cannot be installed over naked WinRM, i.e. knife-winrm or test-kitchen. This cookbook will work over WinRM via Vagrant and Packer because they both wrap Chef executions in a scheduled task.
 
 ## Supported Visual Studio Editions/Versions
 - 2010 Professional
@@ -30,7 +35,7 @@ This cookbook requires 7-zip to be installed so it can extract the ISO. To ensur
 - Windows Server 2012
 - Windows Server 2012 R2
 
-### Windows Server 2008 SP1 and Windows 7
+### VS 2012 on Windows Server 2008 SP1 and Windows 7
 For Windows7 SP1 and Windows Server 2008 SP1 you must first install [KB2664825](http://support.microsoft.com/kb/2664825), otherwise the VS installer will reboot in the middle of the installation. See [Save yourself from insanity: Visual Studio 2012 silent install](https://gshaw0.wordpress.com/2013/09/06/save-yourself-from-insanity-visual-studio-2012-silent-install/) for more details. To avoid this it is recommended that you first install [SQL CE 4](http://www.microsoft.com/en-us/download/details.aspx?id=17876). You can install SQL CE 4 via Chef using the [sqlce cookbook](http://community.opscode.com/cookbooks/sqlce).
 
 # Attributes
@@ -132,7 +137,7 @@ Installs VisualStudio using the included AdminDeployment.xml or unattend.ini. In
 Configures the enable_nuget_package_restore environment variable. Included by the default recipe.
 
 ## dotnet_prereq
-Logs a warning if .NET is not installed. Included by the default recipe.
+Logs a warning if .NET 4.5.x is not installed. This recipe does not curently check for .NET 4.6. Included by the default recipe.
 
 # Optional Recipes
 
@@ -142,9 +147,9 @@ Installs VS updates from the corresponding VS update ISO that is publicly downlo
 ## install_vsto
 Installs the Microsoft Office Developer Tools for Visual Studio 2012. Add this to your runlist if you need Office development tools for Office plugin development. Other versions of VS are not currently supported and will log a Chef warning.
 
-## LWRP
+# Resource/Provider
 
-This recipe does nothing but makes the `visualstudio_edition` and `visualstudio_update` resource definitions available.
+This cookbook makes the `visualstudio_edition` and `visualstudio_update` resource definitions available.
 
 For example, to install Visual Studio 2010 using the `visualstudio_edition` definition:
 
@@ -159,6 +164,14 @@ visualstudio_edition 'vs_2015_professional' do
   installer_file: 'vs_professional.exe'
 end
 ```
+
+# Troubleshooting
+
+If the installer fails very early in the install process, check a few of things:
+
+- Ensure you have the correct .NET version installed first and you've rebooted.
+- Check the VS installation log which is located in c:\program files (x86)\Microsoft Visual Studio &lt;version&gt;\vsinstall.log
+- Ensure you're not running over naked WinRM, i.e. knife-winrm or test-kitchen. Unfortunately because of the Windows security model this cookbook will not work over WinRM without a scheduled task.
 
 # TO DO
 
