@@ -2,9 +2,9 @@
 
 This file is used to list changes made in each version of visualstudion.
 
-## 0.0.10:
+## 1.0.0:
 
-* 19 May 2013 release of visualstudio
+* Initial release to Chef SuperMarket
 
 - - - 
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.
