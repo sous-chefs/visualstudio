@@ -35,6 +35,7 @@ installs.each do |install|
     version version
     install_dir node['visualstudio'][version]['install_dir']
     source install_url
+    product_key node['visualstudio'][version][edition]['product_key']
     package_name node['visualstudio'][version][edition]['package_name']
     checksum node['visualstudio'][version][edition]['checksum']
     preserve_extracted_files node['visualstudio']['preserve_extracted_files']

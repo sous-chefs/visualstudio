@@ -40,3 +40,12 @@ default['visualstudio']['2015']['community']['package_name'] =
   'Microsoft Visual Studio Community 2015'
 default['visualstudio']['2015']['community']['checksum'] =
   '96463572892a0b4dd564f58fbbb1a38d705cad8ca46805dbb4fe6576255c6c01'
+
+# Enterprise
+default['visualstudio']['2015']['enterprise']['installer_file'] = 'vs_enterprise.exe'
+default['visualstudio']['2015']['enterprise']['filename'] =
+  'en_visual_studio_enterprise_2015_x86_x64_dvd_6850497.iso'
+default['visualstudio']['2015']['enterprise']['package_name'] =
+  'Microsoft Visual Studio Enterprise 2015'
+default['visualstudio']['2015']['enterprise']['checksum'] =
+  '12db74d1e6243924c187069ad95cee58b687dcb9ba2d302fc6ae889fb4ae7694'
