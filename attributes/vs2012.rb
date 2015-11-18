@@ -58,14 +58,14 @@ default['visualstudio']['2012']['ultimate']['package_name'] =
 default['visualstudio']['2012']['ultimate']['checksum'] =
   'c2c140ec6b16d7d4596b680066de35cbdf60ec049eb42129e5c30945063d2e83'
 
-# Update 4
-#http://download.microsoft.com/download/D/4/8/D48D1AC2-A297-4C9E-A9D0-A218E6609F06/VSU4/VS2012.4.iso
-default['visualstudio']['2012']['update']['filename'] = 'VS2012.4.iso'
+# Update 5
+#https://download.microsoft.com/download/1/7/A/17A8493D-BB25-4811-8242-CCCB74EF982E/VS2012.5.iso
+default['visualstudio']['2012']['update']['filename'] = 'VS2012.5.iso'
 default['visualstudio']['2012']['update']['source'] = node['visualstudio']['source']
 default['visualstudio']['2012']['update']['checksum'] =
-  'c462118eabcc242a50f1215587cb1c79505159af79fc50c24d8be1d25203cd87'
+  '405bad3d4249dd94b4fa309bb482ade9ce63d968b59cac9e2d63b0a24577285e'
 default['visualstudio']['2012']['update']['package_name'] =
-  'Visual Studio 2012 Update 4 (KB2707250)'
+  'Visual Studio 2012 Update 5 (KB2707250)'
 
 # VS 2012 Office developer tools
 default['visualstudio']['2012']['vsto']['installer_file'] = 'officetools_bundle.exe'

@@ -17,9 +17,9 @@ describe 'visualstudio::install_update' do
       expect(chef_run).to install_visualstudio_update('visualstudio_2012_update').
         with(
           install_dir: 'C:\Program Files (x86)\Microsoft Visual Studio 11.0',
-          source: 'http://localhost:8080/VS2012.4.iso',
-          package_name: 'Visual Studio 2012 Update 4 (KB2707250)',
-          checksum: 'c462118eabcc242a50f1215587cb1c79505159af79fc50c24d8be1d25203cd87')
+          source: 'http://localhost:8080/VS2012.5.iso',
+          package_name: 'Visual Studio 2012 Update 5 (KB2707250)',
+          checksum: '405bad3d4249dd94b4fa309bb482ade9ce63d968b59cac9e2d63b0a24577285e')
     end
   end
 end
