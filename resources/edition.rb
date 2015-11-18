@@ -37,7 +37,7 @@ attribute :source, kind_of: String, :required => true
 attribute :package_name, kind_of: String, :required => true
 
 # The VS product key
-attribute :product_key, kind_of: String
+attribute :product_key, [String, nil]
 
 # The source ISO SHA256 checksum
 attribute :checksum, kind_of: String
