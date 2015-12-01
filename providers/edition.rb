@@ -76,9 +76,9 @@ def prepare_vs_options
   end
 
   setup_options = "/Q /norestart /noweb /log \"#{install_log_file}\" /adminfile \"#{config_path}\""
-  unless new_resource.product_key.nil?
-    product_key = new_resource.product_key.tr('-', '')
-    setup_options = "#{setup_options} /productkey \"#{product_key}\""
+  if new_resource.product_key
+    product_key = new_resource.product_key.delete('-')
+    setup_options << " /productkey \"#{product_key}\""
   end
   setup_options
 end
