@@ -10,7 +10,7 @@ This cookbook assumes the appropriate version of the .NET framework has already 
 
 This cookbook requires 7-zip to be installed so it can extract the ISO. To ensure this happens this cookbook includes the [seven_zip](https://github.com/daptiv/seven_zip) default recipe.
 
-NOTE - This cookbook cannot be installed over naked WinRM, i.e. knife-winrm or test-kitchen. This cookbook will work over WinRM via Vagrant and Packer because they both wrap Chef executions in a scheduled task.
+NOTE - This cookbook cannot be installed over naked WinRM, i.e. knife-winrm or test-kitchen without failing with error 1603. This cookbook will work via Vagrant because Vagrant wraps Windows provisioners in a scheduled task.
 
 ## Supported Visual Studio Editions/Versions
 - 2010 Professional
@@ -22,6 +22,7 @@ NOTE - This cookbook cannot be installed over naked WinRM, i.e. knife-winrm or t
 - 2013 Test Professional
 - 2013 Premium
 - 2013 Ultimate
+- 2015 Enterprise
 - 2015 Professional
 - 2015 Community
 
@@ -37,6 +38,9 @@ NOTE - This cookbook cannot be installed over naked WinRM, i.e. knife-winrm or t
 
 ### VS 2012 on Windows Server 2008 SP1 and Windows 7
 For Windows7 SP1 and Windows Server 2008 SP1 you must first install [KB2664825](http://support.microsoft.com/kb/2664825), otherwise the VS installer will reboot in the middle of the installation. See [Save yourself from insanity: Visual Studio 2012 silent install](https://gshaw0.wordpress.com/2013/09/06/save-yourself-from-insanity-visual-studio-2012-silent-install/) for more details. To avoid this it is recommended that you first install [SQL CE 4](http://www.microsoft.com/en-us/download/details.aspx?id=17876). You can install SQL CE 4 via Chef using the [sqlce cookbook](http://community.opscode.com/cookbooks/sqlce).
+
+### VS 2015 on Windows Server 2012 R2
+If you _really_ want to install VS 2015 on Windows Server 2012R2 over naked WinRM, you can if you first install [KB2999226](http://support.microsoft.com/kb/2999226), otherwise the VS installer will fail with error 1603.
 
 # Attributes
 
