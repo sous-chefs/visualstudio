@@ -3,7 +3,9 @@ module Visualstudio
     def package_is_installed?(package_name)
       require 'win32/registry'
 
-      uninstall_reg_key = 'SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
+      uninstall_reg_key = node['kernel']['machine'] == :x86_64 ?
+        'SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall' :
+        'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall'
 
       Win32::Registry::HKEY_LOCAL_MACHINE.open(uninstall_reg_key) do |uninstall_reg|
         uninstall_reg.each_key do |subkey, wtime|
