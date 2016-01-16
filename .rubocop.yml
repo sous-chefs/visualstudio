@@ -1,0 +1,9 @@
+AllCops:
+  Exclude:
+    - 'Berksfile'
+
+Style/Encoding:
+  Enabled: true
+
+Metrics/LineLength:
+  Max: 100
