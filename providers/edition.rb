@@ -84,6 +84,14 @@ def prepare_vs_options
 end
 
 def prepare_vs2010_options
+  if new_resource.configure_basename.nil?
+    '/q'
+  else
+    "/unattendfile \"#{configure_vs2010_unattend_file}\""
+  end
+end
+
+def configure_vs2010_unattend_file
   config_path = win_friendly_path(::File.join(extracted_iso_dir, new_resource.configure_basename))
 
   template "#{config_path}.tmp" do
@@ -99,8 +107,7 @@ def prepare_vs2010_options
     )
   end
 
-  setup_options = "/unattendfile \"#{config_path}\""
-  setup_options
+  config_path
 end
 
 def install_log_file

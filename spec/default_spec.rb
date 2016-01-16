@@ -45,6 +45,43 @@ describe 'visualstudio::install' do
           'set this and run again!')
     end
 
+    context 'VS 2010' do
+      it 'specifies /q for silent installation by default' do
+        chef_run = ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2', step_into: ['visualstudio_edition']) do |node|
+          node.set['visualstudio']['source'] = 'http://localhost:8080'
+          node.set['visualstudio']['version'] = '2010'
+          node.set['visualstudio']['edition'] = 'professional'
+        end.converge(described_recipe) do
+          allow_any_instance_of(Visualstudio::Helper).to receive(:package_is_installed?).and_return(false)
+        end
+        expect(chef_run).to install_visualstudio_edition('visualstudio_2010_professional').
+          with(
+            edition: 'professional',
+            version: '2010',
+            configure_basename: nil)
+        expect(chef_run).to install_windows_package(chef_run.node['visualstudio']['2010']['professional']['package_name']).
+          with(options: '/q')
+      end
+
+      it 'specifies /unattendfile when an unattend.ini file is given' do
+        chef_run = ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2', step_into: ['visualstudio_edition']) do |node|
+          node.set['visualstudio']['source'] = 'http://localhost:8080'
+          node.set['visualstudio']['version'] = '2010'
+          node.set['visualstudio']['edition'] = 'professional'
+          node.set['visualstudio']['2010']['professional']['config_file'] = 'my_unattend.ini'
+        end.converge(described_recipe) do
+          allow_any_instance_of(Visualstudio::Helper).to receive(:package_is_installed?).and_return(false)
+        end
+        expect(chef_run).to install_visualstudio_edition('visualstudio_2010_professional').
+          with(
+            edition: 'professional',
+            version: '2010',
+            configure_basename: 'my_unattend.ini')
+        expect(chef_run).to install_windows_package(chef_run.node['visualstudio']['2010']['professional']['package_name']).
+          with(options: /^\/unattendfile ".+my_unattend.ini"$/)
+      end
+    end
+
     it 'installs VS 2012 TestProfessional when only edition attribute is set' do
       chef_run = ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2') do |node|
         node.set['visualstudio']['source'] = 'http://localhost:8080'

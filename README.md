@@ -96,7 +96,7 @@ If you _really_ want to install VS 2015 on Windows Server 2012R2 over naked WinR
   </tr>
   <tr>
     <td><code>['visualstudio']['2010']['professional']['config_file']</code></td>
-    <td>Boolean</td>
+    <td>String</td>
     <td>The name of the VS 2010 unattend.ini template to use.</td>
     <td></td>
   </tr>
@@ -127,7 +127,7 @@ node.override['visualstudio']['2013']['professional']['checksum'] = 'c4930bb8345
 node.override['visualstudio']['2013']['professional']['filename'] = 'My_vs2013.iso'
 ```
 
-Unlike newer versions of VisualStudio which use an AdminDeployment.xml file, VS 2010 uses an unattend.ini file. This cookbook includes a working default unattend.ini template which you may optionally override. The use of a template instead of a static file is required due to relative paths inside the file.
+Unlike newer versions of VisualStudio which use an AdminDeployment.xml file, VS 2010 uses an unattend.ini file, which, among other things, is OS-specific. By default, this cookbook uses VS 2010's `/q` option, which works for all Windows versions and specifies a default installation. To customize the installation, you may specify an unattend.ini template instead. The use of a template instead of a static file is required due to relative paths inside the file. This cookbook includes an unattend.ini template sample.
 
 # Recipes
 
@@ -135,7 +135,7 @@ Unlike newer versions of VisualStudio which use an AdminDeployment.xml file, VS 
 Ensures all VisualStudio prereqs are installed first and then only runs the install recipe if they are met. You should add this recipe to your run list.
 
 ## install
-Installs VisualStudio using the included AdminDeployment.xml or unattend.ini. Included by the default recipe.
+Installs VisualStudio using the included AdminDeployment.xml or default silent install. Included by the default recipe.
 
 ## nuget
 Configures the enable_nuget_package_restore environment variable. Included by the default recipe.

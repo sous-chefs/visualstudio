@@ -31,7 +31,7 @@ default['visualstudio']['2010']['professional']['package_name'] =
 default['visualstudio']['2010']['professional']['checksum'] =
   'bdfba5df0bd72cffdb398fe885d9e36d052617647c0ae4fd0579a8fc785c95ba'
 default['visualstudio']['2010']['professional']['installer_file'] = File.join('setup', 'setup.exe')
-default['visualstudio']['2010']['professional']['config_file'] = 'unattend.ini'
+default['visualstudio']['2010']['professional']['config_file'] = nil
 
 # VS 2010 SP1
 default['visualstudio']['2010']['update']['filename'] = 'VS2010SP1dvd1.iso'
