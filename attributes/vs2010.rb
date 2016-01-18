@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #
 # Author:: Ian Kendrick (<iankendrick@gmail.com>)
 # Cookbook Name:: visualstudio
@@ -20,8 +21,7 @@
 
 # Currently you cannot change this, doing so will break the cookbook
 default['visualstudio']['2010']['install_dir'] =
-  (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') +
-  '\Microsoft Visual Studio 10.0'
+  (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') + '\Microsoft Visual Studio 10.0'
 
 # VS 2010 Professional
 default['visualstudio']['2010']['professional']['filename'] =

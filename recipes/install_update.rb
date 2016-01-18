@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #
 # Author:: Shawn Neal
 # Cookbook Name:: visualstudio
@@ -28,7 +29,7 @@ versions_with_updates = versions.reject { |v| node['visualstudio'][v]['update'].
 # Install updates for each VS version
 versions_with_updates.each do |version|
   iso_src = ::File.join(node['visualstudio']['source'],
-    node['visualstudio'][version]['update']['filename'])
+                        node['visualstudio'][version]['update']['filename'])
 
   visualstudio_update "visualstudio_#{version}_update" do
     install_dir node['visualstudio'][version]['install_dir']

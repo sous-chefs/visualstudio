@@ -1,8 +1,10 @@
+# encoding: UTF-8
+
 require 'minitest/spec'
 require_relative 'spec_helper'
 
+# MiniTest to validate VSTO packages were installed
 class InstallVstoSpec < MiniTest::Chef::Spec
-
   describe_recipe 'visualstudio::install_vsto' do
     describe 'packages' do
       include ChefHelper

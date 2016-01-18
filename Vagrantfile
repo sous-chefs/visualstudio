@@ -1,4 +1,6 @@
-Vagrant.configure("2") do |config|
+# encoding: UTF-8
+
+Vagrant.configure('2') do |config|
   config.vm.box = 'daptiv/windows2012r2_chef12'
   config.vm.communicator = :winrm
   config.vm.provision :chef_solo do |chef|

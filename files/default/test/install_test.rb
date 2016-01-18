@@ -1,8 +1,10 @@
+# encoding: UTF-8
+
 require 'minitest/spec'
 require_relative 'spec_helper'
 
+# MiniTest to validate VS was installed
 class InstallSpec < MiniTest::Chef::Spec
-
   describe_recipe 'visualstudio::install' do
     describe 'packages' do
       include ChefHelper
@@ -18,7 +20,7 @@ class InstallSpec < MiniTest::Chef::Spec
           devenv_path = File.join(
             node['visualstudio'][version]['install_dir'],
             '\Common7\IDE\devenv.exe')
-          assert File.exists?(devenv_path), "Could not find file #{devenv_path}"
+          assert File.exist?(devenv_path), "Could not find file #{devenv_path}"
         end
       end
     end

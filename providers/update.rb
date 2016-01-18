@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #
 # Author:: Ian Kendrick (<iankendrick@gmail.com>), Shawn Neal (<sneal@daptiv.com>)
 # Cookbook Name:: visualstudio
@@ -28,10 +29,11 @@ def whyrun_supported?
   true
 end
 
+use_inline_resources
+
 action :install do
   unless package_is_installed?(new_resource.package_name)
     converge_by("Installing #{new_resource.package_name}") do
-
       # Extract the ISO image to the temporary Chef cache dir
       seven_zip_archive "extract_#{setup_basename}_iso" do
         path extracted_iso_dir

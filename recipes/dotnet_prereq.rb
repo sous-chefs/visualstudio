@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #
 # Author:: Shawn Neal <sneal@daptiv.com>
 # Cookbook Name:: visualstudio
@@ -21,7 +22,7 @@
 
 dotnet4dir = File.join(ENV['WINDIR'], 'Microsoft.Net\\Framework64\\v4.0.30319')
 dotnet_45_file = File.join(dotnet4dir, 'Microsoft.Activities.Build.dll')
-dotnet_is_not_installed_msg = '.NET 4.5 must be installed before installing VisualStudio. ' +
-  'This is required otherwise the Visual Studio installer will silently fail. ' +
+dotnet_is_not_installed_msg = '.NET 4.5 must be installed before installing VisualStudio. ' \
+  'This is required otherwise the Visual Studio installer will silently fail. ' \
   'Please install .NET 4.5, reboot, then run this recipe again.'
-Chef::Log.warn dotnet_is_not_installed_msg unless File.exists?(dotnet_45_file)
+Chef::Log.warn dotnet_is_not_installed_msg unless File.exist?(dotnet_45_file)
