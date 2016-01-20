@@ -52,9 +52,10 @@ describe 'visualstudio::install' do
           node.set['visualstudio']['source'] = 'http://localhost:8080'
           node.set['visualstudio']['version'] = '2010'
           node.set['visualstudio']['edition'] = 'professional'
+        end.converge(described_recipe) do
           allow_any_instance_of(Visualstudio::Helper).to receive(:package_is_installed?)
             .and_return(false)
-        end.converge(described_recipe)
+        end
         expect(chef_run).to install_visualstudio_edition('visualstudio_2010_professional')
           .with(
             edition: 'professional',
@@ -71,9 +72,10 @@ describe 'visualstudio::install' do
           node.set['visualstudio']['version'] = '2010'
           node.set['visualstudio']['edition'] = 'professional'
           node.set['visualstudio']['2010']['professional']['config_file'] = 'my_unattend.ini'
+        end.converge(described_recipe) do
           allow_any_instance_of(Visualstudio::Helper).to receive(:package_is_installed?)
             .and_return(false)
-        end.converge(described_recipe)
+        end
         expect(chef_run).to install_visualstudio_edition('visualstudio_2010_professional')
           .with(
             edition: 'professional',
