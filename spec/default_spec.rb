@@ -1,6 +1,5 @@
 # encoding: UTF-8
 describe 'visualstudio::install' do
-
   describe 'windows' do
     before(:each) do
       ENV['ProgramFiles(x86)'] = 'C:\Program Files (x86)'
@@ -19,8 +18,8 @@ describe 'visualstudio::install' do
     end
 
     it 'defaults to VS 2012 Ultimate' do
-      expect(chef_run).to install_visualstudio_edition('visualstudio_2012_ultimate').
-        with(
+      expect(chef_run).to install_visualstudio_edition('visualstudio_2012_ultimate')
+        .with(
           edition: 'ultimate',
           version: '2012',
           install_dir: 'C:\Program Files (x86)\Microsoft Visual Studio 11.0',
@@ -40,9 +39,52 @@ describe 'visualstudio::install' do
 
     it 'raises an error when VS source attribute is not set' do
       chef_run = ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2')
-      expect { chef_run.converge(described_recipe) }.to raise_error(RuntimeError,
-        'The required attribute node[\'visualstudio\'][\'source\'] is empty, ' +
+      expect { chef_run.converge(described_recipe) }.to raise_error(
+        RuntimeError,
+        'The required attribute node[\'visualstudio\'][\'source\'] is empty, ' \
           'set this and run again!')
+    end
+
+    context 'VS 2010' do
+      it 'specifies /q for silent installation by default' do
+        opts = { platform: 'windows', version: '2008R2', step_into: ['visualstudio_edition'] }
+        chef_run = ChefSpec::SoloRunner.new(opts) do |node|
+          node.set['visualstudio']['source'] = 'http://localhost:8080'
+          node.set['visualstudio']['version'] = '2010'
+          node.set['visualstudio']['edition'] = 'professional'
+        end.converge(described_recipe) do
+          allow_any_instance_of(Visualstudio::Helper).to receive(:package_is_installed?)
+            .and_return(false)
+        end
+        expect(chef_run).to install_visualstudio_edition('visualstudio_2010_professional')
+          .with(
+            edition: 'professional',
+            version: '2010',
+            configure_basename: nil)
+        vs2010_package = chef_run.node['visualstudio']['2010']['professional']['package_name']
+        expect(chef_run).to install_windows_package(vs2010_package).with(options: '/q')
+      end
+
+      it 'specifies /unattendfile when an unattend.ini file is given' do
+        opts = { platform: 'windows', version: '2008R2', step_into: ['visualstudio_edition'] }
+        chef_run = ChefSpec::SoloRunner.new(opts) do |node|
+          node.set['visualstudio']['source'] = 'http://localhost:8080'
+          node.set['visualstudio']['version'] = '2010'
+          node.set['visualstudio']['edition'] = 'professional'
+          node.set['visualstudio']['2010']['professional']['config_file'] = 'my_unattend.ini'
+        end.converge(described_recipe) do
+          allow_any_instance_of(Visualstudio::Helper).to receive(:package_is_installed?)
+            .and_return(false)
+        end
+        expect(chef_run).to install_visualstudio_edition('visualstudio_2010_professional')
+          .with(
+            edition: 'professional',
+            version: '2010',
+            configure_basename: 'my_unattend.ini')
+        vs2010_package = chef_run.node['visualstudio']['2010']['professional']['package_name']
+        expect(chef_run).to install_windows_package(vs2010_package)
+          .with(options: %r{^\/unattendfile ".+my_unattend.ini"$})
+      end
     end
 
     it 'installs VS 2012 TestProfessional when only edition attribute is set' do
@@ -51,8 +93,8 @@ describe 'visualstudio::install' do
         node.set['visualstudio']['edition'] = 'testprofessional'
       end.converge(described_recipe)
       url = 'http://localhost:8080/en_visual_studio_test_professional_2012_x86_dvd_920918.iso'
-      expect(chef_run).to install_visualstudio_edition('visualstudio_2012_testprofessional').
-        with(
+      expect(chef_run).to install_visualstudio_edition('visualstudio_2012_testprofessional')
+        .with(
           edition: 'testprofessional',
           version: '2012',
           install_dir: 'C:\Program Files (x86)\Microsoft Visual Studio 11.0',
@@ -78,11 +120,11 @@ describe 'visualstudio::install' do
         node.set['visualstudio']['installs'] = [
           {
             'edition' => 'testprofessional',
-            'version'=> '2013',
+            'version' => '2013'
           },
           {
             'edition' => 'professional',
-            'version'=> '2015',
+            'version' => '2015'
           }]
       end.converge(described_recipe)
       expect(chef_run).to install_visualstudio_edition('visualstudio_2013_testprofessional')

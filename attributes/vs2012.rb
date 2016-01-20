@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #
 # Author:: Shawn Neal (<sneal@daptiv.com>)
 # Cookbook Name:: visualstudio
@@ -20,8 +21,7 @@
 
 # Currently you cannot change this, doing so will break the cookbook
 default['visualstudio']['2012']['install_dir'] =
-  (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') +
-  '\Microsoft Visual Studio 11.0'
+  (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') + '\Microsoft Visual Studio 11.0'
 
 # Test Professional
 default['visualstudio']['2012']['testprofessional']['installer_file'] = 'vs_testprofessional.exe'
@@ -59,7 +59,7 @@ default['visualstudio']['2012']['ultimate']['checksum'] =
   'c2c140ec6b16d7d4596b680066de35cbdf60ec049eb42129e5c30945063d2e83'
 
 # Update 5
-#https://download.microsoft.com/download/1/7/A/17A8493D-BB25-4811-8242-CCCB74EF982E/VS2012.5.iso
+# https://download.microsoft.com/download/1/7/A/17A8493D-BB25-4811-8242-CCCB74EF982E/VS2012.5.iso
 default['visualstudio']['2012']['update']['filename'] = 'VS2012.5.iso'
 default['visualstudio']['2012']['update']['source'] = node['visualstudio']['source']
 default['visualstudio']['2012']['update']['checksum'] =
@@ -70,12 +70,12 @@ default['visualstudio']['2012']['update']['package_name'] =
 # VS 2012 Office developer tools
 default['visualstudio']['2012']['vsto']['installer_file'] = 'officetools_bundle.exe'
 default['visualstudio']['2012']['vsto']['package_src_url'] =
-  'http://download.microsoft.com/download/2/F/6/2F6A4FFA-D409-40C8-AF68-F6F0CBE0A00D/ENU/' +
+  'http://download.microsoft.com/download/2/F/6/2F6A4FFA-D409-40C8-AF68-F6F0CBE0A00D/ENU/' \
   'officetools_bundle.exe'
 default['visualstudio']['2012']['vsto']['package_name'] =
   'Microsoft Office Developer Tools for Visual Studio 2012 ENU'
 default['visualstudio']['2012']['vsto']['package_regkey'] =
-  'HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall' +
+  'HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall' \
   '\11a5e71f-e0d4-46b6-9fba-e5d0fc6149d0}'
 default['visualstudio']['2012']['vsto']['checksum'] =
   '1480da0041446ea534db180acd1ecb7db6cca988242ace536c7eed5c1ae7087e'

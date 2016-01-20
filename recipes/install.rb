@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #
 # Author:: Shawn Neal <sneal@daptiv.com>
 # Cookbook Name:: visualstudio
@@ -27,8 +28,8 @@ installs.each do |install|
   version = install['version']
   edition = install['edition']
 
-  install_url = ::File.join(node['visualstudio']['source'],
-    node['visualstudio'][version][edition]['filename'])
+  install_url = File.join(node['visualstudio']['source'],
+                          node['visualstudio'][version][edition]['filename'])
 
   visualstudio_edition "visualstudio_#{version}_#{edition}" do
     edition edition

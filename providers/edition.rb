@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #
 # Author:: Ian Kendrick (<iankendrick@gmail.com>), Shawn Neal (<sneal@daptiv.com>)
 # Cookbook Name:: visualstudio
@@ -27,10 +28,11 @@ def whyrun_supported?
   true
 end
 
+use_inline_resources
+
 action :install do
   unless package_is_installed?(new_resource.package_name)
     converge_by("Installing VisualStudio #{new_resource.edition} #{new_resource.version}") do
-
       # Extract the ISO image to the temporary Chef cache dir
       seven_zip_archive "extract_#{new_resource.version}_#{new_resource.edition}_iso" do
         path extracted_iso_dir
@@ -40,7 +42,7 @@ action :install do
       end
 
       # Ensure the target directory exists so logging doesn't fail on VS 2010
-      FileUtils::mkdir_p new_resource.install_dir
+      FileUtils.mkdir_p new_resource.install_dir
 
       # Install Visual Studio
       setup_options = new_resource.version == '2010' ? prepare_vs2010_options : prepare_vs_options
@@ -66,6 +68,16 @@ action :install do
 end
 
 def prepare_vs_options
+  config_path = create_vs_admin_deployment_file
+  setup_options = "/Q /norestart /noweb /log \"#{install_log_file}\" /adminfile \"#{config_path}\""
+  if new_resource.product_key
+    product_key = new_resource.product_key.delete('-')
+    setup_options << " /productkey \"#{product_key}\""
+  end
+  setup_options
+end
+
+def create_vs_admin_deployment_file
   config_source = "#{new_resource.version}/AdminDeployment-#{new_resource.edition}.xml"
   config_path = win_friendly_path(::File.join(extracted_iso_dir, 'AdminDeployment.xml'))
 
@@ -75,15 +87,18 @@ def prepare_vs_options
     action :create
   end
 
-  setup_options = "/Q /norestart /noweb /log \"#{install_log_file}\" /adminfile \"#{config_path}\""
-  if new_resource.product_key
-    product_key = new_resource.product_key.delete('-')
-    setup_options << " /productkey \"#{product_key}\""
-  end
-  setup_options
+  config_path
 end
 
 def prepare_vs2010_options
+  if new_resource.configure_basename.nil?
+    '/q'
+  else
+    "/unattendfile \"#{create_vs2010_unattend_file}\""
+  end
+end
+
+def create_vs2010_unattend_file
   config_path = win_friendly_path(::File.join(extracted_iso_dir, new_resource.configure_basename))
 
   template "#{config_path}.tmp" do
@@ -93,14 +108,16 @@ def prepare_vs2010_options
   end
 
   # chef creates utf-8 ini file but VS expects unicode, so convert
-  powershell_script 'convert unattend.ini to unicode' do
+  utf8_to_unicode(config_path)
+  config_path
+end
+
+def utf8_to_unicode(file_path)
+  powershell_script "convert #{file_path} to unicode" do
     code(
-      "gc -en utf8 #{config_path}.tmp | Out-File -en unicode #{config_path}"
+      "gc -en utf8 #{file_path}.tmp | Out-File -en unicode #{file_path}"
     )
   end
-
-  setup_options = "/unattendfile \"#{config_path}\""
-  setup_options
 end
 
 def install_log_file

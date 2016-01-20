@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #
 # Author:: Ian Kendrick (<iankendrick@gmail.com>), Shawn Neal (<sneal@daptiv.com>)
 # Cookbook Name:: visualstudio
@@ -22,13 +23,13 @@ actions :install
 default_action :install
 
 # The VS installation directory
-attribute :install_dir, kind_of: String, :required => true
+attribute :install_dir, kind_of: String, required: true
 
 # The update exe full source URL
-attribute :source, kind_of: String, :required => true
+attribute :source, kind_of: String, required: true
 
 # The installed MSI package name
-attribute :package_name, kind_of: String, :required => true
+attribute :package_name, kind_of: String, required: true
 
 # The source update exe SHA256 checksum
 attribute :checksum, kind_of: String

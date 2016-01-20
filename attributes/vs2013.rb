@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #
 # Author:: Shawn Neal (<sneal@daptiv.com>)
 # Cookbook Name:: visualstudio
@@ -20,8 +21,7 @@
 
 # Currently you cannot change this, doing so will break the cookbook
 default['visualstudio']['2013']['install_dir'] =
-  (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') +
-  '\Microsoft Visual Studio 12.0'
+  (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') + '\Microsoft Visual Studio 12.0'
 
 # Test Professional
 default['visualstudio']['2013']['testprofessional']['installer_file'] = 'vs_testprofessional.exe'

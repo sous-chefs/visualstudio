@@ -1,3 +1,4 @@
+# encoding: UTF-8
 #
 # Author:: Ian Kendrick (<iankendrick@gmail.com>), Shawn Neal (<sneal@daptiv.com>)
 # Cookbook Name:: visualstudio
@@ -25,16 +26,16 @@ default_action :install
 attribute :edition, kind_of: String, name_attribute: true
 
 # The VS version: 2010, 2012 etc
-attribute :version, kind_of: String, :required => true
+attribute :version, kind_of: String, required: true
 
 # The VS installation directory
-attribute :install_dir, kind_of: String, :required => true
+attribute :install_dir, kind_of: String, required: true
 
 # The ISO full source URL
-attribute :source, kind_of: String, :required => true
+attribute :source, kind_of: String, required: true
 
 # The installed MSI package name
-attribute :package_name, kind_of: String, :required => true
+attribute :package_name, kind_of: String, required: true
 
 # The VS product key
 attribute :product_key, [String, nil]
@@ -46,7 +47,7 @@ attribute :checksum, kind_of: String
 attribute :preserve_extracted_files, kind_of: [TrueClass, FalseClass], default: false
 
 # The installer filename specific to the edition, defaults to vs_<edition>.exe
-attribute :installer_file, kind_of: String, :required => false
+attribute :installer_file, kind_of: String, required: false
 
 # VS 2010 ini path, unused for 2013+
 attribute :configure_basename, kind_of: String, default: nil

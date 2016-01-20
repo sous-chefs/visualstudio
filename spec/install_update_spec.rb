@@ -1,6 +1,5 @@
 # encoding: UTF-8
 describe 'visualstudio::install_update' do
-
   describe 'windows' do
     before(:each) do
       ENV['ProgramFiles(x86)'] = 'C:\Program Files (x86)'
@@ -14,8 +13,8 @@ describe 'visualstudio::install_update' do
     end
 
     it 'defaults to VS 2012 update' do
-      expect(chef_run).to install_visualstudio_update('visualstudio_2012_update').
-        with(
+      expect(chef_run).to install_visualstudio_update('visualstudio_2012_update')
+        .with(
           install_dir: 'C:\Program Files (x86)\Microsoft Visual Studio 11.0',
           source: 'http://localhost:8080/VS2012.5.iso',
           package_name: 'Visual Studio 2012 Update 5 (KB2707250)',
