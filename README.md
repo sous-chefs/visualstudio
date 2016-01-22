@@ -1,5 +1,5 @@
 [![Cookbook Version](http://img.shields.io/cookbook/v/visualstudio.svg)](https://supermarket.chef.io/cookbooks/visualstudio)
-[![Build Status](https://secure.travis-ci.org/daptiv/visualstudio.png)](http://travis-ci.org/daptiv/visualstudio)
+[![Build Status](https://travis-ci.org/daptiv/visualstudio.svg?branch=master)](https://travis-ci.org/daptiv/visualstudio)
 
 # VisualStudio Cookbook
 This Chef cookbook installs Visual Studio 2010, 2012, 2013, 2015 from an ISO.
