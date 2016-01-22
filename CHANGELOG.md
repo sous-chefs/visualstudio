@@ -1,6 +1,15 @@
 # CHANGELOG for visualstudio
 
-This file is used to list changes made in each version of visualstudion.
+This file is used to list changes made in each version of the Visual Studio
+cookbook.
+
+# 1.1.0:
+
+* VS 2010 installation defaults to /q without needing an unattend.ini file.
+* VS 2012 Update 5.
+* VS 2015 Enterprise edition added.
+* Product key is now configurable via a node attribute.
+* Replaced Tailor with RuboCop and upgraded development dependencies
 
 ## 1.0.1:
 
@@ -13,7 +22,7 @@ This file is used to list changes made in each version of visualstudion.
 
 * Initial release to Chef SuperMarket
 
-- - - 
+- - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.
 
 The [Github Flavored Markdown page](http://github.github.com/github-flavored-markdown/) describes the differences between markdown on github and standard markdown.
