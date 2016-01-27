@@ -1,7 +1,8 @@
 # encoding: UTF-8
 
 Vagrant.configure('2') do |config|
-  config.vm.box = 'daptiv/windows2012r2_chef12'
+  config.vm.box = 'testbox'
+  config.vm.box_url = ENV['WINDOWS_BOX_URL']
   config.vm.communicator = :winrm
   config.vm.provision :chef_solo do |chef|
     chef.add_recipe 'visualstudio::default'
@@ -13,7 +14,7 @@ Vagrant.configure('2') do |config|
       'visualstudio' => {
         'version' => '2015',
         'edition' => 'professional',
-        'source' => 'http://vagrantboxes.hq.daptiv.com/installs/cookbookresources',
+        'source' => ENV['VS_SOURCE_URL'],
         'preserve_extracted_files' => true
       }
     }
