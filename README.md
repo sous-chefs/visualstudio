@@ -25,6 +25,7 @@ NOTE - This cookbook cannot be installed over naked WinRM, i.e. knife-winrm or t
 - 2013 Test Professional
 - 2013 Premium
 - 2013 Ultimate
+- 2013 Community (Update 5)
 - 2015 Enterprise
 - 2015 Professional
 - 2015 Community

@@ -63,3 +63,11 @@ default['visualstudio']['2013']['update']['checksum'] =
   'baa3e1286bf847ffb1ba6191f14494aa5f0b856ea258284d99924481ea83c6cf'
 default['visualstudio']['2013']['update']['package_name'] =
   'Visual Studio 2013 Update 5 (KB3021976)'
+
+# Community
+default['visualstudio']['2013']['community']['installer_file'] = 'vs_community.exe'
+default['visualstudio']['2013']['community']['filename'] = 'vs2013.5_ce_enu.iso'
+default['visualstudio']['2013']['community']['package_name'] =
+  'Microsoft Visual Studio Community 2013 with Update 5'
+default['visualstudio']['2013']['community']['checksum'] =
+  '7de2340d9570895451c5f5d9f2081db860a4f753e7596e31b2742390a6d0e6bc'
