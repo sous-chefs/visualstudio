@@ -33,6 +33,16 @@ default['visualstudio']['2010']['professional']['checksum'] =
 default['visualstudio']['2010']['professional']['installer_file'] = File.join('setup', 'setup.exe')
 default['visualstudio']['2010']['professional']['config_file'] = nil
 
+# VS 2010 Ultimate
+default['visualstudio']['2010']['ultimate']['filename'] =
+  'en_visual_studio_2010_ultimate_x86_dvd_509116.iso'
+default['visualstudio']['2010']['ultimate']['package_name'] =
+  'Microsoft Visual Studio 2010 Ultimate - ENU'
+default['visualstudio']['2010']['ultimate']['checksum'] =
+  '602926C864FA1DDC087FEFB1ED952216DA4122D4DB774050D8E9373D3E4BFF98'
+default['visualstudio']['2010']['ultimate']['installer_file'] = File.join('setup', 'setup.exe')
+default['visualstudio']['2010']['ultimate']['config_file'] = nil
+
 # VS 2010 SP1
 default['visualstudio']['2010']['update']['filename'] = 'VS2010SP1dvd1.iso'
 default['visualstudio']['2010']['update']['source'] = node['visualstudio']['source']
