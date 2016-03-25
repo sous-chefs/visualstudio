@@ -1,6 +1,6 @@
 
 #
-# Author:: Shawn Neal (<sneal@daptiv.com>)
+# Author:: Shawn Neal (<sneal@sneal.net>)
 # Cookbook Name:: visualstudio
 #
 # Copyright 2015, Shawn Neal

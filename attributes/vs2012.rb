@@ -1,6 +1,6 @@
 
 #
-# Author:: Shawn Neal (<sneal@daptiv.com>)
+# Author:: Shawn Neal (<sneal@sneal.net>)
 # Cookbook Name:: visualstudio
 # Attribute:: vs2012
 #
