@@ -19,11 +19,8 @@
 # limitations under the License.
 #
 
-default['visualstudio']['edition'] = 'ultimate'
-default['visualstudio']['version'] = '2012'
-
-# Set this attribute your self to the FQDN of the folder which contains the ISO
-# default['visualstudio']['source'] = 'http://example.com:8080/visualstudio'
+default['visualstudio']['edition'] = 'community'
+default['visualstudio']['version'] = '2015'
 
 # Set the nuget package restore environment var for older VS versions
 default['visualstudio']['enable_nuget_package_restore'] = true
