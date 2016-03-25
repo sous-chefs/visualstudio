@@ -201,4 +201,4 @@ If the installer fails very early in the install process, check a few of things:
 
 # Author
 
-Author:: Shawn Neal (sneal@daptiv.com)
+Author:: Shawn Neal (sneal@sneal.net)

@@ -1,6 +1,6 @@
 # encoding: UTF-8
 #
-# Author:: Shawn Neal <sneal@daptiv.com>
+# Author:: Shawn Neal <sneal@sneal.net>
 # Cookbook Name:: visualstudio
 # Recipe:: dotnet_prereq
 #

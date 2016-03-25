@@ -2,7 +2,7 @@
 
 name             'visualstudio'
 maintainer       'Shawn Neal'
-maintainer_email 'sneal@daptiv.com'
+maintainer_email 'sneal@sneal.net'
 license          'Apache 2.0'
 description      'Installs/Configures Visual Studio'
 ver_path = File.join(File.dirname(__FILE__), 'version.txt')

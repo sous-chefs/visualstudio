@@ -1,6 +1,6 @@
 # encoding: UTF-8
 #
-# Author:: Ian Kendrick (<iankendrick@gmail.com>), Shawn Neal (<sneal@daptiv.com>)
+# Author:: Ian Kendrick (<iankendrick@gmail.com>), Shawn Neal (<sneal@sneal.net>)
 # Cookbook Name:: visualstudio
 # Resource:: edition
 #
