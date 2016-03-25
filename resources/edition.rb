@@ -43,11 +43,8 @@ attribute :product_key, [String, nil]
 # The source ISO SHA256 checksum
 attribute :checksum, kind_of: String
 
-# Should the extracted ISO files be preserved after installation?
-attribute :preserve_extracted_files, kind_of: [TrueClass, FalseClass], default: false
+# Should the downloaded ISO be deleted at the end of the Chef run?
+attribute :delete_iso, kind_of: [TrueClass, FalseClass], default: true
 
 # The installer filename specific to the edition, defaults to vs_<edition>.exe
 attribute :installer_file, kind_of: String, required: false
-
-# VS 2010 ini path, unused for 2013+
-attribute :configure_basename, kind_of: String, default: nil

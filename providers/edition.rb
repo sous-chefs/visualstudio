@@ -23,6 +23,9 @@ require 'fileutils'
 
 include Windows::Helper
 include Visualstudio::Helper
+include Chef::Mixin::PowershellOut
+
+ONE_HOUR_TIMEOUT = 3600
 
 def whyrun_supported?
   true
@@ -33,42 +36,73 @@ use_inline_resources
 action :install do
   unless package_is_installed?(new_resource.package_name)
     converge_by("Installing VisualStudio #{new_resource.edition} #{new_resource.version}") do
-      # Extract the ISO image to the temporary Chef cache dir
-      seven_zip_archive "extract_#{new_resource.version}_#{new_resource.edition}_iso" do
-        path extracted_iso_dir
-        source new_resource.source
-        overwrite true
-        checksum new_resource.checksum
-      end
-
-      # Ensure the target directory exists so logging doesn't fail on VS 2010
-      FileUtils.mkdir_p new_resource.install_dir
-
-      # Install Visual Studio
-      setup_options = new_resource.version == '2010' ? prepare_vs2010_options : prepare_vs_options
-
-      windows_package new_resource.package_name do
-        source installer_exe
-        installer_type :custom
-        options setup_options
-        timeout 3600 # 1hour
-        success_codes [0, 127, 3010]
-      end
-
-      # Cleanup extracted ISO files from tmp dir
-      directory "remove_#{new_resource.version}_#{new_resource.edition}_dir" do
-        path extracted_iso_dir
-        action :delete
-        recursive true
-        not_if { new_resource.preserve_extracted_files }
-      end
+      install_vs
     end
     new_resource.updated_by_last_action(true)
   end
 end
 
-def prepare_vs_options
-  config_path = create_vs_admin_deployment_file
+def install_vs
+  with_downloaded_and_mounted_iso do |drive_letter|
+    windows_package new_resource.package_name do
+      source installer_exe_path(drive_letter)
+      installer_type :custom
+      options vs_options
+      timeout ONE_HOUR_TIMEOUT
+      success_codes [0, 127, 3010]
+      action :nothing
+    end.run_action(:install)
+  end
+end
+
+def with_downloaded_and_mounted_iso
+  with_downloaded_iso do |iso_path|
+    with_mounted_iso(iso_path) do |drive_letter|
+      yield drive_letter
+    end
+  end
+end
+
+def with_downloaded_iso
+  iso_local_path = ::File.join(Chef::Config[:file_cache_path], iso_filename)
+  download_iso(iso_local_path)
+  begin
+    yield iso_local_path
+  ensure
+    ::File.delete(iso_local_path) if new_resource.delete_iso
+  end
+end
+
+def download_iso(iso_local_path)
+  remote_file "remote_file_#{new_resource.version}_#{new_resource.edition}" do
+    source new_resource.source
+    checksum new_resource.checksum
+    path iso_local_path
+    action :nothing
+  end.run_action(:create)
+end
+
+def with_mounted_iso(iso_local_path)
+  drive_letter = mount_iso(iso_local_path)
+  begin
+    yield drive_letter
+  ensure
+    powershell_out!("Dismount-DiskImage -ImagePath \"#{iso_local_path}\"")
+  end
+end
+
+def mount_iso(iso_local_path)
+  mount_script = code <<-EOH
+    $mountResult = Mount-DiskImage #{iso_local_path} -PassThru
+    $mountResult | Get-Volume
+    Write-Output ($mountVolume | Get-Volume).DriveLetter
+  EOH
+  mount_result = powershell_out!(mount_script)
+  mount_result.stdout.strip
+end
+
+def vs_options
+  config_path = create_admin_deployment_file
   setup_options = "/Q /norestart /noweb /log \"#{install_log_file}\" /adminfile \"#{config_path}\""
   if new_resource.product_key
     product_key = new_resource.product_key.delete('-')
@@ -77,62 +111,29 @@ def prepare_vs_options
   setup_options
 end
 
-def create_vs_admin_deployment_file
+def create_admin_deployment_file
   config_source = "#{new_resource.version}/AdminDeployment-#{new_resource.edition}.xml"
-  config_path = win_friendly_path(::File.join(extracted_iso_dir, 'AdminDeployment.xml'))
+  config_path = win_friendly_path(::File.join(Chef::Config[:file_cache_path],
+                                              'AdminDeployment.xml'))
 
   # Create installation config file
   cookbook_file config_path do
     source config_source
-    action :create
-  end
+    action :nothing
+  end.run_action(:create)
 
   config_path
-end
-
-def prepare_vs2010_options
-  if new_resource.configure_basename.nil?
-    '/q'
-  else
-    "/unattendfile \"#{create_vs2010_unattend_file}\""
-  end
-end
-
-def create_vs2010_unattend_file
-  config_path = win_friendly_path(::File.join(extracted_iso_dir, new_resource.configure_basename))
-
-  template "#{config_path}.tmp" do
-    source "#{new_resource.configure_basename}.erb"
-    action :create
-    variables 'extracted_iso_dir' => extracted_iso_dir.downcase
-  end
-
-  # chef creates utf-8 ini file but VS expects unicode, so convert
-  utf8_to_unicode(config_path)
-  config_path
-end
-
-def utf8_to_unicode(file_path)
-  powershell_script "convert #{file_path} to unicode" do
-    code(
-      "gc -en utf8 #{file_path}.tmp | Out-File -en unicode #{file_path}"
-    )
-  end
 end
 
 def install_log_file
-  win_friendly_path(::File.join(new_resource.install_dir, 'vsinstall.log'))
+  win_friendly_path(::File.join(new_resource.install_dir, 'install.log'))
 end
 
-def installer_exe
+def iso_filename
+  ::File.basename(new_resource.source)
+end
+
+def installer_exe_path(drive_letter)
   installer = new_resource.installer_file || "vs_#{new_resource.edition}.exe"
-  ::File.join(extracted_iso_dir, installer)
-end
-
-def extracted_iso_dir
-  win_friendly_path(
-    ::File.join(
-      Chef::Config[:file_cache_path],
-      new_resource.version,
-      new_resource.edition))
+  ::File.join(drive_letter, installer)
 end

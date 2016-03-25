@@ -25,8 +25,8 @@ default['visualstudio']['version'] = '2015'
 # Set the nuget package restore environment var for older VS versions
 default['visualstudio']['enable_nuget_package_restore'] = true
 
-# Should the extracted installer files be kept around after install?
-default['visualstudio']['preserve_extracted_files'] = false
+# Should the downloaded ISOs be kept around after the Chef run?
+default['visualstudio']['delete_iso'] = true
 
 # Version specific attributes
 include_attribute 'visualstudio::vs2010'
