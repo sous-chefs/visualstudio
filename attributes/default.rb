@@ -19,8 +19,8 @@
 # limitations under the License.
 #
 
-default['visualstudio']['edition'] = 'ultimate'
-default['visualstudio']['version'] = '2012'
+default['visualstudio']['edition'] = 'community'
+default['visualstudio']['version'] = '2015'
 
 # This is merged with the default['visualstudio']['<version>']['<edition>']['default_install_items']
 # overwrite the <SelectableItemCustomization> here to change the AdminDeployment.xml for install.
