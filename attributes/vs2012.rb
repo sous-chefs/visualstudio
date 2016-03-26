@@ -23,15 +23,6 @@
 default['visualstudio']['2012']['install_dir'] =
   (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') + '\Microsoft Visual Studio 11.0'
 
-# Test Professional
-default['visualstudio']['2012']['testprofessional']['installer_file'] = 'vs_testprofessional.exe'
-default['visualstudio']['2012']['testprofessional']['filename'] =
-  'en_visual_studio_test_professional_2012_x86_dvd_920918.iso'
-default['visualstudio']['2012']['testprofessional']['package_name'] =
-  'Microsoft Visual Studio Test Professional 2012'
-default['visualstudio']['2012']['testprofessional']['checksum'] =
-  '52075a4d5ab8fa01bf95eb884a62376075b4a38db72add6808c836cc0d01e1f8'
-
 # Professional
 default['visualstudio']['2012']['professional']['installer_file'] = 'vs_professional.exe'
 default['visualstudio']['2012']['professional']['filename'] =
@@ -40,6 +31,15 @@ default['visualstudio']['2012']['professional']['package_name'] =
   'Microsoft Visual Studio Professional 2012'
 default['visualstudio']['2012']['professional']['checksum'] =
   '511f7df6ea22b359f6f0e6a960b6ba8e057e6a177643d6d582a9a289eb2b924b'
+
+# Test Professional
+default['visualstudio']['2012']['testprofessional']['installer_file'] = 'vs_testprofessional.exe'
+default['visualstudio']['2012']['testprofessional']['filename'] =
+  'en_visual_studio_test_professional_2012_x86_dvd_920918.iso'
+default['visualstudio']['2012']['testprofessional']['package_name'] =
+  'Microsoft Visual Studio Test Professional 2012'
+default['visualstudio']['2012']['testprofessional']['checksum'] =
+  '52075a4d5ab8fa01bf95eb884a62376075b4a38db72add6808c836cc0d01e1f8'
 
 # Premium
 default['visualstudio']['2012']['premium']['installer_file'] = 'vs_premium.exe'
@@ -59,13 +59,13 @@ default['visualstudio']['2012']['ultimate']['checksum'] =
   'c2c140ec6b16d7d4596b680066de35cbdf60ec049eb42129e5c30945063d2e83'
 
 # Update 5
-# https://download.microsoft.com/download/1/7/A/17A8493D-BB25-4811-8242-CCCB74EF982E/VS2012.5.iso
 default['visualstudio']['2012']['update']['filename'] = 'VS2012.5.iso'
-default['visualstudio']['2012']['update']['source'] = node['visualstudio']['source']
 default['visualstudio']['2012']['update']['checksum'] =
   '405bad3d4249dd94b4fa309bb482ade9ce63d968b59cac9e2d63b0a24577285e'
 default['visualstudio']['2012']['update']['package_name'] =
   'Visual Studio 2012 Update 5 (KB2707250)'
+default['visualstudio']['2012']['update']['source'] =
+  'https://download.microsoft.com/download/1/7/A/17A8493D-BB25-4811-8242-CCCB74EF982E'
 
 # VS 2012 Office developer tools
 default['visualstudio']['2012']['vsto']['installer_file'] = 'officetools_bundle.exe'

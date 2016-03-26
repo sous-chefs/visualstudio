@@ -19,7 +19,7 @@ describe 'visualstudio::install' do
         end.converge(described_recipe)
       end
       it 'installs Visual Studio 2015 Professional when only edition attribute is set' do
-        url = 'http://localhost:8080/en_visual_studio_professional_2015_x86_x64_dvd_6846629.iso'
+        url = 'http://localhost:8080/vs2015.1.pro_enu.iso'
         expect(chef_run).to install_visualstudio_edition('visualstudio_2015_professional')
           .with(
             edition: 'professional',
