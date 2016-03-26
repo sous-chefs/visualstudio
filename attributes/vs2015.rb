@@ -23,29 +23,40 @@
 default['visualstudio']['2015']['install_dir'] =
   (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') + '\Microsoft Visual Studio 14.0'
 
-# Professional
-default['visualstudio']['2015']['professional']['installer_file'] = 'vs_professional.exe'
-default['visualstudio']['2015']['professional']['filename'] =
-  'en_visual_studio_professional_2015_x86_x64_dvd_6846629.iso'
-default['visualstudio']['2015']['professional']['package_name'] =
-  'Microsoft Visual Studio Professional 2015'
-default['visualstudio']['2015']['professional']['checksum'] =
-  '8d6d9a13ccb7f409161518e07e610c12180f415995fa417fa1343a4f2f4ce74b'
-
-# Community
+# Community w/Update1
 default['visualstudio']['2015']['community']['installer_file'] = 'vs_community.exe'
 default['visualstudio']['2015']['community']['filename'] =
-  'vs2015.com_enu.iso'
+  'vs2015.1.com_enu.iso'
 default['visualstudio']['2015']['community']['package_name'] =
   'Microsoft Visual Studio Community 2015'
 default['visualstudio']['2015']['community']['checksum'] =
-  '96463572892a0b4dd564f58fbbb1a38d705cad8ca46805dbb4fe6576255c6c01'
+  '4bd522a4db378f6d18bfca536510713d29fce48ceb3a2e6bd82cca0e915e1d48'
+default['visualstudio']['2015']['community']['source'] =
+  'http://download.microsoft.com/download/5/7/A/57A99666-126E-42FA-8E70-862EDBADD215'
 
-# Enterprise
+# Professional w/Update1
+default['visualstudio']['2015']['professional']['installer_file'] = 'vs_professional.exe'
+default['visualstudio']['2015']['professional']['filename'] = 'vs2015.1.pro_enu.iso'
+default['visualstudio']['2015']['professional']['package_name'] =
+  'Microsoft Visual Studio Professional 2015'
+default['visualstudio']['2015']['professional']['checksum'] = ''
+default['visualstudio']['2015']['professional']['source'] =
+  'http://download.microsoft.com/download/3/6/A/36A72A3F-711B-4738-B4C6-C668A508D2EE'
+
+# Test Professional w/Update1
+default['visualstudio']['2015']['testprofessional']['installer_file'] = 'vs_testprofessional.exe'
+default['visualstudio']['2015']['testprofessional']['filename'] = 'vs2015.testpro_enu.iso'
+default['visualstudio']['2015']['testprofessional']['package_name'] =
+  'Microsoft Visual Studio Test Professional 2015'
+default['visualstudio']['2015']['testprofessional']['checksum'] = ''
+default['visualstudio']['2015']['testprofessional']['source'] =
+  'http://download.microsoft.com/download/8/5/6/856E021B-39D6-4593-B7BB-2F8D1178EBCB'
+
+# Enterprise w/Update1
 default['visualstudio']['2015']['enterprise']['installer_file'] = 'vs_enterprise.exe'
-default['visualstudio']['2015']['enterprise']['filename'] =
-  'en_visual_studio_enterprise_2015_x86_x64_dvd_6850497.iso'
+default['visualstudio']['2015']['enterprise']['filename'] = 'vs2015.1.ent_enu.iso'
 default['visualstudio']['2015']['enterprise']['package_name'] =
   'Microsoft Visual Studio Enterprise 2015'
-default['visualstudio']['2015']['enterprise']['checksum'] =
-  '12db74d1e6243924c187069ad95cee58b687dcb9ba2d302fc6ae889fb4ae7694'
+default['visualstudio']['2015']['enterprise']['checksum'] = ''
+default['visualstudio']['2015']['professional']['source'] =
+  'http://download.microsoft.com/download/6/C/9/6C95B548-64A9-4637-A7F2-EB2A750C7504'
