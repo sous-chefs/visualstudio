@@ -1,15 +1,24 @@
 
 describe 'visualstudio::install_vsto' do
-  describe 'windows' do
-    before(:each) do
-      ENV['ProgramFiles(x86)'] = 'C:\Program Files (x86)'
-      stub_const('File::ALT_SEPARATOR', '\\')
-    end
-
+  describe 'Visual Studio 2015 Community Edition' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2').converge(described_recipe)
+      ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2') do |node|
+        node.set['visualstudio']['version'] = '2015'
+        node.set['visualstudio']['edition'] = 'community'
+      end.converge(described_recipe)
     end
-
+    it 'does not install VSTO' do
+      expect(chef_run).not_to install_windows_package(
+        'Microsoft Office Developer Tools for Visual Studio 2012 ENU')
+    end
+  end
+  describe 'Visual Studio 2012 Ultimate Edition' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2') do |node|
+        node.set['visualstudio']['version'] = '2012'
+        node.set['visualstudio']['edition'] = 'ultimate'
+      end.converge(described_recipe)
+    end
     it 'installs VSTO for VS 2012' do
       pkg_name = 'Microsoft Office Developer Tools for Visual Studio 2012 ENU'
       src_url = 'http://download.microsoft.com/download/2/F/6/' \
