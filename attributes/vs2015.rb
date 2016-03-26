@@ -25,7 +25,7 @@ default['visualstudio']['2015']['install_dir'] =
 
 # Professional
 default['visualstudio']['2015']['professional']['installer_file'] = 'vs_professional.exe'
-default['visualstudio']['2015']['professional']['filename'] =
+default['visualstudio']['2015']['professional']['install_url'] =
   'en_visual_studio_professional_2015_x86_x64_dvd_6846629.iso'
 default['visualstudio']['2015']['professional']['package_name'] =
   'Microsoft Visual Studio Professional 2015'
@@ -34,12 +34,13 @@ default['visualstudio']['2015']['professional']['checksum'] =
 
 # Community
 default['visualstudio']['2015']['community']['installer_file'] = 'vs_community.exe'
-default['visualstudio']['2015']['community']['filename'] =
-  'vs2015.com_enu.iso'
+default['visualstudio']['2015']['community']['iso_url'] =
+  'http://download.microsoft.com/download/5/7/A/57A99666-126E-42FA-8E70-862EDBADD215/' \
+  'vs2015.1.com_enu.iso'
 default['visualstudio']['2015']['community']['package_name'] =
   'Microsoft Visual Studio Community 2015'
 default['visualstudio']['2015']['community']['checksum'] =
-  '96463572892a0b4dd564f58fbbb1a38d705cad8ca46805dbb4fe6576255c6c01'
+  '4bd522a4db378f6d18bfca536510713d29fce48ceb3a2e6bd82cca0e915e1d48'
 
 # Enterprise
 default['visualstudio']['2015']['enterprise']['installer_file'] = 'vs_enterprise.exe'

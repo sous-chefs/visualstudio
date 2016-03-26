@@ -25,15 +25,16 @@
 installs.each do |install|
   version = install['version']
   edition = install['edition']
+  edition_attr = node['visualstudio'][version][edition]
   visualstudio_edition "visualstudio_#{version}_#{edition}" do
     edition edition
     version version
-    source install['iso_url']
     delete_iso node['visualstudio']['delete_iso']
     install_dir node['visualstudio'][version]['install_dir']
-    product_key node['visualstudio'][version][edition]['product_key']
-    package_name node['visualstudio'][version][edition]['package_name']
-    checksum node['visualstudio'][version][edition]['checksum']
-    installer_file node['visualstudio'][version][edition]['installer_file']
+    product_key edition_attr['product_key']
+    package_name edition_attr['package_name']
+    checksum edition_attr['checksum']
+    installer_file edition_attr['installer_file']
+    source edition_attr['iso_url']
   end
 end
