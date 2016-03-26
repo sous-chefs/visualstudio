@@ -18,4 +18,9 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = 'random'
+
+  config.before(:each) do
+    ENV['ProgramFiles(x86)'] = 'C:\Program Files (x86)'
+    stub_const('File::ALT_SEPARATOR', '\\')
+  end
 end
