@@ -1,7 +1,6 @@
 # encoding: UTF-8
 describe 'visualstudio::install' do
   describe 'Windows 2008R2' do
-
     describe 'Visual Studio 2015 Community' do
       it 'raises an error when source attribute is not set' do
         chef_run = ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2')
