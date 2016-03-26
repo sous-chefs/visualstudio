@@ -44,7 +44,10 @@ action :install do
       end
 
       # Ensure the target directory exists so logging doesn't fail on VS 2010
-      FileUtils.mkdir_p new_resource.install_dir
+      directory "create_#{new_resource.install_dir}" do
+        path new_resource.install_dir
+        recursive true
+      end
 
       # Install Visual Studio
       setup_options = new_resource.version == '2010' ? prepare_vs2010_options : prepare_vs_options
