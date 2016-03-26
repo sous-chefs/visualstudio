@@ -1,18 +1,28 @@
 
 describe 'visualstudio::install_update' do
-  describe 'windows' do
-    before(:each) do
-      ENV['ProgramFiles(x86)'] = 'C:\Program Files (x86)'
-      stub_const('File::ALT_SEPARATOR', '\\')
+  describe 'Visual Studio 2015 Community Edition' do
+    let(:chef_run) do
+      ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2') do |node|
+        node.set['visualstudio']['source'] = 'http://localhost:8080'
+      end.converge(described_recipe)
     end
+    it 'does not install any updates by default' do
+      expect(chef_run).not_to install_visualstudio_update('visualstudio_2015_update')
+      expect(chef_run).not_to install_visualstudio_update('visualstudio_2013_update')
+      expect(chef_run).not_to install_visualstudio_update('visualstudio_2012_update')
+      expect(chef_run).not_to install_visualstudio_update('visualstudio_2010_update')
+    end
+  end
 
+  describe 'Visual Studio 2012 Ultimate Edition' do
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2') do |node|
         node.default['visualstudio']['source'] = 'http://localhost:8080'
+        node.override['visualstudio']['version'] = '2012'
+        node.override['visualstudio']['edition'] = 'ultimate'
       end.converge(described_recipe)
     end
-
-    it 'defaults to VS 2012 update' do
+    it 'installs the VS 2012 update' do
       expect(chef_run).to install_visualstudio_update('visualstudio_2012_update')
         .with(
           install_dir: 'C:\Program Files (x86)\Microsoft Visual Studio 11.0',
