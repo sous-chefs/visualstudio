@@ -25,8 +25,7 @@ default['visualstudio']['2015']['install_dir'] =
 
 # Community w/Update1
 default['visualstudio']['2015']['community']['installer_file'] = 'vs_community.exe'
-default['visualstudio']['2015']['community']['filename'] =
-  'vs2015.1.com_enu.iso'
+default['visualstudio']['2015']['community']['filename'] = 'vs2015.1.com_enu.iso'
 default['visualstudio']['2015']['community']['package_name'] =
   'Microsoft Visual Studio Community 2015'
 default['visualstudio']['2015']['community']['checksum'] =
@@ -39,7 +38,8 @@ default['visualstudio']['2015']['professional']['installer_file'] = 'vs_professi
 default['visualstudio']['2015']['professional']['filename'] = 'vs2015.1.pro_enu.iso'
 default['visualstudio']['2015']['professional']['package_name'] =
   'Microsoft Visual Studio Professional 2015'
-default['visualstudio']['2015']['professional']['checksum'] = ''
+default['visualstudio']['2015']['professional']['checksum'] =
+  '7badca090697567ca679159afa21f5d84605bda6a66f99283185dacd24d61e6b'
 default['visualstudio']['2015']['professional']['source'] =
   'http://download.microsoft.com/download/3/6/A/36A72A3F-711B-4738-B4C6-C668A508D2EE'
 
@@ -48,7 +48,8 @@ default['visualstudio']['2015']['testprofessional']['installer_file'] = 'vs_test
 default['visualstudio']['2015']['testprofessional']['filename'] = 'vs2015.testpro_enu.iso'
 default['visualstudio']['2015']['testprofessional']['package_name'] =
   'Microsoft Visual Studio Test Professional 2015'
-default['visualstudio']['2015']['testprofessional']['checksum'] = ''
+default['visualstudio']['2015']['testprofessional']['checksum'] =
+  '4c83fd0c971d6249b7f87e7fb20ccbf41d4ff4814a0660c4f89d6884408c191b'
 default['visualstudio']['2015']['testprofessional']['source'] =
   'http://download.microsoft.com/download/8/5/6/856E021B-39D6-4593-B7BB-2F8D1178EBCB'
 
@@ -57,6 +58,7 @@ default['visualstudio']['2015']['enterprise']['installer_file'] = 'vs_enterprise
 default['visualstudio']['2015']['enterprise']['filename'] = 'vs2015.1.ent_enu.iso'
 default['visualstudio']['2015']['enterprise']['package_name'] =
   'Microsoft Visual Studio Enterprise 2015'
-default['visualstudio']['2015']['enterprise']['checksum'] = ''
-default['visualstudio']['2015']['professional']['source'] =
+default['visualstudio']['2015']['enterprise']['checksum'] =
+  'ea91fec301f1c105ef39826a72d21de5923f3d7a5857c25af3163526dd768639'
+default['visualstudio']['2015']['enterprise']['source'] =
   'http://download.microsoft.com/download/6/C/9/6C95B548-64A9-4637-A7F2-EB2A750C7504'
