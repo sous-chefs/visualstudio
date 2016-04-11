@@ -41,7 +41,7 @@ module MiniTest
     end
 
     def uninstall_reg_key
-      if node['kernel']['machine'] == :x86_64
+      if node['kernel']['machine'] == 'x86_64'
         'SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
       else
         'SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall'
