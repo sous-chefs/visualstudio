@@ -130,6 +130,23 @@ describe 'visualstudio::install' do
       expect(chef_run).to install_visualstudio_edition('visualstudio_2013_testprofessional')
       expect(chef_run).to install_visualstudio_edition('visualstudio_2015_professional')
     end
+
+    let(:config_xml_path) { 'c:\var\chef\cache\2015\professional\AdminDeployment.xml' }
+    it 'customizes the AdminDeployment.xml when install_items set on the node' do
+      opts = {
+        step_into: ['visualstudio_edition'],
+        file_cache_path: 'c:/var/chef/cache',
+        platform: 'windows',
+        version: '2008R2'
+      }
+      chef_run = ChefSpec::SoloRunner.new(opts) do |node|
+        node.set['visualstudio']['source'] = 'http://localhost:8080'
+        node.set['visualstudio']['edition'] = 'professional'
+        node.set['visualstudio']['version'] = '2015'
+        node.set['visualstudio']['install_items']['NativeLanguageSupport_VCV1']['selected'] = true
+      end.converge('visualstudio::install')
+      expect(chef_run).to render_file(config_xml_path)
+    end
   end
 
   describe 'linux' do

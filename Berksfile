@@ -3,3 +3,4 @@ source 'https://supermarket.chef.io'
 metadata
 cookbook 'minitest-handler'
 cookbook 'sqlce'
+cookbook 'dotnetframework'

@@ -20,9 +20,11 @@
 #
 
 require 'fileutils'
+require 'chef/mixin/deep_merge'
 
 include Windows::Helper
 include Visualstudio::Helper
+include Chef::Mixin::DeepMerge
 
 def whyrun_supported?
   true
@@ -77,16 +79,22 @@ def prepare_vs_options
   setup_options
 end
 
+# rubocop:disable Metrics/LineLength, Metrics/MethodLength, Metrics/AbcSize
 def create_vs_admin_deployment_file
-  config_source = "#{new_resource.version}/AdminDeployment-#{new_resource.edition}.xml"
   config_path = win_friendly_path(::File.join(extracted_iso_dir, 'AdminDeployment.xml'))
 
-  # Create installation config file
-  cookbook_file config_path do
-    source config_source
-    action :create
-  end
+  # Merge the VS version and edition default AdminDeploymentFile.xml item's with customized install_items
+  install_items = deep_merge(node['visualstudio'][new_resource.version.to_s][new_resource.edition.to_s]['default_install_items'], Mash.new)
+  install_items = deep_merge(node['visualstudio']['install_items'], install_items)
 
+  template config_path do
+    source 'AdminDeployment.xml.erb'
+    variables(
+      items: install_items,
+      version: new_resource.version.to_s,
+      edition: new_resource.edition
+    )
+  end
   config_path
 end
 
