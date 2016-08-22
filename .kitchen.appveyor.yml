@@ -19,6 +19,7 @@ platforms:
       communicator: winrm
     transport:
       name: winrm
+      winrm_transport: negotiate
 
 suites:
   - name: tasks
