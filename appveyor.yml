@@ -25,5 +25,9 @@ install:
   - ps: (New-Object System.Net.WebClient).DownloadFile('https://packages.chef.io/stable/windows/2008r2/chefdk-0.17.17-1-x86.msi', 'c:\projects\chefdk.msi')
   - ps: msiexec /qb /i c:\projects\chefdk.msi 
 
+build_script:
+  - bundle install || bundle install || bundle install
+  - bundle exec rake
+
 test_script:
-  - C:\opscode\chefdk\bin\kitchen verify
+  - c:\opscode\chefdk\bin\kitchen verify
