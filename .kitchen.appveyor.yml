@@ -15,6 +15,10 @@ provisioner:
 
 platforms:
   - name: windows-2012R2
+    driver_config:
+      communicator: winrm
+    transport:
+      name: winrm
 
 suites:
   - name: tasks
