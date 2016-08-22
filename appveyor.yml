@@ -9,6 +9,7 @@ environment:
   winrm_pass: Pass@word1
   winrm_port: 5985
   KITCHEN_YAML: c:\projects\visualstudio\.kitchen.appveyor.yml
+  SSL_CERT_FILE: c:\projects\certs.pem
 
   matrix:
     - ruby_version: "21"
@@ -22,7 +23,8 @@ branches:
 install:
   - ps: net user /add $env:winrm_user $env:winrm_pass
   - ps: net localgroup administrators $env:winrm_user /add
-  - ps: (New-Object System.Net.WebClient).DownloadFile('https://packages.chef.io/stable/windows/2008r2/chefdk-0.17.17-1-x86.msi', 'c:\projects\chefdk.msi')
+  - ps: Invoke-WebRequest -Uri http://curl.haxx.se/ca/cacert.pem -OutFile c:\projects\kitchen-machine\certs.pem
+  - ps: Invoke-WebRequest -Uri https://packages.chef.io/stable/windows/2008r2/chefdk-0.17.17-1-x86.msi -OutFile c:\projects\chefdk.msi
   - ps: msiexec /qb /i c:\projects\chefdk.msi
   - ps: $env:PATH="C:\Ruby$env:ruby_version\bin;$env:PATH"
   - ps: Write-Host $env:PATH
@@ -31,7 +33,7 @@ install:
   - ps: gem install bundler --quiet --no-ri --no-rdoc
 
 build_script:
-  - bundle install || bundle install || bundle install
+  - bundle install
   - bundle exec rake
 
 test_script:
