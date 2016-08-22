@@ -1,0 +1,35 @@
+version: "1.1.0.{build}-{branch}"
+
+image: Visual Studio 2013
+platform: x64
+
+cache:
+  - c:\projects\bundle
+
+environment:
+  winrm_user: test_user
+  winrm_pass: Pass@word1
+  winrm_port: 5985
+  KITCHEN_YAML: c:\projects\visualstudio\.kitchen.appveyor.yml
+  SSL_CERT_FILE: c:\opscode\chefdk\embedded\ssl\certs\cacert.pem
+
+  matrix:
+    - ruby_version: "21"
+
+clone_folder: c:\projects\visualstudio
+clone_depth: 1
+
+install:
+  - ps: net user /add $env:winrm_user $env:winrm_pass
+  - ps: net localgroup administrators $env:winrm_user /add
+  - ps: Invoke-WebRequest -Uri https://packages.chef.io/stable/windows/2008r2/chefdk-0.17.17-1-x86.msi -OutFile c:\projects\chefdk.msi
+  - ps: Start-Process C:\Windows\System32\msiexec.exe -ArgumentList "/qb /i c:\projects\chefdk.msi" -wait
+  - ps: $env:PATH="C:\Ruby$env:ruby_version\bin;$env:PATH"
+  - bundle config --local path c:\projects\bundle
+  - bundle install
+
+build_script:
+  - bundle exec rake
+
+test_script:
+  - c:\opscode\chefdk\bin\kitchen verify
