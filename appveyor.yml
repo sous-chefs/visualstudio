@@ -22,7 +22,7 @@ branches:
 install:
   - ps: net user /add $env:winrm_user $env:winrm_pass
   - ps: net localgroup administrators $env:winrm_user /add
-  - ps: (New-Object System.Net.WebClient).DownloadFile('https://packages.chef.io/stable/windows/2008r2/chefdk-0.17.17-1-x86.msi', 'c:\projects\chefdk.msi'
+  - ps: (New-Object System.Net.WebClient).DownloadFile('https://packages.chef.io/stable/windows/2008r2/chefdk-0.17.17-1-x86.msi', 'c:\projects\chefdk.msi')
   - ps: msiexec /qb /i c:\projects\chefdk.msi 
 
 test_script:
