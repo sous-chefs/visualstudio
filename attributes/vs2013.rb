@@ -39,7 +39,7 @@ default['visualstudio']['2013']['professional']['filename'] = 'vs2013.5_pro_enu.
 default['visualstudio']['2013']['professional']['package_name'] =
   'Microsoft Visual Studio Professional 2013'
 default['visualstudio']['2013']['professional']['checksum'] =
-  ''
+  '85fdde5e636774c9869bcaab4d2ded83e7a9388014771bf228577eea6112b033'
 default['visualstudio']['2013']['professional']['source'] =
   'http://download.microsoft.com/download/F/2/E/F2EFF589-F7D7-478E-B3AB-15F412DA7DEB'
 
@@ -68,7 +68,7 @@ default['visualstudio']['2013']['ultimate']['filename'] = 'vs2013.5_ult_enu.iso'
 default['visualstudio']['2013']['ultimate']['package_name'] =
   'Microsoft Visual Studio Ultimate 2013'
 default['visualstudio']['2013']['ultimate']['checksum'] =
-  ''
+  '43a2f252cb3b21cce1149c212f436e9e8190ae73b489f951601a546b62752bef'
 default['visualstudio']['2013']['ultimate']['source'] =
   'http://download.microsoft.com/download/E/2/A/E2ADF1BE-8FA0-4436-A260-8780444C8355'
 
