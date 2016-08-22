@@ -25,8 +25,7 @@ install:
   - ps: net localgroup administrators $env:winrm_user /add
   - ps: Invoke-WebRequest -Uri http://curl.haxx.se/ca/cacert.pem -OutFile c:\projects\certs.pem
   - ps: Invoke-WebRequest -Uri https://packages.chef.io/stable/windows/2008r2/chefdk-0.17.17-1-x86.msi -OutFile c:\projects\chefdk.msi
-  - ps: msiexec /qb /i c:\projects\chefdk.msi
-  - ps: while (!(Test-Path 'c:\opscode\chefdk\bin\kitchen.bat')) { Start-Sleep 10 }
+  - ps: Start-Process C:\Windows\System32\msiexec.exe -ArgumentList "/qb /i c:\projects\chefdk.msi" -wait
   - ps: $env:PATH="C:\Ruby$env:ruby_version\bin;$env:PATH"
   - ps: Write-Host $env:PATH
   - ps: ruby --version
