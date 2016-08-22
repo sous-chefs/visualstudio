@@ -33,8 +33,8 @@ install:
   - ps: gem install bundler --quiet --no-ri --no-rdoc
 
 build_script:
-  - bundle install
-  - bundle exec rake
+  - exit 0
 
 test_script:
+  - c:\opscode\chefdk\bin\kitchen diagnose --all
   - c:\opscode\chefdk\bin\kitchen verify
