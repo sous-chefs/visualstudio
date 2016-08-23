@@ -5,7 +5,7 @@ os: Windows Server 2012 R2
 platform: x64
 
 cache:
-  - vendor/bundle
+  - c:\projects\bundle
 
 environment:
   SSL_CERT_FILE: c:\opscode\chef\embedded\ssl\certs\cacert.pem
@@ -22,7 +22,7 @@ install:
   - ps: Start-Process C:\Windows\System32\msiexec.exe -ArgumentList "/qn /i c:\projects\chef.msi" -wait
   - ps: $env:PATH="C:\Ruby$env:ruby_version\bin;$env:PATH"
   - c:\opscode\chefdk\bin\berks vendor c:\projects\cookbooks
-  - bundle config --local path vendor/bundle
+  - bundle config --local path c:\projects\bundle
   - bundle install
 
 build_script:
@@ -30,4 +30,3 @@ build_script:
 
 test_script:
   - c:\opscode\chef\bin\chef-client --local-mode --fatal-windows-admin-check --log_level info -j c:\projects\cookbooks\visualstudio\appveyor-node.json
-  
