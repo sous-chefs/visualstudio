@@ -5,27 +5,20 @@ platform:
   - x64
 
 environment:
-  winrm_user: test_user
-  winrm_pass: Pass@word1
-  winrm_port: 5985
-  KITCHEN_YAML: c:\projects\visualstudio\.kitchen.appveyor.yml
-  SSL_CERT_FILE: c:\projects\certs.pem
+  SSL_CERT_FILE: c:\opscode\chef\embedded\ssl\certs\cacert.pem
 
   matrix:
     - ruby_version: "21"
 
-clone_folder: c:\projects\visualstudio
+clone_folder: c:\projects\cookbooks\visualstudio
 clone_depth: 1
 branches:
   only:
     - master
 
 install:
-  - ps: net user /add $env:winrm_user $env:winrm_pass
-  - ps: net localgroup administrators $env:winrm_user /add
-  - ps: Invoke-WebRequest -Uri http://curl.haxx.se/ca/cacert.pem -OutFile c:\projects\certs.pem
-  - ps: Invoke-WebRequest -Uri https://packages.chef.io/stable/windows/2008r2/chefdk-0.17.17-1-x86.msi -OutFile c:\projects\chefdk.msi
-  - ps: Start-Process C:\Windows\System32\msiexec.exe -ArgumentList "/qb /i c:\projects\chefdk.msi" -wait
+  - ps: Invoke-WebRequest -Uri http://www.getchef.com/chef/install.msi -OutFile c:\projects\chef.msi
+  - ps: Start-Process C:\Windows\System32\msiexec.exe -ArgumentList "/qn /i c:\projects\chef.msi" -wait
   - ps: $env:PATH="C:\Ruby$env:ruby_version\bin;$env:PATH"
   - ps: Write-Host $env:PATH
   - ps: ruby --version
@@ -36,5 +29,4 @@ build_script:
   - exit 0
 
 test_script:
-  - c:\opscode\chefdk\bin\kitchen diagnose --all
-  - c:\opscode\chefdk\bin\kitchen verify
+  - c:\opscode\chef\bin\chef-client --local-mode --fatal-windows-admin-check --log_level debug -j c:\projects\cookbooks\visualstudio\appveyor-node.json
