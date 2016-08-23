@@ -26,7 +26,7 @@ install:
   - ps: ruby --version
   - ps: gem --version
   - ps: gem install bundler --quiet --no-ri --no-rdoc
-  - ps: c:\opscode\chefdk\bin\berks install
+  - ps: c:\opscode\chefdk\bin\berks vendor c:\projects\cookbooks
 
 build_script:
   - exit 0
