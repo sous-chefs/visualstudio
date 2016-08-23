@@ -1,20 +1,19 @@
 version: "master-{build}"
 
+image: WMF 5
 os: Windows Server 2012 R2
-platform:
-  - x64
+platform: x64
+
+cache:
+  - vendor/bundle
 
 environment:
   SSL_CERT_FILE: c:\opscode\chef\embedded\ssl\certs\cacert.pem
-
   matrix:
     - ruby_version: "21"
 
 clone_folder: c:\projects\cookbooks\visualstudio
 clone_depth: 1
-branches:
-  only:
-    - master
 
 install:
   - ps: Invoke-WebRequest -Uri http://www.getchef.com/chef/install.msi -OutFile c:\projects\chef.msi
@@ -22,14 +21,13 @@ install:
   - ps: Start-Process C:\Windows\System32\msiexec.exe -ArgumentList "/qb /i c:\projects\chefdk.msi" -wait
   - ps: Start-Process C:\Windows\System32\msiexec.exe -ArgumentList "/qn /i c:\projects\chef.msi" -wait
   - ps: $env:PATH="C:\Ruby$env:ruby_version\bin;$env:PATH"
-  - ps: Write-Host $env:PATH
-  - ps: ruby --version
-  - ps: gem --version
-  - ps: gem install bundler --quiet --no-ri --no-rdoc
-  - ps: c:\opscode\chefdk\bin\berks vendor c:\projects\cookbooks
+  - c:\opscode\chefdk\bin\berks vendor c:\projects\cookbooks
+  - bundle config --local path vendor/bundle
+  - bundle install
 
 build_script:
-  - exit 0
+  - bundle exec rake
 
 test_script:
   - c:\opscode\chef\bin\chef-client --local-mode --fatal-windows-admin-check --log_level info -j c:\projects\cookbooks\visualstudio\appveyor-node.json
+  
