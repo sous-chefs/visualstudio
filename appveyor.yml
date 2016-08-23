@@ -32,4 +32,4 @@ build_script:
   - exit 0
 
 test_script:
-  - c:\opscode\chef\bin\chef-client --local-mode --fatal-windows-admin-check --log_level debug -j c:\projects\cookbooks\visualstudio\appveyor-node.json
+  - c:\opscode\chef\bin\chef-client --local-mode --fatal-windows-admin-check --log_level info -j c:\projects\cookbooks\visualstudio\appveyor-node.json

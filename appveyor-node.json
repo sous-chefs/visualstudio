@@ -1,5 +1,5 @@
 {
-  "run_list": ["recipe[visualstudio::default]"],
+  "run_list": ["recipe[visualstudio]", "recipe[minitest-handler]"],
   "visualstudio": {
     "version": "2015",
     "edition": "community",
