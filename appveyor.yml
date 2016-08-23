@@ -1,5 +1,6 @@
 version: "master-{build}"
 
+# Use the 2013 image so VS 2015 isn't already installed
 image: Visual Studio 2013
 platform: x64
 
@@ -7,9 +8,8 @@ cache:
   - c:\projects\bundle
 
 environment:
-  SSL_CERT_FILE: c:\opscode\chef\embedded\ssl\certs\cacert.pem
   matrix:
-    - ruby_version: "21"
+    - ruby_version: "22"
 
 clone_folder: c:\projects\cookbooks\visualstudio
 clone_depth: 1
