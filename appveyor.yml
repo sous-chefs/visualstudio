@@ -18,12 +18,15 @@ branches:
 
 install:
   - ps: Invoke-WebRequest -Uri http://www.getchef.com/chef/install.msi -OutFile c:\projects\chef.msi
+  - ps: Invoke-WebRequest -Uri https://packages.chef.io/stable/windows/2008r2/chefdk-0.17.17-1-x86.msi -OutFile c:\projects\chefdk.msi
+  - ps: Start-Process C:\Windows\System32\msiexec.exe -ArgumentList "/qb /i c:\projects\chefdk.msi" -wait
   - ps: Start-Process C:\Windows\System32\msiexec.exe -ArgumentList "/qn /i c:\projects\chef.msi" -wait
   - ps: $env:PATH="C:\Ruby$env:ruby_version\bin;$env:PATH"
   - ps: Write-Host $env:PATH
   - ps: ruby --version
   - ps: gem --version
   - ps: gem install bundler --quiet --no-ri --no-rdoc
+  - ps: c:\opscode\chefdk\bin\berks install
 
 build_script:
   - exit 0
