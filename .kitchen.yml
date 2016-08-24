@@ -1,0 +1,34 @@
+---
+driver:
+  name: vagrant
+  provider: virtualbox
+  gui: true
+  username: vagrant
+  password: vagrant
+  elevated: true
+  elevated_username: vagrant
+  elevated_password: vagrant
+
+provisioner:
+  name: chef_zero
+
+platforms:
+  - name: windows-2012R2
+    driver:
+      box: mwrock/Windows2012R2
+
+suites:
+  - name: tasks
+    run_list:
+      - recipe[visualstudio::default]
+      - recipe[visualstudio::install_update]
+      - recipe[visualstudio::install_vsto]
+      - recipe[minitest-handler]
+    attributes: {
+      'visualstudio': {
+        'version': '2015',
+        'edition': 'community',
+        'source': 'http://download.microsoft.com/download/b/e/d/bedddfc4-55f4-4748-90a8-ffe38a40e89f/',
+        'preserve_extracted_files': true
+      }
+    }
