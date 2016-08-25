@@ -1,4 +1,4 @@
-# encoding: UTF-8
+
 #
 # Author:: Ian Kendrick (<iankendrick@gmail.com>), Shawn Neal (<sneal@daptiv.com>)
 # Cookbook Name:: visualstudio
@@ -67,7 +67,9 @@ def extracted_iso_dir
   win_friendly_path(
     ::File.join(
       Chef::Config[:file_cache_path],
-      Digest::MD5.hexdigest(new_resource.package_name)))
+      Digest::MD5.hexdigest(new_resource.package_name)
+    )
+  )
 end
 
 def install_log_file

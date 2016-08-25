@@ -1,4 +1,4 @@
-# encoding: UTF-8
+
 #
 # Author:: Ian Kendrick (<iankendrick@gmail.com>), Shawn Neal (<sneal@daptiv.com>)
 # Cookbook Name:: visualstudio
@@ -134,5 +134,7 @@ def extracted_iso_dir
     ::File.join(
       Chef::Config[:file_cache_path],
       new_resource.version,
-      new_resource.edition))
+      new_resource.edition
+    )
+  )
 end

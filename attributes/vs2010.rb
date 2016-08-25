@@ -1,4 +1,4 @@
-# encoding: UTF-8
+
 #
 # Author:: Ian Kendrick (<iankendrick@gmail.com>)
 # Cookbook Name:: visualstudio

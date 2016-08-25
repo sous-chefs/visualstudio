@@ -1,4 +1,4 @@
-# encoding: UTF-8
+
 describe 'visualstudio::install' do
   describe 'windows' do
     before(:each) do
@@ -27,7 +27,8 @@ describe 'visualstudio::install' do
           package_name: 'Microsoft Visual Studio Ultimate 2012',
           checksum: 'c2c140ec6b16d7d4596b680066de35cbdf60ec049eb42129e5c30945063d2e83',
           preserve_extracted_files: false,
-          installer_file: 'vs_ultimate.exe')
+          installer_file: 'vs_ultimate.exe'
+        )
     end
   end
 
@@ -42,7 +43,8 @@ describe 'visualstudio::install' do
       expect { chef_run.converge(described_recipe) }.to raise_error(
         RuntimeError,
         'The required attribute node[\'visualstudio\'][\'source\'] is empty, ' \
-          'set this and run again!')
+          'set this and run again!'
+      )
     end
 
     context 'VS 2010' do
@@ -60,7 +62,8 @@ describe 'visualstudio::install' do
           .with(
             edition: 'professional',
             version: '2010',
-            configure_basename: nil)
+            configure_basename: nil
+          )
         vs2010_package = chef_run.node['visualstudio']['2010']['professional']['package_name']
         expect(chef_run).to install_windows_package(vs2010_package).with(options: '/q')
       end
@@ -80,7 +83,8 @@ describe 'visualstudio::install' do
           .with(
             edition: 'professional',
             version: '2010',
-            configure_basename: 'my_unattend.ini')
+            configure_basename: 'my_unattend.ini'
+          )
         vs2010_package = chef_run.node['visualstudio']['2010']['professional']['package_name']
         expect(chef_run).to install_windows_package(vs2010_package)
           .with(options: %r{^\/unattendfile ".+my_unattend.ini"$})
@@ -102,7 +106,8 @@ describe 'visualstudio::install' do
           package_name: 'Microsoft Visual Studio Test Professional 2012',
           checksum: '52075a4d5ab8fa01bf95eb884a62376075b4a38db72add6808c836cc0d01e1f8',
           preserve_extracted_files: false,
-          installer_file: 'vs_testprofessional.exe')
+          installer_file: 'vs_testprofessional.exe'
+        )
     end
 
     it 'installs Vs 2013 Ultimate when edition attribute is set to Ultimate and version to 2013' do
@@ -125,7 +130,8 @@ describe 'visualstudio::install' do
           {
             'edition' => 'professional',
             'version' => '2015'
-          }]
+          }
+        ]
       end.converge(described_recipe)
       expect(chef_run).to install_visualstudio_edition('visualstudio_2013_testprofessional')
       expect(chef_run).to install_visualstudio_edition('visualstudio_2015_professional')

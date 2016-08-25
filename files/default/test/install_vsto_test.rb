@@ -1,4 +1,4 @@
-# encoding: UTF-8
+
 
 require 'minitest/spec'
 require_relative 'spec_helper'

@@ -1,4 +1,4 @@
-# encoding: UTF-8
+
 
 module Visualstudio
   # VS cookbook library helper methods
@@ -30,7 +30,7 @@ module Visualstudio
     def assert_source_attribute_is_set
       # Ensure the user specified the required source attribute
       if node['visualstudio']['source'].nil?
-        fail 'The required attribute node[\'visualstudio\'][\'source\'] is empty, ' \
+        raise 'The required attribute node[\'visualstudio\'][\'source\'] is empty, ' \
           'set this and run again!'
       end
     end
