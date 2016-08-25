@@ -170,7 +170,7 @@ Installs the Microsoft Office Developer Tools for Visual Studio 2012. Add this t
 
 This cookbook makes the `visualstudio_edition` and `visualstudio_update` resource definitions available.
 
-For example, to install Visual Studio 2010 using the `visualstudio_edition` definition:
+For example, to install Visual Studio 2015 Pro using the `visualstudio_edition` definition:
 
 ```ruby
 visualstudio_edition 'vs_2015_professional' do
