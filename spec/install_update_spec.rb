@@ -1,4 +1,4 @@
-# encoding: UTF-8
+
 describe 'visualstudio::install_update' do
   describe 'windows' do
     before(:each) do
@@ -8,7 +8,7 @@ describe 'visualstudio::install_update' do
 
     let(:chef_run) do
       ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2') do |node|
-        node.set['visualstudio']['source'] = 'http://localhost:8080'
+        node.default['visualstudio']['source'] = 'http://localhost:8080'
       end.converge(described_recipe)
     end
 
@@ -18,7 +18,8 @@ describe 'visualstudio::install_update' do
           install_dir: 'C:\Program Files (x86)\Microsoft Visual Studio 11.0',
           source: 'http://localhost:8080/VS2012.5.iso',
           package_name: 'Visual Studio 2012 Update 5 (KB2707250)',
-          checksum: '405bad3d4249dd94b4fa309bb482ade9ce63d968b59cac9e2d63b0a24577285e')
+          checksum: '405bad3d4249dd94b4fa309bb482ade9ce63d968b59cac9e2d63b0a24577285e'
+        )
     end
   end
 end

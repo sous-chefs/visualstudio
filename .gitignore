@@ -11,6 +11,7 @@ version.txt
 # Bundler
 bin/*
 .bundle/*
+.vendor/*
 
 .kitchen/
 .kitchen.local.yml

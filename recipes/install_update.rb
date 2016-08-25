@@ -1,4 +1,4 @@
-# encoding: UTF-8
+
 #
 # Author:: Shawn Neal
 # Cookbook Name:: visualstudio

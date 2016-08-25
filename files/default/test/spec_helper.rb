@@ -1,4 +1,4 @@
-# encoding: UTF-8
+
 
 require 'win32/registry'
 require 'minitest/autorun'

@@ -1,4 +1,4 @@
-# encoding: UTF-8
+
 #
 # Author:: Shawn Neal <sneal@daptiv.com>
 # Cookbook Name:: visualstudio

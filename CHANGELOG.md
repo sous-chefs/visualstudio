@@ -2,6 +2,16 @@
 
 This file is used to list changes made in each version of visualstudion.
 
+## 1.1.0
+
+* VS 2010 installation defaults to /q without needing an unattend.ini file.
+* VS 2012 Update 5.
+* VS 2015 Enterprise edition added.
+* Product key is now configurable via a node attribute.
+* Replaced Tailor with RuboCop and upgraded development dependencies.
+* Fixed "Win32::Registry::Error".
+* Added TravisCI build.
+
 ## 1.0.1:
 
 * Exit code 3010 (reboot required) should not fail Chef run

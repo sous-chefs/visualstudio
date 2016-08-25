@@ -1,4 +1,4 @@
-# encoding: UTF-8
+
 
 require 'minitest/spec'
 require_relative 'spec_helper'
@@ -19,7 +19,8 @@ class InstallSpec < MiniTest::Chef::Spec
         each_version_edition(node) do |version, _|
           devenv_path = File.join(
             node['visualstudio'][version]['install_dir'],
-            '\Common7\IDE\devenv.exe')
+            '\Common7\IDE\devenv.exe'
+          )
           assert File.exist?(devenv_path), "Could not find file #{devenv_path}"
         end
       end

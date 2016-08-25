@@ -1,4 +1,4 @@
-# encoding: UTF-8
+
 #
 # Author:: Shawn Neal (<sneal@daptiv.com>)
 # Cookbook Name:: visualstudio
@@ -32,14 +32,14 @@ default['visualstudio']['2015']['professional']['package_name'] =
 default['visualstudio']['2015']['professional']['checksum'] =
   '8d6d9a13ccb7f409161518e07e610c12180f415995fa417fa1343a4f2f4ce74b'
 
-# Community
+# Community w/Update 3
 default['visualstudio']['2015']['community']['installer_file'] = 'vs_community.exe'
 default['visualstudio']['2015']['community']['filename'] =
-  'vs2015.com_enu.iso'
+  'vs2015.3.com_enu.iso'
 default['visualstudio']['2015']['community']['package_name'] =
   'Microsoft Visual Studio Community 2015'
 default['visualstudio']['2015']['community']['checksum'] =
-  '96463572892a0b4dd564f58fbbb1a38d705cad8ca46805dbb4fe6576255c6c01'
+  'ce124aec77f970605bb38352e59e7b3c7b51c0367f213cf5e6165b2698c1ba20'
 
 # Enterprise
 default['visualstudio']['2015']['enterprise']['installer_file'] = 'vs_enterprise.exe'

@@ -1,4 +1,4 @@
-# encoding: UTF-8
+
 
 source 'http://rubygems.org'
 
@@ -12,3 +12,4 @@ gem 'foodcritic'
 gem 'rubocop'
 gem 'rake'
 gem 'berkshelf'
+gem 'stove'

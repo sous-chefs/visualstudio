@@ -1,4 +1,4 @@
-# encoding: UTF-8
+
 describe 'visualstudio::install_vsto' do
   describe 'windows' do
     before(:each) do
@@ -21,7 +21,8 @@ describe 'visualstudio::install_vsto' do
         .with(
           source: src_url,
           checksum: '1480da0041446ea534db180acd1ecb7db6cca988242ace536c7eed5c1ae7087e',
-          options: options)
+          options: options
+        )
     end
   end
 end

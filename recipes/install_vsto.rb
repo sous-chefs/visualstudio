@@ -1,4 +1,4 @@
-# encoding: UTF-8
+
 #
 # Author:: Juan Laube
 # Cookbook Name:: visualstudio
@@ -25,7 +25,8 @@
 versions.each do |version|
   if version == '2012'
     install_log_path = win_friendly_path(
-      File.join(node['visualstudio']['2012']['install_dir'], 'vstoinstall.log'))
+      File.join(node['visualstudio']['2012']['install_dir'], 'vstoinstall.log')
+    )
 
     # By removing this key we can skip an uncessary reboot before installing VSTO
     key = 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion' \
