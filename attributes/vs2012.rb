@@ -220,7 +220,6 @@ end
 
 # Update 5
 default['visualstudio']['2012']['update']['filename'] = 'VS2012.5.iso'
-default['visualstudio']['2012']['update']['source'] = node['visualstudio']['source']
 default['visualstudio']['2012']['update']['checksum'] =
   '405bad3d4249dd94b4fa309bb482ade9ce63d968b59cac9e2d63b0a24577285e'
 default['visualstudio']['2012']['update']['package_name'] =

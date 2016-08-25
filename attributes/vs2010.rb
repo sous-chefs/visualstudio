@@ -45,8 +45,9 @@ default['visualstudio']['2010']['ultimate']['config_file'] = nil
 
 # VS 2010 SP1
 default['visualstudio']['2010']['update']['filename'] = 'VS2010SP1dvd1.iso'
-default['visualstudio']['2010']['update']['source'] = node['visualstudio']['source']
 default['visualstudio']['2010']['update']['checksum'] =
   'fce24f0e3f95fdeb54b806be3266f3b61a1e6b5b78c7e6c13c36fc1a6f5ba0ad'
 default['visualstudio']['2010']['update']['package_name'] =
   'Microsoft Visual Studio 2010 Service Pack 1'
+default['visualstudio']['2010']['update']['default_source'] =
+  'http://download.microsoft.com/download/E/B/A/EBA0A152-F426-47E6-9E3F-EFB686E3CA20'
