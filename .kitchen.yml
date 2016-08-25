@@ -26,8 +26,6 @@ suites:
       - recipe[minitest-handler]
     attributes: {
       'visualstudio': {
-        'version': '2015',
-        'edition': 'community',
         'source': 'http://download.microsoft.com/download/b/e/d/bedddfc4-55f4-4748-90a8-ffe38a40e89f/',
         'preserve_extracted_files': true
       }
