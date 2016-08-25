@@ -21,21 +21,16 @@
 
 ::Chef::Recipe.send(:include, Visualstudio::Helper)
 
-assert_source_attribute_is_set
-
 # Install each specified edition/version
 installs.each do |install|
   version = install['version']
   edition = install['edition']
-
-  install_url = File.join(node['visualstudio']['source'],
-                          node['visualstudio'][version][edition]['filename'])
-
+  url = source_download_url(version, edition)
   visualstudio_edition "visualstudio_#{version}_#{edition}" do
     edition edition
     version version
     install_dir node['visualstudio'][version]['install_dir']
-    source install_url
+    source url
     product_key node['visualstudio'][version][edition]['product_key']
     package_name node['visualstudio'][version][edition]['package_name']
     checksum node['visualstudio'][version][edition]['checksum']

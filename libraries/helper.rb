@@ -26,16 +26,31 @@ module Visualstudio
       installs.map { |i| i['version'] }.uniq
     end
 
-    # Fails the Chef run if the visualstudio source attribute is not set
-    def assert_source_attribute_is_set
-      # Ensure the user specified the required source attribute
-      if node['visualstudio']['source'].nil?
-        raise 'The required attribute node[\'visualstudio\'][\'source\'] is empty, ' \
-          'set this and run again!'
-      end
+    # Gets the version/edition ISO download URL or raises an error
+    def source_download_url(version, edition)
+      src = iso_source(version, edition)
+      assert_src_is_not_nil(src, version, edition)
+      ::File.join(src, node['visualstudio'][version][edition]['filename'])
     end
 
     private
+
+    # Gets the version/edition ISO download root URL
+    def iso_source(version, edition)
+      src = node['visualstudio'][version][edition]['default_source']
+      src = node['visualstudio']['source'] if node['visualstudio']['source']
+      src = node['visualstudio'][version][edition]['source'] if node['visualstudio'][version][edition]['source']
+      src
+    end
+
+    # Fails the Chef run if the visualstudio download source is not set
+    def assert_src_is_not_nil(src, version, edition)
+      if src.nil?
+        raise 'The ISO download source is empty! '\
+          "Set the node['visualstudio']['#{version}']['#{edition}']['source'] " \
+          'or node[\'visualstudio\'][\'source\'] attribute and run again!'
+      end
+    end
 
     def windows_package_is_installed?(package_name)
       require 'win32/registry'

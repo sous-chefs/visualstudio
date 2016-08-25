@@ -6,14 +6,14 @@ This Chef cookbook installs Visual Studio 2010, 2012, 2013, 2015 from an ISO.
 
 # Requirements
 
-This cookbook assumes the appropriate version of the .NET framework has already been installed before running the VisualStudio cookbook. To install .NET you can use the [dotnetframework cookbook](https://github.com/daptiv/dotnetframework). You must reboot the system after the .NET installation and before the VisualStudio installation.
+This cookbook assumes the appropriate version of the .NET framework has already been installed before running the VisualStudio cookbook. To install .NET you can use the [dotnetframework cookbook](https://supermarket.chef.io/cookbooks/dotnetframework). You must reboot the system after the .NET installation and before the VisualStudio installation.
 
 - VisualStudio 2010, 2012, and 2013 require .NET 4.5.x.
 - VisualStudio 2015 requires .NET 4.6.
 
-This cookbook requires 7-zip to be installed so it can extract the ISO. To ensure this happens this cookbook includes the [seven_zip](https://github.com/daptiv/seven_zip) default recipe.
+This cookbook requires 7-zip to be installed so it can extract the ISO. To ensure this happens this cookbook includes the [seven_zip](https://supermarket.chef.io/cookbooks/seven_zip) default recipe.
 
-NOTE - This cookbook cannot be installed over naked WinRM, i.e. knife-winrm or test-kitchen without failing with error 1603. This cookbook will work via Vagrant because Vagrant wraps Windows provisioners in a scheduled task.
+NOTE - This cookbook cannot be installed over naked WinRM, i.e. knife-winrm without failing with error 1603. This cookbook will work via test-kithen with an elevated user.
 
 ## Supported Visual Studio Editions/Versions
 - 2010 Professional
@@ -25,9 +25,10 @@ NOTE - This cookbook cannot be installed over naked WinRM, i.e. knife-winrm or t
 - 2013 Test Professional
 - 2013 Premium
 - 2013 Ultimate
-- 2013 Community (Update 5)
+- 2013 Community
 - 2015 Enterprise
 - 2015 Professional
+- 2015 Test Professional
 - 2015 Community
 
 ## Supported OSs
@@ -48,7 +49,7 @@ If you _really_ want to install VS 2015 on Windows Server 2012R2 over naked WinR
 
 # Attributes
 
-## Required
+## Optional
 
 <table>
   <tr>
@@ -60,42 +61,51 @@ If you _really_ want to install VS 2015 on Windows Server 2012R2 over naked WinR
   <tr>
     <td><code>['visualstudio']['source']</code></td>
     <td>Url</td>
-    <td>http(s) root url to where all the ISOs are stored for VisualStudio installation</td>
+    <td>http(s) root url to all version/edition's ISOs are stored for VisualStudio installation.</td>
     <td></td>
   </tr>
-</table>
-
-## Optional
-
-<table>
   <tr>
-    <th>Key</th>
-    <th>Type</th>
-    <th>Description</th>
-    <th>Default</th>
+    <td><code>['visualstudio'][VERSION][EDITION]['source']</code></td>
+    <td>Url</td>
+    <td>
+    http(s) root url to this version/edition's ISO is stored for VisualStudio installation. VERSION and EDITION should be replaced with one of the supported VS versions/editions. This attribute when set takes precedence over node['visualstudio']['source'].
+    </td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><code>['visualstudio'][VERSION]['update']['source']</code></td>
+    <td>Url</td>
+    <td>http(s) root url to this version's update ISO is stored for installation.</td>
+    <td></td>
   </tr>
   <tr>
     <td><code>['visualstudio']['edition']</code></td>
     <td>Boolean</td>
-    <td>The VisualStudio edition to install, i.e. community, professional, premium, ultimate, testprofessional</td>
-    <td><code>ultimate</code></td>
+    <td>The VisualStudio edition to install, i.e. community, professional, premium, ultimate, testprofessional.</td>
+    <td><code>community</code></td>
   </tr>
   <tr>
     <td><code>['visualstudio']['version']</code></td>
     <td>Integer</td>
-    <td>The VisualStudio version to install, i.e. 2010, 2012, 2013, 2015</td>
-    <td><code>2012</code></td>
+    <td>The VisualStudio version to install, i.e. 2010, 2012, 2013, 2015.</td>
+    <td><code>2015</code></td>
   </tr>
   <tr>
     <td><code>['visualstudio']['enable_nuget_package_restore']</code></td>
     <td>Boolean</td>
-    <td>Sets the system wide environment variable to enable MSBuild/VisualStudio package restore on build</td>
+    <td>Sets the system wide environment variable to enable MSBuild/VisualStudio package restore on build.</td>
     <td><code>True</code></td>
   </tr>
   <tr>
     <td><code>['visualstudio']['installs']</code></td>
     <td>Array</td>
     <td>An array of hashes that contain the various versions and editions of VS to install. See Usage below for an example.</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td><code>['visualstudio']['install_items'][FEATURE]['selected']</code></td>
+    <td>Boolean</td>
+    <td>Configures the feature on/off. This currentnly applies to all versions/editions being installed.</td>
     <td></td>
   </tr>
   <tr>
@@ -108,9 +118,7 @@ If you _really_ want to install VS 2015 on Windows Server 2012R2 over naked WinR
 
 # Usage
 
-Set the `node['visualstudio']['source']` attribute to the download location of the VisualStudio ISO, for example: http://example.com/installs. Then add `'visualstudio::default'` to your runlist. The same source attribute is used for all editions, versions, and updates.
-
-By default this cookbook assumes you're installing VisualStudio 2012 Ultimate. If you'd like to install another edition set the 'edition' attribute to: 'community', 'professional', 'premium', or 'testprofessional'. If you'd like to install a different version set the 'version' attribute to: '2010', '2012', '2013', '2015'.
+Add `'visualstudio::default'` to your runlist. This will install VS 2015 Community Edition from the publicly available ISO. If you'd like to install another edition set the 'edition' attribute to: 'community', 'professional', 'premium', or 'testprofessional'. If you'd like to install a different version set the 'version' attribute to: '2010', '2012', '2013', '2015'.
 
 If you need to install multiple different versions/editions of VisualStudio on the same node you must instead set the 'installs' attribute. If the installs attribute is set then the version and edition attributes are ignored.
 
@@ -124,25 +132,33 @@ node['visualstudio']['installs'] = [{
 }]
 ```
 
-Each VS version/edition pair has their own unique attributes which can be overridden. The most common to override would be `checksum` and `filename`. For example, we can override the VS 2013 Professional checksum and filename attributes like so:
+Each VS version/edition pair has their own unique attributes which can be overridden. The most common to override would be `checksum`,  `filename`, and `source`. For example, we can override the VS 2013 Professional checksum and filename attributes like so:
 
 ```ruby
 node.override['visualstudio']['2013']['professional']['checksum'] = 'c4930bb83454a2fcbc762da79a4227e92fdbef7d0b395c619829a36c3fb4ec54'
 node.override['visualstudio']['2013']['professional']['filename'] = 'My_vs2013.iso'
+node.override['visualstudio']['2013']['professional']['source'] = 'https://myartifactrepo.example.com/visualstudio/'
 ```
 
-Unlike newer versions of VisualStudio which use an AdminDeployment.xml file, VS 2010 uses an unattend.ini file, which, among other things, is OS-specific. By default, this cookbook uses VS 2010's `/q` option, which works for all Windows versions and specifies a default installation. To customize the installation, you may specify an unattend.ini template instead. The use of a template instead of a static file is required due to relative paths inside the file. This cookbook includes an unattend.ini template sample.
+VisualStudio 2013 and newer have default public download links for all their ISOs. If you're using an older version (2010, 2012) you must first set a download source. Either set the global `node['visualstudio']['source']` download URL or the version/edition specific download source, e.g. `node['visualstudio']['2012']['professional']['source']`. You can also use these same attributes to override the ISO location for newer VS versions.
 
-To customize the AdminDeployment.xml file for adding features to an unattended install in VisualStudio versions over 2010 edit the node attribute `node['visualstudio']['install_items']`
+## Customizing Installed Features
+### VS 2012 and Newer
+
+To customize the AdminDeployment.xml file for adding features to an unattended install in VisualStudio 2012 and newer edit the node attribute `node['visualstudio']['install_items']`
 adding the 'id' of the `<SelectableItemCustomization>` you want to install, it's 'Selected', 'Hidden', and 'FriendlyName' can then be set assuming the item has the attribute(s).
 
 For example:
 `node['visualstudio']['install_items']['NativeLanguageSupport_VCV1']['selected']= true`
 while you could also modify the 'Hidden' and 'FriendlyName' attributes for 'NativeLanguageSupport_VCV1' there's rarely a reason to as you won't see the installer anyway.
 
-Note:
+__Note:__
 Do not edit the `node['visualstudio'][<version>][<edition>]['default_install_items']` these are the defaults for the AdminDeployment.xml file if you wish to change the settings see above,
 `node['visualstudio']['install_items']` is merged with these effectively overwriting with the desired settings.
+
+### VS 2010
+
+Unlike newer versions of VisualStudio which use an AdminDeployment.xml file, VS 2010 uses an unattend.ini file, which, among other things, is OS-specific. By default, this cookbook uses VS 2010's `/q` option, which works for all Windows versions and specifies a default installation. To customize the installation, you may specify an unattend.ini template instead. The use of a template instead of a static file is required due to relative paths inside the file. This cookbook includes an unattend.ini template sample.
 
 # Recipes
 
@@ -161,7 +177,7 @@ Logs a warning if .NET 4.5.x is not installed. This recipe does not curently che
 # Optional Recipes
 
 ## install_update
-Installs VS updates from the corresponding VS update ISO that is publicly downloadable from Microsoft. Add this to your runlist to update all versions of VS in your installs attribute array. By default you must place the iso in the same folder as the main VS ISO since they all share the same source attribute.
+Installs VS updates from the corresponding VS update ISO that is publicly downloadable from Microsoft. Add this to your runlist to update all versions of VS in your installs attribute array.
 
 ## install_vsto
 Installs the Microsoft Office Developer Tools for Visual Studio 2012. Add this to your runlist if you need Office development tools for Office plugin development. Other versions of VS are not currently supported and will log a Chef warning.
@@ -170,7 +186,7 @@ Installs the Microsoft Office Developer Tools for Visual Studio 2012. Add this t
 
 This cookbook makes the `visualstudio_edition` and `visualstudio_update` resource definitions available.
 
-For example, to install Visual Studio 2010 using the `visualstudio_edition` definition:
+For example, to install Visual Studio 2015 Pro using the `visualstudio_edition` definition:
 
 ```ruby
 visualstudio_edition 'vs_2015_professional' do
@@ -194,8 +210,6 @@ If the installer fails very early in the install process, check a few of things:
 
 # TO DO
 
-- Support all VS 2010 editions
-- Support all VS 2015 editions
 - Check for .NET 4.6 installed, but only if VS 2015 is going to be installed
 - Support VSTO on all versions of VS
 - More tests

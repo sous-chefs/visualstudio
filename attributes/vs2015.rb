@@ -23,14 +23,26 @@
 default['visualstudio']['2015']['install_dir'] =
   (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') + '\Microsoft Visual Studio 14.0'
 
-# Professional
+# Test Professional w/Update1
+default['visualstudio']['2015']['testprofessional']['installer_file'] = 'vs_testprofessional.exe'
+default['visualstudio']['2015']['testprofessional']['filename'] = 'vs2015.testpro_enu.iso'
+default['visualstudio']['2015']['testprofessional']['package_name'] =
+  'Microsoft Visual Studio Test Professional 2015'
+default['visualstudio']['2015']['testprofessional']['checksum'] =
+  '4c83fd0c971d6249b7f87e7fb20ccbf41d4ff4814a0660c4f89d6884408c191b'
+default['visualstudio']['2015']['testprofessional']['default_source'] =
+  'http://download.microsoft.com/download/8/5/6/856E021B-39D6-4593-B7BB-2F8D1178EBCB'
+
+# Professional w/Update1
 default['visualstudio']['2015']['professional']['installer_file'] = 'vs_professional.exe'
 default['visualstudio']['2015']['professional']['filename'] =
-  'en_visual_studio_professional_2015_x86_x64_dvd_6846629.iso'
+  'vs2015.1.pro_enu.iso'
 default['visualstudio']['2015']['professional']['package_name'] =
   'Microsoft Visual Studio Professional 2015'
 default['visualstudio']['2015']['professional']['checksum'] =
-  '8d6d9a13ccb7f409161518e07e610c12180f415995fa417fa1343a4f2f4ce74b'
+  '7badca090697567ca679159afa21f5d84605bda6a66f99283185dacd24d61e6b'
+default['visualstudio']['2015']['professional']['default_source'] =
+  'http://download.microsoft.com/download/3/6/A/36A72A3F-711B-4738-B4C6-C668A508D2EE'
 
 # Defaults for the <SelectableItemCustomization> in AdminDeployment.xml
 # These are DEFAULTS. If you wish to change the selectable items installed edit the node attributes
@@ -178,6 +190,8 @@ default['visualstudio']['2015']['community']['package_name'] =
   'Microsoft Visual Studio Community 2015'
 default['visualstudio']['2015']['community']['checksum'] =
   'ce124aec77f970605bb38352e59e7b3c7b51c0367f213cf5e6165b2698c1ba20'
+default['visualstudio']['2015']['community']['default_source'] =
+  'http://download.microsoft.com/download/b/e/d/bedddfc4-55f4-4748-90a8-ffe38a40e89f'
 
 # Defaults for the <SelectableItemCustomization> in AdminDeployment.xml
 # These are DEFAULTS. If you wish to change the selectable items installed edit the node attributes
@@ -312,14 +326,16 @@ default['visualstudio']['2015']['community']['default_install_items'].tap do |h|
   h['VS_SDK_Breadcrumb_GroupV1']['friendly_name'] = 'Visual Studio Extensibility Tools'
 end
 
-# Enterprise
+# Enterprise w/Update1
 default['visualstudio']['2015']['enterprise']['installer_file'] = 'vs_enterprise.exe'
 default['visualstudio']['2015']['enterprise']['filename'] =
-  'en_visual_studio_enterprise_2015_x86_x64_dvd_6850497.iso'
+  'vs2015.1.ent_enu.iso'
 default['visualstudio']['2015']['enterprise']['package_name'] =
   'Microsoft Visual Studio Enterprise 2015'
 default['visualstudio']['2015']['enterprise']['checksum'] =
-  '12db74d1e6243924c187069ad95cee58b687dcb9ba2d302fc6ae889fb4ae7694'
+  'ea91fec301f1c105ef39826a72d21de5923f3d7a5857c25af3163526dd768639'
+default['visualstudio']['2015']['enterprise']['default_source'] =
+  'http://download.microsoft.com/download/6/C/9/6C95B548-64A9-4637-A7F2-EB2A750C7504'
 
 # Defaults for the <SelectableItemCustomization> in AdminDeployment.xml
 # These are DEFAULTS. If you wish to change the selectable items installed edit the node attributes
