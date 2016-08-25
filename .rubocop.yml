@@ -10,4 +10,4 @@ Style/MultilineBlockChain:
   Enabled: false
 
 Metrics/LineLength:
-  Max: 100
+  Max: 120

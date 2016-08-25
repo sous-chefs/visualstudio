@@ -8,7 +8,7 @@ describe 'visualstudio::install' do
           RuntimeError,
           'The required attribute node[\'visualstudio\'][\'source\'] is empty, ' \
             'set this and run again!'
-          )
+        )
       end
     end
 
@@ -148,10 +148,10 @@ describe 'visualstudio::install' do
         version: '2008R2'
       }
       chef_run = ChefSpec::SoloRunner.new(opts) do |node|
-        node.set['visualstudio']['source'] = 'http://localhost:8080'
-        node.set['visualstudio']['edition'] = 'professional'
-        node.set['visualstudio']['version'] = '2015'
-        node.set['visualstudio']['install_items']['NativeLanguageSupport_VCV1']['selected'] = true
+        node.default['visualstudio']['source'] = 'http://localhost:8080'
+        node.override['visualstudio']['edition'] = 'professional'
+        node.override['visualstudio']['version'] = '2015'
+        node.override['visualstudio']['install_items']['NativeLanguageSupport_VCV1']['selected'] = true
       end.converge('visualstudio::install')
       expect(chef_run).to render_file(config_xml_path)
     end
