@@ -21,19 +21,15 @@
 
 ::Chef::Recipe.send(:include, Visualstudio::Helper)
 
-assert_source_attribute_is_set
-
 # Create list of unique VS versions that have updates
 versions_with_updates = versions.reject { |v| node['visualstudio'][v]['update'].nil? }
 
 # Install updates for each VS version
 versions_with_updates.each do |version|
-  iso_src = ::File.join(node['visualstudio']['source'],
-                        node['visualstudio'][version]['update']['filename'])
-
+  url = source_download_url(version, 'update')
   visualstudio_update "visualstudio_#{version}_update" do
     install_dir node['visualstudio'][version]['install_dir']
-    source iso_src
+    source url
     package_name node['visualstudio'][version]['update']['package_name']
     checksum node['visualstudio'][version]['update']['checksum']
     preserve_extracted_files node['visualstudio']['preserve_extracted_files']

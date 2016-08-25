@@ -1,26 +1,14 @@
 
 describe 'visualstudio::install' do
   describe 'Windows 2008R2' do
-    describe 'Visual Studio 2015 Community' do
-      it 'raises an error when source attribute is not set' do
-        chef_run = ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2')
-        expect { chef_run.converge(described_recipe) }.to raise_error(
-          RuntimeError,
-          'The required attribute node[\'visualstudio\'][\'source\'] is empty, ' \
-            'set this and run again!'
-        )
-      end
-    end
-
     describe 'Visual Studio 2015 Professional' do
       let(:chef_run) do
         ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2') do |node|
-          node.default['visualstudio']['source'] = 'http://localhost:8080'
           node.override['visualstudio']['edition'] = 'professional'
         end.converge(described_recipe)
       end
       it 'installs Visual Studio 2015 Professional when only edition attribute is set' do
-        url = 'http://localhost:8080/vs2015.1.pro_enu.iso'
+        url = 'http://download.microsoft.com/download/3/6/A/36A72A3F-711B-4738-B4C6-C668A508D2EE/vs2015.1.pro_enu.iso'
         expect(chef_run).to install_visualstudio_edition('visualstudio_2015_professional')
           .with(
             edition: 'professional',
@@ -31,6 +19,15 @@ describe 'visualstudio::install' do
             preserve_extracted_files: false,
             installer_file: 'vs_professional.exe'
           )
+      end
+      it 'uses the node[visualstudio][source] attribute when set' do
+        chef_run = ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2') do |node|
+          node.override['visualstudio']['source'] = 'http://localhost:8000'
+          node.override['visualstudio']['version'] = '2015'
+          node.override['visualstudio']['edition'] = 'professional'
+        end.converge(described_recipe)
+        expect(chef_run).to install_visualstudio_edition('visualstudio_2015_professional')
+          .with(source: 'http://localhost:8000/vs2015.1.pro_enu.iso')
       end
     end
 
@@ -58,6 +55,18 @@ describe 'visualstudio::install' do
             preserve_extracted_files: false,
             installer_file: 'vs_ultimate.exe'
           )
+      end
+      it 'raises an error when source is not set' do
+        chef_run = ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2') do |node|
+          node.override['visualstudio']['version'] = '2012'
+          node.override['visualstudio']['edition'] = 'ultimate'
+        end
+        expect { chef_run.converge(described_recipe) }.to raise_error(
+          RuntimeError,
+          'The ISO download source is empty! '\
+          'Set the node[\'visualstudio\'][\'2012\'][\'ultimate\'][\'source\'] ' \
+          'or node[\'visualstudio\'][\'source\'] attribute and run again!'
+        )
       end
     end
 
