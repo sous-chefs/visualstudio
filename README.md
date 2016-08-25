@@ -133,6 +133,17 @@ node.override['visualstudio']['2013']['professional']['filename'] = 'My_vs2013.i
 
 Unlike newer versions of VisualStudio which use an AdminDeployment.xml file, VS 2010 uses an unattend.ini file, which, among other things, is OS-specific. By default, this cookbook uses VS 2010's `/q` option, which works for all Windows versions and specifies a default installation. To customize the installation, you may specify an unattend.ini template instead. The use of a template instead of a static file is required due to relative paths inside the file. This cookbook includes an unattend.ini template sample.
 
+To customize the AdminDeployment.xml file for adding features to an unattended install in VisualStudio versions over 2010 edit the node attribute `node['visualstudio']['install_items']`
+adding the 'id' of the `<SelectableItemCustomization>` you want to install, it's 'Selected', 'Hidden', and 'FriendlyName' can then be set assuming the item has the attribute(s).
+
+For example:
+`node['visualstudio']['install_items']['NativeLanguageSupport_VCV1']['selected']= true`
+while you could also modify the 'Hidden' and 'FriendlyName' attributes for 'NativeLanguageSupport_VCV1' there's rarely a reason to as you won't see the installer anyway.
+
+Note:
+Do not edit the `node['visualstudio'][<version>][<edition>]['default_install_items']` these are the defaults for the AdminDeployment.xml file if you wish to change the settings see above,
+`node['visualstudio']['install_items']` is merged with these effectively overwriting with the desired settings.
+
 # Recipes
 
 ## default

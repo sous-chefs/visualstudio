@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<% case @version 
+  when "2015" %>
+<AdminDeploymentCustomizations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://schemas.microsoft.com/wix/2011/AdminDeployment"> 
+    <% if @edition == "enterprise" %>
+  <BundleCustomizations TargetDir="default" NoCacheOnlyMode="default" NoWeb="yes" NoRefresh="yes" Feed="default" />
+    <% else %>
+  <BundleCustomizations TargetDir="C:\Program Files (x86)\Microsoft Visual Studio 14.0" NoCacheOnlyMode="default" NoWeb="yes" NoRefresh="default" SuppressRefreshPrompt="default" Feed="default" />
+    <% end %>
+  <% when "2013", "2012"  %>
+<AdminDeploymentCustomizations xmlns="http://schemas.microsoft.com/wix/2011/AdminDeployment">
+  <BundleCustomizations TargetDir="default" NoWeb="yes"/>
+<% end %>
+  <SelectableItemCustomizations>
+  <% @items.each do |key, attributes| %>
+    <SelectableItemCustomization Id="<%= key %>" Selected="<%= attributes['selected'] ? "yes" : "no" %>" 
+      <% if attributes.has_key?("hidden") then %>Hidden="<%= attributes['hidden'] ? "yes" : "no" %>"<% end %> 
+      <% if attributes.has_key?("friendly_name") then %>FriendlyName="<%= attributes['friendly_name'] %>"<% end %> 
+    />
+  <% end %>
+  </SelectableItemCustomizations>
+</AdminDeploymentCustomizations>

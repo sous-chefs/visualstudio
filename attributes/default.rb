@@ -22,6 +22,10 @@
 default['visualstudio']['edition'] = 'ultimate'
 default['visualstudio']['version'] = '2012'
 
+# This is merged with the default['visualstudio']['<version>']['<edition>']['default_install_items']
+# overwrite the <SelectableItemCustomization> here to change the AdminDeployment.xml for install.
+default['visualstudio']['install_items'] = {}
+
 # Set this attribute your self to the FQDN of the folder which contains the ISO
 # default['visualstudio']['source'] = 'http://example.com:8080/visualstudio'
 
