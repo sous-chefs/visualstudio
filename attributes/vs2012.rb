@@ -219,13 +219,14 @@ default['visualstudio']['2012']['ultimate']['default_install_items'].tap do |h|
 end
 
 # Update 5
-# https://download.microsoft.com/download/1/7/A/17A8493D-BB25-4811-8242-CCCB74EF982E/VS2012.5.iso
 default['visualstudio']['2012']['update']['filename'] = 'VS2012.5.iso'
 default['visualstudio']['2012']['update']['source'] = node['visualstudio']['source']
 default['visualstudio']['2012']['update']['checksum'] =
   '405bad3d4249dd94b4fa309bb482ade9ce63d968b59cac9e2d63b0a24577285e'
 default['visualstudio']['2012']['update']['package_name'] =
   'Visual Studio 2012 Update 5 (KB2707250)'
+default['visualstudio']['2012']['update']['default_source'] =
+  'https://download.microsoft.com/download/1/7/A/17A8493D-BB25-4811-8242-CCCB74EF982E'
 
 # VS 2012 Office developer tools
 default['visualstudio']['2012']['vsto']['installer_file'] = 'officetools_bundle.exe'
