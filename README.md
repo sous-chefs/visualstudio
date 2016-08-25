@@ -196,7 +196,7 @@ If the installer fails very early in the install process, check a few of things:
 2. Create a named feature branch (i.e. add-vsto-support-for-vs2010)
 3. Write your change
 4. Write tests for your change (if applicable)
-5. Run the build and ensure it passes. `bundle install && bundle exec rake`
+5. Run the build and ensure it passes. `bundle install && bundle exec rake && kitchen verify`
 6. Submit a Pull Request
 
 # Author
