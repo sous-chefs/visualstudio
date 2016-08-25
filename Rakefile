@@ -3,6 +3,7 @@
 require 'rubocop/rake_task'
 require 'foodcritic'
 require 'rspec/core/rake_task'
+require 'stove/rake_task'
 
 task default: [:rubocop, :foodcritic, :spec]
 
@@ -18,3 +19,4 @@ RSpec::Core::RakeTask.new do |task|
 end
 
 RuboCop::RakeTask.new
+Stove::RakeTask.new
