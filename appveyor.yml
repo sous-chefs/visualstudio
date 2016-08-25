@@ -4,7 +4,7 @@ image: Visual Studio 2013
 platform: x64
 
 cache:
-  - c:\projects\bundle
+  - c:\projects\bundle -> Gemfile.lock
 
 environment:
   winrm_user: test_user
@@ -14,7 +14,7 @@ environment:
   SSL_CERT_FILE: c:\opscode\chefdk\embedded\ssl\certs\cacert.pem
 
   matrix:
-    - ruby_version: "21"
+    - ruby_version: "23"
 
 clone_folder: c:\projects\visualstudio
 clone_depth: 1
