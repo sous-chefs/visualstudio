@@ -2,6 +2,15 @@
 
 This file is used to list changes made in each version of visualstudion.
 
+## 1.2.0
+
+* Default to VS 2015 Community Edition
+* Add ability to specifiy installed features via install_items attributes.
+* Add default_source URLs for VS 2013 and 2015, make source attribute optional.
+* Add ability to specifiy download source on a per edition/version basis.
+* [GH 58](https://github.com/daptiv/visualstudio/issues/58) Fix enable nuget package restore recipe idempotence.
+* [GH 56](https://github.com/daptiv/visualstudio/issues/56) Fix architecture check.
+
 ## 1.1.0
 
 * VS 2010 installation defaults to /q without needing an unattend.ini file.
