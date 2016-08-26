@@ -4,7 +4,7 @@
 # Cookbook Name:: visualstudio
 # Recipe:: nuget
 #
-# Copyright 2013, Daptiv Solutions, LLC.
+# Copyright 2016, Shawn Neal
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -21,11 +21,7 @@
 
 enable_nuget_package_restore = node['visualstudio']['enable_nuget_package_restore']
 
-# Use setx because the Chef env resource requires a re-login before being available
-execute 'set_allow_nuget_to_auto_update' do
-  command "setx -m EnableNuGetPackageRestore \"#{enable_nuget_package_restore}\""
-  only_if { ENV['EnableNuGetPackageRestore'] != enable_nuget_package_restore }
+env 'EnableNuGetPackageRestore' do
+  value enable_nuget_package_restore.to_s
+  not_if { enable_nuget_package_restore.to_s.casecmp(ENV['EnableNuGetPackageRestore'] || '').zero? }
 end
-
-# Set EnableNuGetPackageRestore for this process
-ENV['EnableNuGetPackageRestore'] = enable_nuget_package_restore.to_s
