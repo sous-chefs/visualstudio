@@ -64,12 +64,12 @@ action :install do
 end
 
 def extracted_iso_dir
-  win_friendly_path(
-    ::File.join(
+  default_path = ::File.join(
       Chef::Config[:file_cache_path],
       Digest::MD5.hexdigest(new_resource.package_name)
-    )
   )
+  extract_dir = node['visualstudio']['unpack_dir'].nil? ? default_path : node['visualstudio']['unpack_dir']
+  win_friendly_path(extract_dir)
 end
 
 def install_log_file

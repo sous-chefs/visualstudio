@@ -142,10 +142,10 @@ end
 
 def extracted_iso_dir
   default_path = ::File.join(
-      Chef::Config[:file_cache_path],
-      new_resource.version,
-      new_resource.edition
+    Chef::Config[:file_cache_path],
+    new_resource.version,
+    new_resource.edition
   )
-  extract_dir = node['visualstudio']['unpack_dir'] != nil ? node['visualstudio']['unpack_dir'] : default_path
-  win_friendly_path( extract_dir )
+  extract_dir = node['visualstudio']['unpack_dir'].nil? ? default_path : node['visualstudio']['unpack_dir']
+  win_friendly_path(extract_dir)
 end
