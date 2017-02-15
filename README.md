@@ -105,7 +105,7 @@ If you _really_ want to install VS 2015 on Windows Server 2012R2 over naked WinR
   <tr>
     <td><code>['visualstudio']['install_items'][FEATURE]['selected']</code></td>
     <td>Boolean</td>
-    <td>Configures the feature on/off. This currentnly applies to all versions/editions being installed.</td>
+    <td>Configures the feature on/off. This currently applies to all versions/editions being installed.</td>
     <td></td>
   </tr>
   <tr>
