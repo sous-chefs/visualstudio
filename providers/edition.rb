@@ -41,6 +41,7 @@ action :install do
         source new_resource.source
         overwrite true
         checksum new_resource.checksum
+        not_if new_resource.source = nil
       end
 
       # Ensure the target directory exists so logging doesn't fail on VS 2010
@@ -65,7 +66,7 @@ action :install do
         path extracted_iso_dir
         action :delete
         recursive true
-        not_if { new_resource.preserve_extracted_files }
+        not_if { new_resource.source = nil or new_resource.preserve_extracted_files }
       end
     end
     new_resource.updated_by_last_action(true)
@@ -137,7 +138,8 @@ end
 
 def installer_exe
   installer = new_resource.installer_file || "vs_#{new_resource.edition}.exe"
-  ::File.join(extracted_iso_dir, installer)
+  installer = ::File.join(extracted_iso_dir, installer) unless new_resource.source = nil
+  installer
 end
 
 def extracted_iso_dir
