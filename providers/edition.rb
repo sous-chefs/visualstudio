@@ -41,7 +41,7 @@ action :install do
         source new_resource.source
         overwrite true
         checksum new_resource.checksum
-        not_if new_resource.source == nil
+        not_if { new_resource.source == nil }
       end
 
       # Ensure the target directory exists so logging doesn't fail on VS 2010
