@@ -41,7 +41,16 @@ action :install do
         source new_resource.source
         overwrite true
         checksum new_resource.checksum
-        not_if { new_resource.source == nil }
+        only_if { new_resource.source != nil and extractable_download }
+      end
+
+      # Not an ISO but the web install
+      remote_file "download__#{new_resource.version}_#{new_resource.edition}" do
+        path installer_exe
+        source new_resource.source
+        overwrite true
+        checksum new_resource.checksum
+        only_if { new_resource.source != nil and !extractable_download }
       end
 
       # Ensure the target directory exists so logging doesn't fail on VS 2010
@@ -49,14 +58,11 @@ action :install do
         path new_resource.install_dir
         recursive true
       end
-
-      # Install Visual Studio
-      setup_options = new_resource.version == '2010' ? prepare_vs2010_options : prepare_vs_options
-
+      
       windows_package new_resource.package_name do
         source installer_exe
         installer_type :custom
-        options setup_options
+        options visual_studio_options
         timeout 3600 # 1hour
         returns [0, 127, 3010]
       end
@@ -66,11 +72,15 @@ action :install do
         path extracted_iso_dir
         action :delete
         recursive true
-        not_if { new_resource.source == nil or new_resource.preserve_extracted_files }
+        only_if { new_resource.source != nil and !new_resource.preserve_extracted_files }
       end
     end
     new_resource.updated_by_last_action(true)
   end
+end
+
+def extractable_download
+  ::File.extname(new_resource.source).downcase == '.iso' or ::File.extname(new_resource.source).downcase == '.zip' ::File.extname(new_resource.source).downcase == '.7z')
 end
 
 def prepare_vs_options
@@ -124,6 +134,28 @@ def create_vs2010_unattend_file
   config_path
 end
 
+def prepare_vs2017_options
+  # Merge the VS version and edition default AdminDeploymentFile.xml item's with customized install_items
+  install_items = deep_merge(node['visualstudio'][new_resource.version.to_s][new_resource.edition.to_s]['default_install_items'], Mash.new)
+  workloads_and_components_to_install = ''
+
+  install_items.each do |key, attributes|
+    if attributes.has_key?('selected')
+      should_install = attributes['selected'] ? 'yes' : 'no'
+      if (should_install)
+          workloads_and_components_to_install << " --add #{key}"
+      end
+    end
+  end
+  workloads_and_components_to_install = ' --all' if workloads_and_components_to_install.blank?
+
+  setup_options = '--norestart --quiet --wait'
+  setup_options << " --installPath \"#{new_resource.install_dir}\"" unless new_resource.install_dir.blank?
+  setup_options << workloads_and_components_to_install
+
+  setup_options
+end
+
 def utf8_to_unicode(file_path)
   powershell_script "convert #{file_path} to unicode" do
     code(
@@ -134,6 +166,10 @@ end
 
 def install_log_file
   win_friendly_path(::File.join(new_resource.install_dir, 'vsinstall.log'))
+end
+
+def visual_studio_options
+  new_resource.version == '2010' ? prepare_vs2010_options : new_resource.version == '2017' ? prepare_vs2017_options : prepare_vs_options
 end
 
 def installer_exe
