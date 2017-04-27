@@ -48,7 +48,6 @@ action :install do
       remote_file "download__#{new_resource.version}_#{new_resource.edition}" do
         path installer_exe
         source lazy { new_resource.source }
-        overwrite true
         checksum new_resource.checksum
         only_if { (!new_resource.source.nil?) and (!extractable_download) }
       end
