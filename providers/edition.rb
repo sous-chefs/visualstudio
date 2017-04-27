@@ -80,7 +80,7 @@ action :install do
 end
 
 def extractable_download
-  ::File.extname(new_resource.source).downcase == '.iso' or ::File.extname(new_resource.source).downcase == '.zip' ::File.extname(new_resource.source).downcase == '.7z')
+  (::File.extname(new_resource.source).casecmp(".iso")) == 0 or (::File.extname(new_resource.source).casecmp(".zip")) == 0 or (::File.extname(new_resource.source).casecmp(".7z")) == 0
 end
 
 def prepare_vs_options
