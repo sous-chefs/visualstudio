@@ -148,7 +148,7 @@ def prepare_vs2017_options
   end
   workloads_and_components_to_install = ' --all' if workloads_and_components_to_install.empty?
 
-  setup_options = '--norestart --quiet --wait'
+  setup_options = '--norestart --passive --wait'
   setup_options << " --installPath \"#{new_resource.install_dir}\"" unless new_resource.install_dir.empty?
   setup_options << workloads_and_components_to_install
 
