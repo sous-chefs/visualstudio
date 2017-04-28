@@ -152,7 +152,7 @@ def prepare_vs2017_options
     end
   end
 
-  setup_options = '--norestart --quiet --wait'
+  setup_options = '--norestart --passive --wait'
   setup_options << " --installPath \"#{new_resource.install_dir}\"" unless new_resource.install_dir.empty?
   setup_options << " --all" if option_all
   setup_options << " --allWorkloads" if option_allWorkloads && !option_all
