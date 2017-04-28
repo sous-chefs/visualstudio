@@ -134,23 +134,31 @@ def create_vs2010_unattend_file
 end
 
 def prepare_vs2017_options
+  
+  option_all = node['visualstudio'][new_resource.version.to_s]['all']
+  option_allWorkloads = node['visualstudio'][new_resource.version.to_s]['allWorkloads']
+  option_includeRecommended = node['visualstudio'][new_resource.version.to_s]['includeRecommended']
+  option_include_optional = node['visualstudio'][new_resource.version.to_s]['includeOptional']
+  options_components_to_install = ''
+
   # Merge the VS version and edition default AdminDeploymentFile.xml item's with customized install_items
   install_items = deep_merge(node['visualstudio'][new_resource.version.to_s][new_resource.edition.to_s]['default_install_items'], Mash.new)
-  workloads_and_components_to_install = ''
-
   install_items.each do |key, attributes|
     if attributes.has_key?('selected')
       should_install = attributes['selected'] ? 'yes' : 'no'
       if (should_install)
-          workloads_and_components_to_install << " --add #{key}"
+          options_components_to_install << " --add #{key}"
       end
     end
   end
-  workloads_and_components_to_install = ' --all' if workloads_and_components_to_install.empty?
 
-  setup_options = '--norestart --passive --wait'
+  setup_options = '--norestart --quiet --wait'
   setup_options << " --installPath \"#{new_resource.install_dir}\"" unless new_resource.install_dir.empty?
-  setup_options << workloads_and_components_to_install
+  setup_options << " --all" if option_all
+  setup_options << " --allWorkloads" if option_allWorkloads && !option_all
+  setup_options << " --includeRecommended" if option_includeRecommended  && !option_all
+  setup_options << " --includeOptional" if option_include_optional  && !option_all
+  setup_options << options_components_to_install unless options_components_to_install.empty? || option_all || option_allWorkloads
 
   setup_options
 end

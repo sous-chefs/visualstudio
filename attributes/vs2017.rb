@@ -21,6 +21,10 @@
 
 # Currently you cannot change this, doing so will break the cookbook
 default['visualstudio']['2017']['install_dir'] = (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') + '\Microsoft Visual Studio 16.0'
+default['visualstudio']['2017']['all'] = false
+default['visualstudio']['2017']['allWorkloads'] = false
+default['visualstudio']['2017']['includeRecommended'] = true
+default['visualstudio']['2017']['includeOptional'] = false
 
 # Test Professional w/Update1 https://docs.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-test-professional
 default['visualstudio']['2017']['testprofessional']['installer_file'] = 'vs_testprofessional.exe'
