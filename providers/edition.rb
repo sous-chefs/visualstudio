@@ -41,7 +41,7 @@ action :install do
         source new_resource.source
         overwrite true
         checksum new_resource.checksum
-        only_if { !new_resource.source.nil? and extractable_download }
+        only_if { !new_resource.source.nil? && extractable_download }
       end
 
       # Not an ISO but the web install
@@ -49,7 +49,7 @@ action :install do
         path installer_exe
         source lazy { new_resource.source }
         checksum new_resource.checksum
-        only_if { !new_resource.source.nil? and !extractable_download }
+        only_if { !new_resource.source.nil? && !extractable_download }
       end
 
       # Ensure the target directory exists so logging doesn't fail on VS 2010
@@ -71,7 +71,7 @@ action :install do
         path extracted_iso_dir
         action :delete
         recursive true
-        only_if { !new_resource.source.nil? and !new_resource.preserve_extracted_files }
+        only_if { !new_resource.source.nil? && !new_resource.preserve_extracted_files }
       end
     end
     new_resource.updated_by_last_action(true)
@@ -79,7 +79,8 @@ action :install do
 end
 
 def extractable_download
-  ::File.extname(new_resource.source).casecmp('.iso').zero? || ::File.extname(new_resource.source).casecmp('.zip').zero? || ::File.extname(new_resource.source).casecmp('.7z').zero?
+  extension = ::File.extname(new_resource.source)
+  extension.casecmp('.iso').zero? || extension.casecmp('.zip').zero? || extension.casecmp('.7z').zero?
 end
 
 def prepare_vs_options
@@ -134,28 +135,19 @@ def create_vs2010_unattend_file
 end
 
 def prepare_vs2017_options
-  option_all = node['visualstudio'][new_resource.version.to_s]['all']
-  option_all_workloads = node['visualstudio'][new_resource.version.to_s]['allWorkloads']
-  option_include_recommended = node['visualstudio'][new_resource.version.to_s]['includeRecommended']
-  option_include_optional = node['visualstudio'][new_resource.version.to_s]['includeOptional']
-  options_components_to_install = ''
-
-  # Merge the VS version and edition default AdminDeploymentFile.xml item's with customized install_items  
-  node['visualstudio'][new_resource.version.to_s][new_resource.edition.to_s]['default_install_items'].each do |key, attributes|
-    if attributes.has_key?('selected')
-      if attributes['selected']
-        options_components_to_install << " --add #{key}"
-      end
-    end
-  end
+  visual_studio_attributes = node['visualstudio'][new_resource.version.to_s]
 
   setup_options = '--norestart --passive --wait'
   setup_options << " --installPath \"#{new_resource.install_dir}\"" unless new_resource.install_dir.empty?
-  setup_options << ' --all' if option_all
-  setup_options << ' --allWorkloads' if option_all_workloads
-  setup_options << ' --includeRecommended' if option_include_recommended
-  setup_options << ' --includeOptional' if option_include_optional
-  setup_options << options_components_to_install unless options_components_to_install.empty?
+  setup_options << ' --all' if visual_studio_attributes['all']
+  setup_options << ' --allWorkloads' if visual_studio_attributes['allWorkloads']
+  setup_options << ' --includeRecommended' if visual_studio_attributes['includeRecommended']
+  setup_options << ' --includeOptional' if visual_studio_attributes['includeOptional']
+
+  visual_studio_attributes[new_resource.edition.to_s]['default_install_items'].each do |key, attributes|
+    next unless attributes['selected']
+    setup_options << " --add #{key}"
+  end
 
   setup_options
 end
@@ -173,13 +165,11 @@ def install_log_file
 end
 
 def visual_studio_options
-  if new_resource.version == '2010'
-    return prepare_vs2010_options
-  elsif new_resource.version == '2017'
-    return prepare_vs2017_options
-  else
-    return prepare_vs_options
-  end 
+  options = prepare_vs2010_options if new_resource.version == '2010'
+  options = prepare_vs2017_options if new_resource.version == '2017'
+  options = prepare_vs_options unless new_resource.version == '2010' || new_resource.version == '2017'
+
+  options
 end
 
 def installer_exe
