@@ -141,12 +141,10 @@ def prepare_vs2017_options
   option_include_optional = node['visualstudio'][new_resource.version.to_s]['includeOptional']
   options_components_to_install = ''
 
-  # Merge the VS version and edition default AdminDeploymentFile.xml item's with customized install_items
-  install_items = deep_merge(node['visualstudio'][new_resource.version.to_s][new_resource.edition.to_s]['default_install_items'], Mash.new)
-  install_items.each do |key, attributes|
+  # Merge the VS version and edition default AdminDeploymentFile.xml item's with customized install_items  
+  node['visualstudio'][new_resource.version.to_s][new_resource.edition.to_s]['default_install_items'].each do |key, attributes|
     if attributes.has_key?('selected')
-      should_install = attributes['selected'] ? 'yes' : 'no'
-      if (should_install)
+      if (attributes['selected')
           options_components_to_install << " --add #{key}"
       end
     end
