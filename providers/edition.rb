@@ -144,7 +144,7 @@ def prepare_vs2017_options
   # Merge the VS version and edition default AdminDeploymentFile.xml item's with customized install_items  
   node['visualstudio'][new_resource.version.to_s][new_resource.edition.to_s]['default_install_items'].each do |key, attributes|
     if attributes.has_key?('selected')
-      if (attributes['selected')
+      if (attributes['selected'])
           options_components_to_install << " --add #{key}"
       end
     end
