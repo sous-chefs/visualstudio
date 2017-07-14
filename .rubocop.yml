@@ -19,3 +19,6 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*.rb'
     - 'attributes/**/*.rb'
+  ExcludedMethods:
+    - action
+    - converge_by
