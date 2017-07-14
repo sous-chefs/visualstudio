@@ -20,7 +20,8 @@
 #
 
 # Currently you cannot change this, doing so will break the cookbook
-default['visualstudio']['2017']['install_dir'] = (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') + '\Microsoft Visual Studio 16.0'
+default['visualstudio']['2017']['install_dir'] =
+  (ENV['ProgramFiles(x86)'] || 'C:\Program Files (x86)') + '\Microsoft Visual Studio 16.0'
 default['visualstudio']['2017']['all'] = false
 default['visualstudio']['2017']['allWorkloads'] = false
 default['visualstudio']['2017']['includeRecommended'] = true
@@ -117,7 +118,7 @@ default['visualstudio']['2017']['enterprise']['checksum'] = ''
 default['visualstudio']['2017']['enterprise']['default_source'] = 'https://www.visualstudio.com/thank-you-downloading-visual-studio/?sku=Enterprise&rel=15'
 
 # Defaults for the https://docs.microsoft.com/en-us/visualstudio/install/workload-component-id-vs-enterprise
-default['visualstudio']['2017']['enterprise']['default_install_items'].tap do |h|  
+default['visualstudio']['2017']['enterprise']['default_install_items'].tap do |h|
   h['Microsoft.VisualStudio.Workload.CoreEditor']['selected'] = true
   h['Microsoft.VisualStudio.Workload.Azure']['selected'] = true
   h['Microsoft.VisualStudio.Workload.Data']['selected'] = true
