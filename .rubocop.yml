@@ -14,3 +14,8 @@ Metrics/LineLength:
 
 Metrics/AbcSize:
   Max: 25
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+    - 'attributes/**/*.rb'
