@@ -135,21 +135,36 @@ def create_vs2010_unattend_file
 end
 
 def prepare_vs2017_options
-  visual_studio_attributes = node['visualstudio'][new_resource.version.to_s]
-
   setup_options = '--norestart --passive --wait'
-  setup_options << " --installPath \"#{new_resource.install_dir}\"" unless new_resource.install_dir.empty?
-  setup_options << ' --all' if visual_studio_attributes['all']
-  setup_options << ' --allWorkloads' if visual_studio_attributes['allWorkloads']
-  setup_options << ' --includeRecommended' if visual_studio_attributes['includeRecommended']
-  setup_options << ' --includeOptional' if visual_studio_attributes['includeOptional']
+  setup_options << prepare_vs2017_options_installpath
+  setup_options << prepare_vs2017_options_global
 
+  visual_studio_attributes = node['visualstudio'][new_resource.version.to_s]
   visual_studio_attributes[new_resource.edition.to_s]['default_install_items'].each do |key, attributes|
     next unless attributes['selected']
     setup_options << " --add #{key}"
   end
 
   setup_options
+end
+
+def prepare_vs2017_options_installpath
+  path_option = ''
+  path_option = " --installPath \"#{new_resource.install_dir}\"" unless new_resource.install_dir.empty?
+
+  path_option
+end
+
+def prepare_vs2017_options_global
+  visual_studio_attributes = node['visualstudio'][new_resource.version.to_s]
+
+  global_options = ''
+  global_options << ' --all' if visual_studio_attributes['all']
+  global_options << ' --allWorkloads' if visual_studio_attributes['allWorkloads']
+  global_options << ' --includeRecommended' if visual_studio_attributes['includeRecommended']
+  global_options << ' --includeOptional' if visual_studio_attributes['includeOptional']
+
+  global_options
 end
 
 def utf8_to_unicode(file_path)
