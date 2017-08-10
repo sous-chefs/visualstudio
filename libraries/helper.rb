@@ -30,8 +30,8 @@ module Visualstudio
     def source_download_url(version, edition)
       url = nil
       edition_node = node['visualstudio'][version][edition]
-      return url if edition_node.nil? || !edition_node['installer_file']
       src = iso_source(version, edition)
+      return url if src.nil? && edition_node['installer_file']
       assert_src_is_not_nil(src, version, edition)
       url = ::File.join(src, edition_node['filename']) if src
       url
@@ -41,9 +41,11 @@ module Visualstudio
 
     # Gets the version/edition ISO download root URL
     def iso_source(version, edition)
-      src = node['visualstudio'][version][edition]['default_source']
+      edition_node = node['visualstudio'][version][edition]
+
+      src = edition_node['default_source']
       src = node['visualstudio']['source'] if node['visualstudio']['source']
-      src = node['visualstudio'][version][edition]['source'] if node['visualstudio'][version][edition]['source']
+      src = edition_node['source'] if edition_node['source']
       src
     end
 
