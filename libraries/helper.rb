@@ -28,11 +28,12 @@ module Visualstudio
 
     # Gets the version/edition ISO download URL or raises an error
     def source_download_url(version, edition)
-      src = iso_source(version, edition)
-      assert_src_is_not_nil(src, version, edition) \
-        unless node['visualstudio'][version][edition]['installer_file'].empty?
       url = nil
-      url = ::File.join(src, node['visualstudio'][version][edition]['filename']) unless src.empty?
+      edition_node = node['visualstudio'][version][edition]
+      return url if edition_node.nil? || !edition_node['installer_file']
+      src = iso_source(version, edition)
+      assert_src_is_not_nil(src, version, edition)
+      url = ::File.join(src, edition_node['filename']) if src
       url
     end
 
