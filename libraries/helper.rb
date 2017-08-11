@@ -31,7 +31,10 @@ module Visualstudio
       url = nil
       edition_node = node['visualstudio'][version][edition]
       src = iso_source(version, edition)
-      return url if src.nil? && edition_node['installer_file']
+      return url if src.nil? && (\
+        edition_node['installer_file'].include?('/') \
+        || edition_node['installer_file'].include?('\\') \
+      )
       assert_src_is_not_nil(src, version, edition)
       url = ::File.join(src, edition_node['filename']) if src
       url
