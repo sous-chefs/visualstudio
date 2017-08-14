@@ -41,7 +41,7 @@ action :install do
         source new_resource.source
         overwrite true
         checksum new_resource.checksum
-        only_if { !new_resource.source.nil? && extractable_download }
+        only_if { !(new_resource.source == "" || new_resource.source.nil?) && extractable_download }
       end
 
       # Not an ISO but the web install
@@ -49,7 +49,7 @@ action :install do
         path installer_exe
         source lazy { new_resource.source }
         checksum new_resource.checksum
-        only_if { !new_resource.source.nil? && !extractable_download }
+        only_if { !(new_resource.source == "" || new_resource.source.nil?) && !extractable_download }
       end
 
       # Ensure the target directory exists so logging doesn't fail on VS 2010
@@ -71,7 +71,7 @@ action :install do
         path extracted_iso_dir
         action :delete
         recursive true
-        only_if { !new_resource.source.nil? && !new_resource.preserve_extracted_files }
+        only_if { !(new_resource.source == "" || new_resource.source.nil?) && extractable_download && !new_resource.preserve_extracted_files }
       end
     end
     new_resource.updated_by_last_action(true)
@@ -79,6 +79,7 @@ action :install do
 end
 
 def extractable_download
+  return false if new_resource.source == "" || new_resource.source.nil?
   extension = ::File.extname(new_resource.source)
   extension.casecmp('.iso').zero? || extension.casecmp('.zip').zero? || extension.casecmp('.7z').zero?
 end
