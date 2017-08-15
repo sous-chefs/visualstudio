@@ -31,7 +31,7 @@ module Visualstudio
       url = nil
       edition_node = node['visualstudio'][version][edition]
       src = iso_source(version, edition)
-      return url if (src == "" || src.nil?) && (\
+      return url if (src == '' || src.nil?) && (\
         edition_node['installer_file'].include?('/') \
         || edition_node['installer_file'].include?('\\') \
       )

@@ -43,7 +43,7 @@ action :install do
       # Not an ISO but the web install
       remote_file "download__#{setup_basename}" do
         path installer_exe
-        source lazy { new_resource.source }
+        source { lazy { new_resource.source } }
         checksum new_resource.checksum
         only_if { !new_resource.source.nil? && !extractable_download }
       end
