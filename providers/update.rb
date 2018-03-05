@@ -20,7 +20,7 @@
 #
 
 require 'digest/md5'
-require 'chef/shell_out'
+require 'mixlib/shellout'
 
 include Windows::Helper
 include Visualstudio::Helper
