@@ -1,9 +1,7 @@
-
-
-require 'rubocop/rake_task'
+require 'cookstyle'
 require 'foodcritic'
 require 'rspec/core/rake_task'
-require 'stove/rake_task'
+require 'rubocop/rake_task'
 
 task default: [:rubocop, :foodcritic, :spec]
 
@@ -20,4 +18,10 @@ RSpec::Core::RakeTask.new do |task|
 end
 
 RuboCop::RakeTask.new
-Stove::RakeTask.new
+
+begin
+  require 'stove/rake_task'
+  Stove::RakeTask.new
+rescue LoadError => e
+  puts ">>> Gem load error: #{e}, omitting #{task.name}" unless ENV['CI']
+end

@@ -18,9 +18,9 @@ platforms:
       box: mwrock/Windows2012R2
 
 suites:
-  - name: tasks
+  - name: default
     run_list:
-      - recipe[visualstudio::default]
+      - recipe[visualstudio]
       - recipe[visualstudio::install_update]
       - recipe[visualstudio::install_vsto]
       - recipe[minitest-handler]
