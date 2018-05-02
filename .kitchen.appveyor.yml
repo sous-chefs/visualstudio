@@ -4,22 +4,24 @@ driver:
   host: localhost
   reset_command: "exit 0"
   port: 5985
-  username: <%= ENV["winrm_user"] %>
-  password: <%= ENV["winrm_pass"] %>
+  username: <%= ENV["machine_user"] %>
+  password: <%= ENV["machine_pass"] %>
   elevated: true
-  elevated_username: <%= ENV["winrm_user"] %>
-  elevated_password: <%= ENV["winrm_pass"] %>
+  elevated_username: <%= ENV["machine_user"] %>
+  elevated_password: <%= ENV["machine_pass"] %>
 
 provisioner:
   name: chef_zero
 
 platforms:
   - name: windows-2012R2
+    driver:
+      box: mwrock/Windows2012R2
 
 suites:
-  - name: tasks
+  - name: default
     run_list:
-      - recipe[visualstudio::default]
+      - recipe[visualstudio]
       - recipe[visualstudio::install_update]
       - recipe[visualstudio::install_vsto]
       - recipe[minitest-handler]
