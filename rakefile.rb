@@ -8,7 +8,7 @@ task default: [:rubocop, :foodcritic, :spec]
 FoodCritic::Rake::LintTask.new do |t|
   t.options = {
     cookbook_paths: '.',
-    search_gems: true
+    search_gems: true,
   }
 end
 

@@ -133,12 +133,12 @@ describe 'visualstudio::install' do
           node.override['visualstudio']['installs'] = [
             {
               'edition' => 'testprofessional',
-              'version' => '2013'
+              'version' => '2013',
             },
             {
               'edition' => 'professional',
-              'version' => '2015'
-            }
+              'version' => '2015',
+            },
           ]
         end.converge(described_recipe)
       end
@@ -154,7 +154,7 @@ describe 'visualstudio::install' do
         step_into: ['visualstudio_edition'],
         file_cache_path: 'c:/var/chef/cache',
         platform: 'windows',
-        version: '2008R2'
+        version: '2008R2',
       }
       chef_run = ChefSpec::SoloRunner.new(opts) do |node|
         node.default['visualstudio']['source'] = 'http://localhost:8080'

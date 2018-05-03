@@ -82,7 +82,6 @@ def prepare_vs_options
   setup_options
 end
 
-# rubocop:disable Metrics/LineLength, Metrics/MethodLength, Metrics/AbcSize
 def create_vs_admin_deployment_file
   config_path = win_friendly_path(::File.join(extracted_iso_dir, 'AdminDeployment.xml'))
 
