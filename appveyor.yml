@@ -32,11 +32,11 @@ install:
 
 build_script:
   - ps: c:\opscode\chefdk\bin\chef.bat shell-init powershell | iex; cmd /c c:\opscode\chefdk\bin\chef.bat --version
+  - c:\opscode\chefdk\bin\chef.bat exec bundle exec rake
 
 test_script:
   - c:\opscode\chefdk\bin\cookstyle --version
   - c:\opscode\chefdk\bin\chef.bat exec foodcritic --version
-  - c:\opscode\chefdk\bin\chef.bat exec rake
   - c:\opscode\chefdk\bin\chef.bat exec kitchen verify
 
 deploy: off
