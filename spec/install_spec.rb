@@ -166,13 +166,13 @@ describe 'visualstudio::install' do
     end
   end
 
-  describe 'Ubuntu 12.04' do
+  describe 'Ubuntu 18.04' do
     before(:each) do
       ENV['ProgramFiles(x86)'] = nil
       stub_const('File::ALT_SEPARATOR', '\\')
     end
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '12.04') do |node|
+      ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '18.04') do |node|
         node.default['visualstudio']['source'] = 'http://localhost:8080'
       end.converge(described_recipe)
     end
