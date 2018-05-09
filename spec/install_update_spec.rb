@@ -2,7 +2,7 @@
 describe 'visualstudio::install_update' do
   describe 'Visual Studio 2015 Community Edition' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2').converge(described_recipe)
+      ChefSpec::SoloRunner.new(platform: 'windows', version: '2012R2').converge(described_recipe)
     end
     it 'does not install any updates by default' do
       expect(chef_run).not_to install_visualstudio_update('visualstudio_2015_update')
@@ -14,7 +14,7 @@ describe 'visualstudio::install_update' do
 
   describe 'Visual Studio 2012 Ultimate Edition' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2') do |node|
+      ChefSpec::SoloRunner.new(platform: 'windows', version: '2012R2') do |node|
         node.override['visualstudio']['version'] = '2012'
         node.override['visualstudio']['edition'] = 'ultimate'
       end.converge(described_recipe)

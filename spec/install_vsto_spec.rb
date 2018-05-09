@@ -2,7 +2,7 @@
 describe 'visualstudio::install_vsto' do
   describe 'Visual Studio 2015 Community Edition' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2') do |node|
+      ChefSpec::SoloRunner.new(platform: 'windows', version: '2012R2') do |node|
         node.override['visualstudio']['version'] = '2015'
         node.override['visualstudio']['edition'] = 'community'
       end.converge(described_recipe)
@@ -15,7 +15,7 @@ describe 'visualstudio::install_vsto' do
   end
   describe 'Visual Studio 2012 Ultimate Edition' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2') do |node|
+      ChefSpec::SoloRunner.new(platform: 'windows', version: '2012R2') do |node|
         node.override['visualstudio']['version'] = '2012'
         node.override['visualstudio']['edition'] = 'ultimate'
       end.converge(described_recipe)
