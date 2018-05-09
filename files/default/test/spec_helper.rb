@@ -9,7 +9,7 @@ module ChefHelper
     return node['visualstudio']['installs'] unless node['visualstudio']['installs'].nil?
     [{
       'edition' => node['visualstudio']['edition'],
-      'version' => node['visualstudio']['version']
+      'version' => node['visualstudio']['version'],
     }]
   end
 

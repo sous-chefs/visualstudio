@@ -30,8 +30,6 @@ def whyrun_supported?
   true
 end
 
-use_inline_resources
-
 action :install do
   unless package_is_installed?(new_resource.package_name)
     converge_by("Installing VisualStudio #{new_resource.edition} #{new_resource.version}") do
@@ -68,7 +66,6 @@ action :install do
         not_if { new_resource.preserve_extracted_files }
       end
     end
-    new_resource.updated_by_last_action(true)
   end
 end
 
@@ -82,7 +79,6 @@ def prepare_vs_options
   setup_options
 end
 
-# rubocop:disable Metrics/LineLength, Metrics/MethodLength, Metrics/AbcSize
 def create_vs_admin_deployment_file
   config_path = win_friendly_path(::File.join(extracted_iso_dir, 'AdminDeployment.xml'))
 
