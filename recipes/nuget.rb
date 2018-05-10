@@ -23,5 +23,5 @@ enable_nuget_package_restore = node['visualstudio']['enable_nuget_package_restor
 
 env 'EnableNuGetPackageRestore' do
   value enable_nuget_package_restore.to_s
-  not_if { enable_nuget_package_restore.to_s.casecmp(ENV['EnableNuGetPackageRestore'] || '').zero? }
+  not_if { enable_nuget_package_restore.to_s.casecmp(ENV['EnableNuGetPackageRestore'] || '') == 0 }
 end

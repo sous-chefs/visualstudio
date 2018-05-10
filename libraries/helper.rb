@@ -17,7 +17,7 @@ module Visualstudio
       return node['visualstudio']['installs'] unless node['visualstudio']['installs'].nil?
       [{
         'edition' => node['visualstudio']['edition'],
-        'version' => node['visualstudio']['version']
+        'version' => node['visualstudio']['version'],
       }]
     end
 
@@ -45,11 +45,10 @@ module Visualstudio
 
     # Fails the Chef run if the visualstudio download source is not set
     def assert_src_is_not_nil(src, version, edition)
-      if src.nil?
-        raise 'The ISO download source is empty! '\
-          "Set the node['visualstudio']['#{version}']['#{edition}']['source'] " \
-          'or node[\'visualstudio\'][\'source\'] attribute and run again!'
-      end
+      return unless src.to_s.empty?
+      raise 'The ISO download source is empty! '\
+        "Set the node['visualstudio']['#{version}']['#{edition}']['source'] " \
+        'or node[\'visualstudio\'][\'source\'] attribute and run again!'
     end
 
     def windows_package_is_installed?(package_name)
