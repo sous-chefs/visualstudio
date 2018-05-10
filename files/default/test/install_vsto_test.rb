@@ -11,9 +11,7 @@ class InstallVstoSpec < MiniTest::Chef::Spec
       it 'installs VSTO' do
         each_version_edition(node) do |version, _|
           # VSTO is only supported for VS 2012 currently
-          if version == '2012'
-            node['visualstudio'][version]['vsto']['package_name'].must_be_installed
-          end
+          node['visualstudio'][version]['vsto']['package_name'].must_be_installed if version == '2012'
         end
       end
     end
