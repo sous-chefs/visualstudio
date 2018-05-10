@@ -4,7 +4,7 @@ describe 'visualstudio::nuget' do
   end
   describe 'package restore already enabled' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2') do
+      ChefSpec::ServerRunner.new(platform: 'windows', version: '2008R2') do
         ENV['EnableNuGetPackageRestore'] = 'true'
       end.converge(described_recipe)
     end
@@ -14,7 +14,7 @@ describe 'visualstudio::nuget' do
   end
   describe 'package restore not yet enabled' do
     let(:chef_run) do
-      ChefSpec::SoloRunner.new(platform: 'windows', version: '2008R2').converge(described_recipe)
+      ChefSpec::ServerRunner.new(platform: 'windows', version: '2008R2').converge(described_recipe)
     end
     it 'enables restore' do
       expect(chef_run).to create_env('EnableNuGetPackageRestore').with(value: 'true')
