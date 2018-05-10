@@ -26,7 +26,7 @@ suites:
       - recipe[visualstudio::install_update]
       - recipe[visualstudio::install_vsto]
       - recipe[minitest-handler]
-    attributes: {
+    attributes:
       visualstudio:
         source: "http://download.microsoft.com/download/b/e/d/bedddfc4-55f4-4748-90a8-ffe38a40e89f/"
         preserve_extracted_files: true
