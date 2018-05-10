@@ -1,9 +1,9 @@
 
 describe 'visualstudio::install' do
-  describe 'Windows 2008R2' do
+  describe 'Windows 2012R2' do
     describe 'Visual Studio 2015 Professional' do
       let(:chef_run) do
-        ChefSpec::ServerRunner.new(platform: 'windows', version: '2008R2') do |node|
+        ChefSpec::ServerRunner.new(platform: 'windows', version: '2012R2') do |node|
           node.override['visualstudio']['edition'] = 'professional'
         end.converge(described_recipe)
       end
@@ -21,7 +21,7 @@ describe 'visualstudio::install' do
           )
       end
       it 'uses the node[visualstudio][source] attribute when set' do
-        chef_run = ChefSpec::ServerRunner.new(platform: 'windows', version: '2008R2') do |node|
+        chef_run = ChefSpec::ServerRunner.new(platform: 'windows', version: '2012R2') do |node|
           node.override['visualstudio']['source'] = 'http://localhost:8000'
           node.override['visualstudio']['version'] = '2015'
           node.override['visualstudio']['edition'] = 'professional'
@@ -33,7 +33,7 @@ describe 'visualstudio::install' do
 
     describe 'Visual Studio 2012 Ultimate' do
       let(:chef_run) do
-        ChefSpec::ServerRunner.new(platform: 'windows', version: '2008R2') do |node|
+        ChefSpec::ServerRunner.new(platform: 'windows', version: '2012R2') do |node|
           node.default['visualstudio']['source'] = 'http://localhost:8080'
           node.override['visualstudio']['version'] = '2012'
           node.override['visualstudio']['edition'] = 'ultimate'
@@ -57,7 +57,7 @@ describe 'visualstudio::install' do
           )
       end
       it 'raises an error when source is not set' do
-        chef_run = ChefSpec::ServerRunner.new(platform: 'windows', version: '2008R2') do |node|
+        chef_run = ChefSpec::ServerRunner.new(platform: 'windows', version: '2012R2') do |node|
           node.override['visualstudio']['version'] = '2012'
           node.override['visualstudio']['edition'] = 'ultimate'
         end
@@ -72,7 +72,7 @@ describe 'visualstudio::install' do
 
     describe 'Visual Studio 2010' do
       it 'specifies /q for silent installation by default' do
-        opts = { platform: 'windows', version: '2008R2', step_into: ['visualstudio_edition'] }
+        opts = { platform: 'windows', version: '2012R2', step_into: ['visualstudio_edition'] }
         chef_run = ChefSpec::ServerRunner.new(opts) do |node|
           node.default['visualstudio']['source'] = 'http://localhost:8080'
           node.override['visualstudio']['version'] = '2010'
@@ -91,7 +91,7 @@ describe 'visualstudio::install' do
         expect(chef_run).to install_windows_package(vs2010_package).with(options: '/q')
       end
       it 'specifies /unattendfile when an unattend.ini file is given' do
-        opts = { platform: 'windows', version: '2008R2', step_into: ['visualstudio_edition'] }
+        opts = { platform: 'windows', version: '2012R2', step_into: ['visualstudio_edition'] }
         chef_run = ChefSpec::ServerRunner.new(opts) do |node|
           node.default['visualstudio']['source'] = 'http://localhost:8080'
           node.override['visualstudio']['version'] = '2010'
@@ -115,7 +115,7 @@ describe 'visualstudio::install' do
 
     describe 'Visual Studio 2013 Ultimate' do
       let(:chef_run) do
-        ChefSpec::ServerRunner.new(platform: 'windows', version: '2008R2') do |node|
+        ChefSpec::ServerRunner.new(platform: 'windows', version: '2012R2') do |node|
           node.default['visualstudio']['source'] = 'http://localhost:8080'
           node.override['visualstudio']['edition'] = 'ultimate'
           node.override['visualstudio']['version'] = '2013'
@@ -128,7 +128,7 @@ describe 'visualstudio::install' do
 
     describe 'Visual Studio 2013 Test Professional and Visual Studio 2015 Professional' do
       let(:chef_run) do
-        ChefSpec::ServerRunner.new(platform: 'windows', version: '2008R2') do |node|
+        ChefSpec::ServerRunner.new(platform: 'windows', version: '2012R2') do |node|
           node.default['visualstudio']['source'] = 'http://localhost:8080'
           node.override['visualstudio']['installs'] = [
             {
@@ -154,7 +154,7 @@ describe 'visualstudio::install' do
         step_into: ['visualstudio_edition'],
         file_cache_path: 'c:/var/chef/cache',
         platform: 'windows',
-        version: '2008R2',
+        version: '2012R2',
       }
       chef_run = ChefSpec::ServerRunner.new(opts) do |node|
         node.default['visualstudio']['source'] = 'http://localhost:8080'
