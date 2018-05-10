@@ -3,33 +3,40 @@ version: "1.2.0.{build}-{branch}"
 image: Visual Studio 2013
 platform: x64
 
-cache:
-  - c:\projects\bundle -> Gemfile.lock
-
 environment:
-  winrm_user: test_user
-  winrm_pass: Pass@word1
-  winrm_port: 5985
-  KITCHEN_YAML: c:\projects\visualstudio\.kitchen.appveyor.yml
-  SSL_CERT_FILE: c:\opscode\chefdk\embedded\ssl\certs\cacert.pem
+  machine_user: vagrant
+  machine_pass: vagrant
+  KITCHEN_YAML: .kitchen.appveyor.yml
 
-  matrix:
-    - ruby_version: "23"
+branches:
+  only:
+    - master
 
-clone_folder: c:\projects\visualstudio
+# Do not build on tags (GitHub only)
+skip_tags: true
+
+#faster cloning
 clone_depth: 1
 
 install:
-  - ps: net user /add $env:winrm_user $env:winrm_pass
-  - ps: net localgroup administrators $env:winrm_user /add
-  - ps: Invoke-WebRequest -Uri https://packages.chef.io/stable/windows/2008r2/chefdk-0.17.17-1-x86.msi -OutFile c:\projects\chefdk.msi
-  - ps: Start-Process C:\Windows\System32\msiexec.exe -ArgumentList "/qb /i c:\projects\chefdk.msi" -wait
-  - ps: $env:PATH="C:\Ruby$env:ruby_version\bin;$env:PATH"
-  - bundle config --local path c:\projects\bundle
-  - bundle install
+  - ps: iex (irm https://omnitruck.chef.io/install.ps1); Install-Project -Project chefdk -channel current
+  - ps: 'Get-CimInstance win32_operatingsystem -Property Caption, OSArchitecture, Version | fl Caption, OSArchitecture, Version'
+  - ps: $PSVersionTable
+  - c:\opscode\chefdk\bin\chef.bat exec ruby --version
+  - ps: secedit /export /cfg $env:temp/export.cfg
+  - ps: ((get-content $env:temp/export.cfg) -replace ('PasswordComplexity = 1', 'PasswordComplexity = 0')) | Out-File $env:temp/export.cfg
+  - ps: ((get-content $env:temp/export.cfg) -replace ('MinimumPasswordLength = 8', 'MinimumPasswordLength = 0')) | Out-File $env:temp/export.cfg
+  - ps: secedit /configure /db $env:windir/security/new.sdb /cfg $env:temp/export.cfg /areas SECURITYPOLICY
+  - ps: net user /add $env:machine_user $env:machine_pass
+  - ps: net localgroup administrators $env:machine_user /add
 
 build_script:
-  - bundle exec rake
+  - ps: c:\opscode\chefdk\bin\chef.bat shell-init powershell | iex; cmd /c c:\opscode\chefdk\bin\chef.bat --version
 
 test_script:
-  - c:\opscode\chefdk\bin\kitchen verify
+  - c:\opscode\chefdk\bin\cookstyle --version
+  - c:\opscode\chefdk\bin\chef.bat exec foodcritic --version
+  - c:\opscode\chefdk\bin\chef.bat exec rake
+  - c:\opscode\chefdk\bin\chef.bat exec kitchen verify
+
+deploy: off

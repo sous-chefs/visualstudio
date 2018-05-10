@@ -4,28 +4,29 @@ driver:
   host: localhost
   reset_command: "exit 0"
   port: 5985
-  username: <%= ENV["winrm_user"] %>
-  password: <%= ENV["winrm_pass"] %>
+  username: <%= ENV["machine_user"] %>
+  password: <%= ENV["machine_pass"] %>
   elevated: true
-  elevated_username: <%= ENV["winrm_user"] %>
-  elevated_password: <%= ENV["winrm_pass"] %>
+  elevated_username: <%= ENV["machine_user"] %>
+  elevated_password: <%= ENV["machine_pass"] %>
+  require_chef_omnibus: 13.8.5
 
 provisioner:
   name: chef_zero
 
 platforms:
-  - name: windows-2012R2
+  - name: windows-2012r2
+    driver:
+      box: mwrock/Windows2012R2
 
 suites:
-  - name: tasks
+  - name: default
     run_list:
-      - recipe[visualstudio::default]
+      - recipe[visualstudio]
       - recipe[visualstudio::install_update]
       - recipe[visualstudio::install_vsto]
       - recipe[minitest-handler]
     attributes: {
-      'visualstudio': {
-        'source': 'http://download.microsoft.com/download/b/e/d/bedddfc4-55f4-4748-90a8-ffe38a40e89f/',
-        'preserve_extracted_files': true
-      }
-    }
+      visualstudio:
+        source: "http://download.microsoft.com/download/b/e/d/bedddfc4-55f4-4748-90a8-ffe38a40e89f/"
+        preserve_extracted_files: true
