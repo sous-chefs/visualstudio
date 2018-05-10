@@ -187,7 +187,7 @@ default['visualstudio']['2015']['community']['installer_file'] = 'vs_community.e
 default['visualstudio']['2015']['community']['filename'] =
   'vs2015.3.com_enu.iso'
 default['visualstudio']['2015']['community']['package_name'] =
-  'Microsoft Visual Studio Community 2015'
+  'Microsoft Visual Studio Community 2015 with Updates'
 default['visualstudio']['2015']['community']['checksum'] =
   'ce124aec77f970605bb38352e59e7b3c7b51c0367f213cf5e6165b2698c1ba20'
 default['visualstudio']['2015']['community']['default_source'] =

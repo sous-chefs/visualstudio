@@ -1,11 +1,12 @@
-.vagrant
-*~
 *#
-.#*
-\#*#
-.*.sw[a-z]
 *.un~
+*~
+.#*
+.*.sw[a-z]
+.vagrant
+/cache/
 /cookbooks
+\#*#
 version.txt
 
 # Bundler
@@ -13,12 +14,13 @@ bin/*
 .bundle/*
 .vendor/*
 
-.kitchen/
+# Test Kitchen
 .kitchen.local.yml
-
+.kitchen/
+.kitchen/*
 Berksfile.lock
 
-/cache/
-
-#IDE
+#IntelliJ IDEA
+.idea
 .idea/
+.idea/*
