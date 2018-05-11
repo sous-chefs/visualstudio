@@ -2,6 +2,16 @@
 
 This file is used to list changes made in each version of visualstudion.
 
+## 1.3.0
+
+* Support Chef 13, drop support for Chef 12.
+* Fix VS 2015 Community package name.
+* Use ServerRunner instead of SoloRunner for ChefSpec tests.
+* Use Windows 2012R2 as target for both ChefSpec and Test Kitchen.
+* Use Chef 13 for Test Kitchen since minitest-handler is incompatible with Chef 14.
+* Standardize testing environment across repos.  (AppVeyor, Kitchen, Rake, etc.)
+* Upgrade development dependencies.
+
 ## 1.2.0
 
 * Default to VS 2015 Community Edition
@@ -32,7 +42,7 @@ This file is used to list changes made in each version of visualstudion.
 
 * Initial release to Chef SuperMarket
 
-- - - 
+- - -
 Check the [Markdown Syntax Guide](http://daringfireball.net/projects/markdown/syntax) for help with Markdown.
 
 The [Github Flavored Markdown page](http://github.github.com/github-flavored-markdown/) describes the differences between markdown on github and standard markdown.
