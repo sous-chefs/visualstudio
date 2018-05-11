@@ -1,8 +1,8 @@
 # CHANGELOG for visualstudio
 
-This file is used to list changes made in each version of visualstudion.
+This file is used to list changes made in each version of visualstudio.
 
-## 1.3.0
+## 2.0.0
 
 * Support Chef 13, drop support for Chef 12.
 * Fix VS 2015 Community package name.
