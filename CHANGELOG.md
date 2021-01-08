@@ -4,47 +4,7 @@ This file is used to list changes made in each version of visualstudio.
 
 ## Unreleased
 
-- resolved cookstyle error: attributes/default.rb:4:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: attributes/default.rb:7:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: attributes/vs2010.rb:4:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: attributes/vs2010.rb:7:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: attributes/vs2012.rb:4:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: attributes/vs2012.rb:7:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: attributes/vs2013.rb:4:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: attributes/vs2013.rb:7:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: attributes/vs2015.rb:4:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: attributes/vs2015.rb:7:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: libraries/matchers.rb:4:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: libraries/matchers.rb:6:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: libraries/matchers.rb:21:1 refactor: `Chef/Modernize/DefinesChefSpecMatchers`
-- resolved cookstyle error: metadata.rb:6:1 refactor: `Chef/Modernize/RespondToInMetadata`
-- resolved cookstyle error: metadata.rb:9:1 refactor: `Chef/RedundantCode/LongDescriptionMetadata`
-- resolved cookstyle error: providers/edition.rb:4:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: providers/edition.rb:7:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: providers/edition.rb:29:1 refactor: `Chef/Modernize/WhyRunSupportedTrue`
-- resolved cookstyle error: providers/update.rb:4:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: providers/update.rb:7:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: providers/update.rb:23:1 refactor: `Chef/Modernize/UnnecessaryMixlibShelloutRequire`
-- resolved cookstyle error: providers/update.rb:28:1 refactor: `Chef/Modernize/WhyRunSupportedTrue`
-- resolved cookstyle error: recipes/default.rb:4:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: recipes/default.rb:7:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: recipes/dotnet_prereq.rb:4:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: recipes/dotnet_prereq.rb:7:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: recipes/install.rb:4:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: recipes/install.rb:7:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: recipes/install.rb:22:1 refactor: `Chef/Correctness/IncorrectLibraryInjection`
-- resolved cookstyle error: recipes/install_update.rb:4:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: recipes/install_update.rb:7:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: recipes/install_update.rb:22:1 refactor: `Chef/Correctness/IncorrectLibraryInjection`
-- resolved cookstyle error: recipes/install_vsto.rb:4:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: recipes/install_vsto.rb:7:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: recipes/install_vsto.rb:22:1 refactor: `Chef/Correctness/IncorrectLibraryInjection`
-- resolved cookstyle error: recipes/nuget.rb:4:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: recipes/nuget.rb:7:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: resources/edition.rb:4:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: resources/edition.rb:7:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: resources/update.rb:4:1 refactor: `Chef/Style/CommentFormat`
-- resolved cookstyle error: resources/update.rb:7:1 refactor: `Chef/Style/CommentFormat`
+- Various Cookstyle fixes
 
 ## 2.0.0
 
