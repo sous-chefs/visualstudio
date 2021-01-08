@@ -1,10 +1,10 @@
 
 #
 # Author:: Shawn Neal <sneal@sneal.net>
-# Cookbook Name:: visualstudio
+# Cookbook:: visualstudio
 # Recipe:: default
 #
-# Copyright 2013, Daptiv Solutions, LLC.
+# Copyright:: 2013, Daptiv Solutions, LLC.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

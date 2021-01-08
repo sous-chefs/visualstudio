@@ -1,10 +1,10 @@
 
 #
 # Author:: Ian Kendrick (<iankendrick@gmail.com>), Shawn Neal (<sneal@sneal.net>)
-# Cookbook Name:: visualstudio
+# Cookbook:: visualstudio
 # Provider:: update
 #
-# Copyright 2015, Ian Kendrick, Shawn Neal
+# Copyright:: 2015, Ian Kendrick, Shawn Neal
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -20,14 +20,9 @@
 #
 
 require 'digest/md5'
-require 'mixlib/shellout'
 
 include Windows::Helper
 include Visualstudio::Helper
-
-def whyrun_supported?
-  true
-end
 
 action :install do
   unless package_is_installed?(new_resource.package_name)

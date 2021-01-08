@@ -1,10 +1,10 @@
 
 #
 # Author:: Ian Kendrick (<iankendrick@gmail.com>)
-# Cookbook Name:: visualstudio
+# Cookbook:: visualstudio
 # Attribute:: vs2010
 #
-# Copyright 2015, Ian Kendrick
+# Copyright:: 2015, Ian Kendrick
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.

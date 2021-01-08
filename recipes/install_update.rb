@@ -1,10 +1,10 @@
 
 #
 # Author:: Shawn Neal
-# Cookbook Name:: visualstudio
+# Cookbook:: visualstudio
 # Recipe:: install_update
 #
-# Copyright 2015, Shawn Neal
+# Copyright:: 2015, Shawn Neal
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@
 # limitations under the License.
 #
 
-::Chef::Recipe.send(:include, Visualstudio::Helper)
+::Chef::DSL::Recipe.send(:include, Visualstudio::Helper)
 
 # Create list of unique VS versions that have updates
 versions_with_updates = versions.reject { |v| node['visualstudio'][v]['update'].nil? }
