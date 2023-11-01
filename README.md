@@ -2,6 +2,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/ttumjhmmxjo5j7gv/branch/master?svg=true)](https://ci.appveyor.com/project/ChefWindowsCookbooks65871/visualstudio/branch/master)
 
 # VisualStudio Cookbook
+
 This Chef cookbook installs Visual Studio 2010, 2012, 2013, 2015 from an ISO.
 
 # Requirements
@@ -16,6 +17,7 @@ This cookbook requires 7-zip to be installed so it can extract the ISO. To ensur
 NOTE - This cookbook cannot be installed over naked WinRM, i.e. knife-winrm without failing with error 1603. This cookbook will work via test-kithen with an elevated user.
 
 ## Supported Visual Studio Editions/Versions
+
 - 2010 Professional
 - 2012 Professional
 - 2012 Test Professional
@@ -32,6 +34,7 @@ NOTE - This cookbook cannot be installed over naked WinRM, i.e. knife-winrm with
 - 2015 Community
 
 ## Supported OSs
+
 - Windows 7
 - Windows 8
 - Windows 8.1
@@ -42,9 +45,11 @@ NOTE - This cookbook cannot be installed over naked WinRM, i.e. knife-winrm with
 - Windows Server 2012 R2
 
 ### VS 2012 on Windows Server 2008 SP1 and Windows 7
+
 For Windows7 SP1 and Windows Server 2008 SP1 you must first install [KB2664825](http://support.microsoft.com/kb/2664825), otherwise the VS installer will reboot in the middle of the installation. See [Save yourself from insanity: Visual Studio 2012 silent install](https://gshaw0.wordpress.com/2013/09/06/save-yourself-from-insanity-visual-studio-2012-silent-install/) for more details. To avoid this it is recommended that you first install [SQL CE 4](http://www.microsoft.com/en-us/download/details.aspx?id=17876). You can install SQL CE 4 via Chef using the [sqlce cookbook](http://community.opscode.com/cookbooks/sqlce).
 
 ### VS 2015 on Windows Server 2012 R2
+
 If you _really_ want to install VS 2015 on Windows Server 2012R2 over naked WinRM, you can if you first install [KB2999226](http://support.microsoft.com/kb/2999226), otherwise the VS installer will fail with error 1603.
 
 # Attributes
@@ -90,6 +95,7 @@ node.override['visualstudio']['2013']['professional']['source'] = 'https://myart
 VisualStudio 2013 and newer have default public download links for all their ISOs. If you're using an older version (2010, 2012) you must first set a download source. Either set the global `node['visualstudio']['source']` download URL or the version/edition specific download source, e.g. `node['visualstudio']['2012']['professional']['source']`. You can also use these same attributes to override the ISO location for newer VS versions.
 
 ## Customizing Installed Features
+
 ### VS 2012 and Newer
 
 To customize the AdminDeployment.xml file for adding features to an unattended install in VisualStudio 2012 and newer edit the node attribute `node['visualstudio']['install_items']`
@@ -110,23 +116,29 @@ Unlike newer versions of VisualStudio which use an AdminDeployment.xml file, VS 
 # Recipes
 
 ## default
+
 Ensures all VisualStudio prereqs are installed first and then only runs the install recipe if they are met. You should add this recipe to your run list.
 
 ## install
+
 Installs VisualStudio using the included AdminDeployment.xml or default silent install. Included by the default recipe.
 
 ## nuget
+
 Configures the enable_nuget_package_restore environment variable. Included by the default recipe.
 
 ## dotnet_prereq
+
 Logs a warning if .NET 4.5.x is not installed. This recipe does not curently check for .NET 4.6. Included by the default recipe.
 
 # Optional Recipes
 
 ## install_update
+
 Installs VS updates from the corresponding VS update ISO that is publicly downloadable from Microsoft. Add this to your runlist to update all versions of VS in your installs attribute array.
 
 ## install_vsto
+
 Installs the Microsoft Office Developer Tools for Visual Studio 2012. Add this to your runlist if you need Office development tools for Office plugin development. Other versions of VS are not currently supported and will log a Chef warning.
 
 # Resource/Provider
@@ -173,4 +185,4 @@ If the installer fails very early in the install process, check a few of things:
 
 # Author
 
-Author:: Shawn Neal (sneal@sneal.net)
+Author:: Shawn Neal (<sneal@sneal.net>)
