@@ -1,11 +1,8 @@
-[![Cookbook Version](http://img.shields.io/cookbook/v/visualstudio.svg)](https://supermarket.chef.io/cookbooks/visualstudio)
-[![Build status](https://ci.appveyor.com/api/projects/status/ttumjhmmxjo5j7gv/branch/master?svg=true)](https://ci.appveyor.com/project/ChefWindowsCookbooks65871/visualstudio/branch/master)
-
 # VisualStudio Cookbook
 
 This Chef cookbook installs Visual Studio 2010, 2012, 2013, 2015 from an ISO.
 
-# Requirements
+## Requirements
 
 This cookbook assumes the appropriate version of the .NET framework has already been installed before running the VisualStudio cookbook. To install .NET you can use the [dotnetframework cookbook](https://supermarket.chef.io/cookbooks/dotnetframework). You must reboot the system after the .NET installation and before the VisualStudio installation.
 
@@ -52,9 +49,9 @@ For Windows7 SP1 and Windows Server 2008 SP1 you must first install [KB2664825](
 
 If you _really_ want to install VS 2015 on Windows Server 2012R2 over naked WinRM, you can if you first install [KB2999226](http://support.microsoft.com/kb/2999226), otherwise the VS installer will fail with error 1603.
 
-# Attributes
+## Attributes
 
-## Optional
+### Optional
 
 | Key | Type | Description | Default |
 |-----|------|-------------|---------|
@@ -68,7 +65,7 @@ If you _really_ want to install VS 2015 on Windows Server 2012R2 over naked WinR
 | `['visualstudio']['install_items'][FEATURE]['selected']` | Boolean | Configures the feature on/off. This currently applies to all versions/editions being installed. | |
 | `['visualstudio']['2010']['professional']['config_file']` | String | The name of the Visual Studio 2010 unattend.ini template to use. | |
 
-# Usage
+## Usage
 
 Add `'visualstudio::default'` to your runlist. This will install VS 2015 Community Edition from the publicly available ISO. If you'd like to install another edition set the 'edition' attribute to: 'community', 'professional', 'premium', or 'testprofessional'. If you'd like to install a different version set the 'version' attribute to: '2010', '2012', '2013', '2015'.
 
@@ -113,25 +110,25 @@ Do not edit the `node['visualstudio'][<version>][<edition>]['default_install_ite
 
 Unlike newer versions of VisualStudio which use an AdminDeployment.xml file, VS 2010 uses an unattend.ini file, which, among other things, is OS-specific. By default, this cookbook uses VS 2010's `/q` option, which works for all Windows versions and specifies a default installation. To customize the installation, you may specify an unattend.ini template instead. The use of a template instead of a static file is required due to relative paths inside the file. This cookbook includes an unattend.ini template sample.
 
-# Recipes
+## Recipes
 
-## default
+### default
 
 Ensures all VisualStudio prereqs are installed first and then only runs the install recipe if they are met. You should add this recipe to your run list.
 
-## install
+### install
 
 Installs VisualStudio using the included AdminDeployment.xml or default silent install. Included by the default recipe.
 
-## nuget
+### nuget
 
 Configures the enable_nuget_package_restore environment variable. Included by the default recipe.
 
-## dotnet_prereq
+### dotnet_prereq
 
 Logs a warning if .NET 4.5.x is not installed. This recipe does not curently check for .NET 4.6. Included by the default recipe.
 
-# Optional Recipes
+## Optional Recipes
 
 ## install_update
 
@@ -141,7 +138,7 @@ Installs VS updates from the corresponding VS update ISO that is publicly downlo
 
 Installs the Microsoft Office Developer Tools for Visual Studio 2012. Add this to your runlist if you need Office development tools for Office plugin development. Other versions of VS are not currently supported and will log a Chef warning.
 
-# Resource/Provider
+## Resource/Provider
 
 This cookbook makes the `visualstudio_edition` and `visualstudio_update` resource definitions available.
 
@@ -159,7 +156,7 @@ visualstudio_edition 'vs_2015_professional' do
 end
 ```
 
-# Troubleshooting
+## Troubleshooting
 
 If the installer fails very early in the install process, check a few of things:
 
@@ -167,14 +164,14 @@ If the installer fails very early in the install process, check a few of things:
 - Check the VS installation log which is located in c:\program files (x86)\Microsoft Visual Studio &lt;version&gt;\vsinstall.log
 - Ensure you're not running over naked WinRM, i.e. knife-winrm or test-kitchen. Unfortunately because of the Windows security model this cookbook will not work over WinRM without a scheduled task.
 
-# TO DO
+## TO DO
 
 - Check for .NET 4.6 installed, but only if VS 2015 is going to be installed
 - Support VSTO on all versions of VS
 - More tests
 - Refactor duplication between cookbook helper and test helper
 
-# Contributing
+## Contributing
 
 1. Fork the repository on Github
 2. Create a named feature branch (i.e. add-vsto-support-for-vs2010)
@@ -182,7 +179,3 @@ If the installer fails very early in the install process, check a few of things:
 4. Write tests for your change (if applicable)
 5. Run the build and ensure it passes. `bundle install && bundle exec rake && kitchen verify`
 6. Submit a Pull Request
-
-# Author
-
-Author:: Shawn Neal (<sneal@sneal.net>)
