@@ -21,6 +21,7 @@
 
 actions :install
 default_action :install
+unified_mode true
 
 # The VS installation directory
 attribute :install_dir, kind_of: String, required: true
