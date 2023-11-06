@@ -2,6 +2,8 @@
 
 This file is used to list changes made in each version of visualstudio.
 
+## Unreleased
+
 ## 3.0.0 - *2023-11-06*
 
 - Update testing
