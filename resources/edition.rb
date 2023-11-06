@@ -21,6 +21,7 @@
 
 actions :install
 default_action :install
+unified_mode true
 
 # The VS edition: professional etc
 attribute :edition, kind_of: String, name_attribute: true
