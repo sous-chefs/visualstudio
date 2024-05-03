@@ -2,6 +2,8 @@
 
 This file is used to list changes made in each version of visualstudio.
 
+## Unreleased
+
 ## 3.0.3 - *2024-05-03*
 
 ## 3.0.2 - *2024-05-03*
