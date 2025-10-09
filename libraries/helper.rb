@@ -46,7 +46,7 @@ module Visualstudio
     # Fails the Chef run if the visualstudio download source is not set
     def assert_src_is_not_nil(src, version, edition)
       return unless src.to_s.empty?
-      raise 'The ISO download source is empty! '\
+      raise 'The ISO download source is empty! ' \
         "Set the node['visualstudio']['#{version}']['#{edition}']['source'] " \
         'or node[\'visualstudio\'][\'source\'] attribute and run again!'
     end
