@@ -2,6 +2,13 @@
 
 This file is used to list changes made in each version of visualstudio.
 
+## [3.0.5](https://github.com/sous-chefs/visualstudio/compare/3.0.4...v3.0.5) (2025-10-16)
+
+
+### Bug Fixes
+
+* **ci:** Update workflows to use release pipeline ([#50](https://github.com/sous-chefs/visualstudio/issues/50)) ([820504c](https://github.com/sous-chefs/visualstudio/commit/820504c78fdad9a75e340b551f43161715fe24d9))
+
 ## 3.0.0 - *2023-11-06*
 
 * Update testing
