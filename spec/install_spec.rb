@@ -63,7 +63,7 @@ describe 'visualstudio::install' do
         end
         expect { chef_run.converge(described_recipe) }.to raise_error(
           RuntimeError,
-          'The ISO download source is empty! '\
+          'The ISO download source is empty! ' \
           'Set the node[\'visualstudio\'][\'2012\'][\'ultimate\'][\'source\'] ' \
           'or node[\'visualstudio\'][\'source\'] attribute and run again!'
         )
