@@ -53,17 +53,17 @@ If you _really_ want to install VS 2015 on Windows Server 2012R2 over naked WinR
 
 ### Optional
 
-| Key | Type | Description | Default |
-|-----|------|-------------|---------|
-| `['visualstudio']['source']` | URL | HTTP(S) root URL beneath which ISOs for all versions/editions of Visual Studio are stored. | |
-| `['visualstudio'][VERSION][EDITION]['source']` | URL | HTTP(S) root URL beneath which the ISO for a specific `VERSION` and `EDITION` of Visual Studio is stored. `VERSION` and `EDITION` should be replaced with one of the supported Visual Studio versions/editions. This attribute, when set, takes precedence over `node['visualstudio']['source']`. | |
-| `['visualstudio'][VERSION]['update']['source']` | URL | HTTP(S) root URL beneath which the update ISO for a specific `VERSION` is stored. | |
-| `['visualstudio']['edition']` | Boolean | The Visual Studio edition to install, i.e. community, professional, premium, ultimate, testprofessional. | `community` |
-| `['visualstudio']['version']` | Integer | The Visual Studio version to install, i.e. 2010, 2012, 2013, 2015. | `2015` |
-| `['visualstudio']['enable_nuget_package_restore']` | Boolean | Sets the system wide environment variable to enable MSBuild/Visual Studio package restore on build. | `True` |
-| `['visualstudio']['installs']` | Array | An array of hashes that contain the various versions and editions of Visual Studio to install. See Usage below for an example. | |
-| `['visualstudio']['install_items'][FEATURE]['selected']` | Boolean | Configures the feature on/off. This currently applies to all versions/editions being installed. | |
-| `['visualstudio']['2010']['professional']['config_file']` | String | The name of the Visual Studio 2010 unattend.ini template to use. | |
+| Key | Type | Description | Default
+| --- | ---- | ----------- | -------
+| `['visualstudio']['source']` | URL | HTTP(S) root URL beneath which ISOs for all versions/editions of Visual Studio are stored. | -
+| `['visualstudio'][VERSION][EDITION]['source']` | URL | HTTP(S) root URL beneath which the ISO for a specific `VERSION` and `EDITION` of Visual Studio is stored. `VERSION` and `EDITION` should be replaced with one of the supported Visual Studio versions/editions. This attribute, when set, takes precedence over `node['visualstudio']['source']`. | -
+| `['visualstudio'][VERSION]['update']['source']` | URL | HTTP(S) root URL beneath which the update ISO for a specific `VERSION` is stored. | -
+| `['visualstudio']['edition']` | Boolean | The Visual Studio edition to install, i.e. community, professional, premium, ultimate, testprofessional. | `community`
+| `['visualstudio']['version']` | Integer | The Visual Studio version to install, i.e. 2010, 2012, 2013, 2015. | `2015`
+| `['visualstudio']['enable_nuget_package_restore']` | Boolean | Sets the system wide environment variable to enable MSBuild/Visual Studio package restore on build. | `True`
+| `['visualstudio']['installs']` | Array | An array of hashes that contain the various versions and editions of Visual Studio to install. See Usage below for an example. | -
+| `['visualstudio']['install_items'][FEATURE]['selected']` | Boolean | Configures the feature on/off. This currently applies to all versions/editions being installed. | -
+| `['visualstudio']['2010']['professional']['config_file']` | String | The name of the Visual Studio 2010 unattend.ini template to use. | -
 
 ## Usage
 
