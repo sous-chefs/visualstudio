@@ -1,4 +1,9 @@
 require 'win32/registry'
+
+# Cinc Client leaves its own CLI flags in ARGV; minitest/autorun parses ARGV at
+# exit and fails on flags such as --local-mode when run from the report handler.
+ARGV.clear
+
 require 'minitest/autorun'
 
 # MiniTest helper methods
