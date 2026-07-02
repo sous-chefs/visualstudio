@@ -17,3 +17,10 @@ cookbook 'minitest-handler',
          git: 'https://github.com/b-dean/minitest-handler-cookbook.git',
          branch: 'chef-13-fix'
 cookbook 'sqlce'
+
+default['minitest']['recipes'] = %w(
+  visualstudio::install
+  visualstudio::install_update
+  visualstudio::install_vsto
+  visualstudio::nuget
+)
