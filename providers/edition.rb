@@ -29,6 +29,10 @@ include Chef::Mixin::DeepMerge
 action :install do
   unless package_is_installed?(new_resource.package_name)
     converge_by("Installing VisualStudio #{new_resource.edition} #{new_resource.version}") do
+      directory extracted_iso_dir do
+        recursive true
+      end
+
       # Extract the ISO image to the temporary Chef cache dir
       seven_zip_archive "extract_#{new_resource.version}_#{new_resource.edition}_iso" do
         path extracted_iso_dir

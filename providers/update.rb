@@ -27,6 +27,10 @@ include Visualstudio::Helper
 action :install do
   unless package_is_installed?(new_resource.package_name)
     converge_by("Installing #{new_resource.package_name}") do
+      directory extracted_iso_dir do
+        recursive true
+      end
+
       # Extract the ISO image to the temporary Chef cache dir
       seven_zip_archive "extract_#{setup_basename}_iso" do
         path extracted_iso_dir
