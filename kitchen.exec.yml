@@ -1,6 +1,7 @@
 ---
 driver: { name: exec }
 transport: { name: exec }
+verifier: { name: dummy }
 
 platforms:
   - name: macos-latest
