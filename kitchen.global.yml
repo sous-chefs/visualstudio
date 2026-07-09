@@ -5,6 +5,7 @@ provisioner:
   product_version: <%= ENV['CHEF_VERSION'] || 'latest' %>
   channel: stable
   install_strategy: once
+  policyfile: Policyfile.rb
   chef_license: accept
   enforce_idempotency: <%= ENV['ENFORCE_IDEMPOTENCY'] || true %>
   multiple_converge: <%= ENV['MULTIPLE_CONVERGE'] || 2 %>

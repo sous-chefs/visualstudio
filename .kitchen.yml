@@ -12,6 +12,7 @@ driver:
 
 provisioner:
   name: chef_zero
+  policyfile: Policyfile.rb
 
 platforms:
   - name: windows-2012r2
@@ -20,11 +21,8 @@ platforms:
 
 suites:
   - name: default
-    run_list:
-      - recipe[visualstudio]
-      - recipe[visualstudio::install_update]
-      - recipe[visualstudio::install_vsto]
-      - recipe[minitest-handler]
+    provisioner:
+      named_run_list: default
     attributes:
       visualstudio:
         source: "http://download.microsoft.com/download/b/e/d/bedddfc4-55f4-4748-90a8-ffe38a40e89f/"

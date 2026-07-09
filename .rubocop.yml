@@ -1,0 +1,9 @@
+---
+Chef/Modernize/SevenZipArchiveResource:
+  Exclude:
+    - providers/edition.rb
+    - providers/update.rb
+
+Style/MultilineBlockChain:
+  Exclude:
+    - spec/install_spec.rb

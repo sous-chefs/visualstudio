@@ -1,5 +1,5 @@
 require 'chefspec'
-require 'chefspec/berkshelf'
+require 'chefspec/policyfile'
 
 # Conventionally, all specs live under a `spec` directory
 # which RSpec adds to the `$LOAD_PATH`. Require this file

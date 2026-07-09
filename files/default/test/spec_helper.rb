@@ -1,5 +1,10 @@
 require 'win32/registry'
-require 'minitest/autorun'
+
+# Cinc Client leaves its own CLI flags in ARGV; keep them away from minitest
+# while allowing minitest-handler to own execution.
+ARGV.clear
+
+require 'minitest/spec'
 
 # MiniTest helper methods
 module ChefHelper

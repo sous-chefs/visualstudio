@@ -148,7 +148,7 @@ describe 'visualstudio::install' do
       end
     end
 
-    let(:config_xml_path) { 'c:\var\chef\cache\2015\professional\AdminDeployment.xml' }
+    let(:config_xml_path) { ::File.expand_path('c:\var\chef\cache\2015\professional\AdminDeployment.xml').tr('/', '\\') }
     it 'customizes the AdminDeployment.xml when install_items set on the node' do
       opts = {
         step_into: ['visualstudio_edition'],
