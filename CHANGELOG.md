@@ -2,6 +2,22 @@
 
 This file is used to list changes made in each version of visualstudio.
 
+## [3.1.0](https://github.com/sous-chefs/visualstudio/compare/v3.0.5...v3.1.0) (2026-08-16)
+
+
+### Features
+
+* normalize scaffolding across all windowschefcookbooks repos ([cc91dfd](https://github.com/sous-chefs/visualstudio/commit/cc91dfdf1ffb93902c0f84f88fdca74b8800f0de))
+
+
+### Bug Fixes
+
+* **ci:** Update workflows to use release pipeline ([#50](https://github.com/sous-chefs/visualstudio/issues/50)) ([820504c](https://github.com/sous-chefs/visualstudio/commit/820504c78fdad9a75e340b551f43161715fe24d9))
+* enclose command in parentheses to prevent yaml parse error ([cc472cc](https://github.com/sous-chefs/visualstudio/commit/cc472cc236ad1d4934b1a0b38f46f3a13d56dd67))
+* migrate to Policyfile and clean up checks ([#61](https://github.com/sous-chefs/visualstudio/issues/61)) ([7919486](https://github.com/sous-chefs/visualstudio/commit/7919486d0fa9ea4942c25623b164480a861ad3d0))
+* output encoding 'handle is invalid' error in build script ([e41a7c0](https://github.com/sous-chefs/visualstudio/commit/e41a7c0c1cfaefe566443144ea7af3667a3f76d4))
+* remove stray comma from .kitchen.appveyor.yml ([da7fcdb](https://github.com/sous-chefs/visualstudio/commit/da7fcdb69da9d7df5b74aa5e1ff78f7b1c0aad3b))
+
 ## [3.0.5](https://github.com/sous-chefs/visualstudio/compare/3.0.4...v3.0.5) (2025-10-16)
 
 
